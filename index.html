@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr Odds Watchlist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 140px;
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 255, 136, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .ticker {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00ff88;
+            margin-bottom: 6px;
+        }
+
+        .name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            font-size: 0.85rem;
+            color: #999;
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+
+        .category-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-top: 12px;
+            width: fit-content;
+        }
+
+        .commodity { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+        .energy { background: rgba(255, 87, 34, 0.2); color: #ff5722; }
+        .chemicals { background: rgba(156, 39, 176, 0.2); color: #ce93d8; }
+        .agriculture { background: rgba(76, 175, 80, 0.2); color: #81c784; }
+        .crypto { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mr Odds Watchlist</h1>
+            <p class="subtitle">Commodities, Energy, Agriculture & More</p>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <div class="ticker">WTI</div>
+                <div class="name">Crude Oil</div>
+                <div class="description">West Texas Intermediate crude oil (traded through oil ETFs or futures)</div>
+                <span class="category-tag commodity">Commodity</span>
+            </div>
+
+            <div class="card">
+                <div class="ticker">CORN</div>
+                <div class="name">Teucrium Corn Fund</div>
+                <div class="description">Commodity ETF tracking corn futures prices</div>
+                <span class="category-tag agriculture">Agriculture</span>
+            </div>
+
+            <div class="card">
+                <div class="ticker">GSG</div>
+                <div class="name">iShares S&P GSCI Commodity-Indexed Trust</div>
+                <div class="description">All commodity strategy K-1 free ETF</div>
+                <span class="category-tag commodity">Commodity</span>
+            </div>
+
+            <div class="card">
+                <div class="ticker">CANE</div>
+                <div class="name">Teucrium Sugar Fund</div>
+                <div class="description">Commodity ETF tracking sugar futures</div>
+                <span class="category-tag agriculture">Agriculture</span>
+            </div>
+
+            <div class="card">
+                <div class="ticker">EMN</div>
+                <div class="name">Eastman Chemical Company</div>
+                <div class="description">Specialty materials and chemical manufacturing</div>
+                <span class="category-tag chemicals">Chemicals</span>
+            </div>
+
+            <div class="card">
+                <div class="ticker">LYB</div>
+                <div class="name">LyondellBasell Industries</div>
+                <div class="description">Large global chemical and plastics manufacturer</div>
+                <span class="category-tag chemicals">Chemicals</span>
+            </div>
+
+            <div class="card">
+                <div class="ticker">OLN</div>
+                <div class="name">Olin Corporation</div>
+                <div class="description">Chemicals + ammunition manufacturing</div>
+                <span class="category-tag chemicals">Chemicals</span>
+            </div>
+
+            <div class="card">
+                <div class="ticker">OXY</div>
+                <div class="name">Occidental Petroleum Corporation</div>
+                <div class="description">Major U.S. oil and gas company</div>
+                <span class="category-tag energy">Energy</span>
+            </div>
+
+            <div class="card">
+                <div class="ticker">MTDR</div>
+                <div class="name">Matador Resources Company</div>
+                <div class="description">Independent oil and gas exploration company</div>
+                <span class="category-tag energy">Energy</span>
+            </div>
+
+            <div class="card">
+                <div class="ticker">COP</div>
+                <div class="name">ConocoPhillips</div>
+                <div class="description">One of the largest oil exploration and production companies</div>
+                <span class="category-tag energy">Energy</span>
+            </div>
+
+            <div class="card">
+                <div class="ticker">NTR</div>
+                <div class="name">Nutrien Ltd</div>
+                <div class="description">World's largest fertilizer producer</div>
+                <span class="category-tag agriculture">Agriculture</span>
+            </div>
+
+            <div class="card">
+                <div class="ticker">MOS</div>
+                <div class="name">The Mosaic Company</div>
+                <div class="description">Major producer of potash and phosphate fertilizers</div>
+                <span class="category-tag agriculture">Agriculture</span>
+            </div>
+
+            <div class="card">
+                <div class="ticker">MSTR</div>
+                <div class="name">Strategy Inc. (formerly MicroStrategy)</div>
+                <div class="description">Known for large Bitcoin holdings</div>
+                <span class="category-tag crypto">Crypto Exposure</span>
+            </div>
+        </div>
+
+        <footer>
+            <p>Mr Odds Command Center • Not financial advice • DYOR</p>
+        </footer>
+    </div>
+</body>
+</html>
