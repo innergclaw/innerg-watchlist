@@ -54,6 +54,12 @@
             text-transform: uppercase;
         }
 
+        .last-updated {
+            color: #555;
+            font-size: 0.75rem;
+            margin-top: 8px;
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -77,12 +83,43 @@
             transform: translateY(-2px);
         }
 
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+
         .ticker {
             font-size: 1.5rem;
             font-weight: 700;
             color: #00ff88;
-            margin-bottom: 6px;
         }
+
+        .price-container {
+            text-align: right;
+        }
+
+        .price {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .price-loading {
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        .change {
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .change.positive { color: #00ff88; }
+        .change.negative { color: #ff4444; }
+        .change.neutral { color: #888; }
 
         .name {
             font-size: 0.95rem;
@@ -135,95 +172,174 @@
             <h1>INNERG TRADER WATCHLIST</h1>
             <p class="subtitle">FOR ENERGY, AGRICULTURE & CHEMICAL SECTORS</p>
             <p class="tagline">INNERG INTEL DISCORD EXCLUSIVE</p>
+            <p class="last-updated" id="lastUpdated">Loading prices...</p>
         </header>
 
         <div class="grid">
-            <div class="card">
-                <div class="ticker">WTI</div>
-                <div class="name">Crude Oil</div>
-                <div class="description">West Texas Intermediate crude oil (traded through oil ETFs or futures)</div>
+            <div class="card" data-ticker="USO">
+                <div class="card-header">
+                    <div class="ticker">WTI</div>
+                    <div class="price-container">
+                        <div class="price" id="price-USO"><span class="price-loading">--</span></div>
+                        <div class="change" id="change-USO"></div>
+                    </div>
+                </div>
+                <div class="name">Crude Oil (via USO ETF)</div>
+                <div class="description">West Texas Intermediate crude oil exposure</div>
                 <span class="category-tag commodity">Commodity</span>
             </div>
 
-            <div class="card">
-                <div class="ticker">CORN</div>
+            <div class="card" data-ticker="CORN">
+                <div class="card-header">
+                    <div class="ticker">CORN</div>
+                    <div class="price-container">
+                        <div class="price" id="price-CORN"><span class="price-loading">--</span></div>
+                        <div class="change" id="change-CORN"></div>
+                    </div>
+                </div>
                 <div class="name">Teucrium Corn Fund</div>
                 <div class="description">Commodity ETF tracking corn futures prices</div>
                 <span class="category-tag agriculture">Agriculture</span>
             </div>
 
-            <div class="card">
-                <div class="ticker">GSG</div>
+            <div class="card" data-ticker="GSG">
+                <div class="card-header">
+                    <div class="ticker">GSG</div>
+                    <div class="price-container">
+                        <div class="price" id="price-GSG"><span class="price-loading">--</span></div>
+                        <div class="change" id="change-GSG"></div>
+                    </div>
+                </div>
                 <div class="name">iShares S&P GSCI Commodity-Indexed Trust</div>
                 <div class="description">All commodity strategy K-1 free ETF</div>
                 <span class="category-tag commodity">Commodity</span>
             </div>
 
-            <div class="card">
-                <div class="ticker">CANE</div>
+            <div class="card" data-ticker="CANE">
+                <div class="card-header">
+                    <div class="ticker">CANE</div>
+                    <div class="price-container">
+                        <div class="price" id="price-CANE"><span class="price-loading">--</span></div>
+                        <div class="change" id="change-CANE"></div>
+                    </div>
+                </div>
                 <div class="name">Teucrium Sugar Fund</div>
                 <div class="description">Commodity ETF tracking sugar futures</div>
                 <span class="category-tag agriculture">Agriculture</span>
             </div>
 
-            <div class="card">
-                <div class="ticker">EMN</div>
+            <div class="card" data-ticker="EMN">
+                <div class="card-header">
+                    <div class="ticker">EMN</div>
+                    <div class="price-container">
+                        <div class="price" id="price-EMN"><span class="price-loading">--</span></div>
+                        <div class="change" id="change-EMN"></div>
+                    </div>
+                </div>
                 <div class="name">Eastman Chemical Company</div>
                 <div class="description">Specialty materials and chemical manufacturing</div>
                 <span class="category-tag chemicals">Chemicals</span>
             </div>
 
-            <div class="card">
-                <div class="ticker">LYB</div>
+            <div class="card" data-ticker="LYB">
+                <div class="card-header">
+                    <div class="ticker">LYB</div>
+                    <div class="price-container">
+                        <div class="price" id="price-LYB"><span class="price-loading">--</span></div>
+                        <div class="change" id="change-LYB"></div>
+                    </div>
+                </div>
                 <div class="name">LyondellBasell Industries</div>
                 <div class="description">Large global chemical and plastics manufacturer</div>
                 <span class="category-tag chemicals">Chemicals</span>
             </div>
 
-            <div class="card">
-                <div class="ticker">OLN</div>
+            <div class="card" data-ticker="OLN">
+                <div class="card-header">
+                    <div class="ticker">OLN</div>
+                    <div class="price-container">
+                        <div class="price" id="price-OLN"><span class="price-loading">--</span></div>
+                        <div class="change" id="change-OLN"></div>
+                    </div>
+                </div>
                 <div class="name">Olin Corporation</div>
                 <div class="description">Chemicals + ammunition manufacturing</div>
                 <span class="category-tag chemicals">Chemicals</span>
             </div>
 
-            <div class="card">
-                <div class="ticker">OXY</div>
+            <div class="card" data-ticker="OXY">
+                <div class="card-header">
+                    <div class="ticker">OXY</div>
+                    <div class="price-container">
+                        <div class="price" id="price-OXY"><span class="price-loading">--</span></div>
+                        <div class="change" id="change-OXY"></div>
+                    </div>
+                </div>
                 <div class="name">Occidental Petroleum Corporation</div>
                 <div class="description">Major U.S. oil and gas company</div>
                 <span class="category-tag energy">Energy</span>
             </div>
 
-            <div class="card">
-                <div class="ticker">MTDR</div>
+            <div class="card" data-ticker="MTDR">
+                <div class="card-header">
+                    <div class="ticker">MTDR</div>
+                    <div class="price-container">
+                        <div class="price" id="price-MTDR"><span class="price-loading">--</span></div>
+                        <div class="change" id="change-MTDR"></div>
+                    </div>
+                </div>
                 <div class="name">Matador Resources Company</div>
                 <div class="description">Independent oil and gas exploration company</div>
                 <span class="category-tag energy">Energy</span>
             </div>
 
-            <div class="card">
-                <div class="ticker">COP</div>
+            <div class="card" data-ticker="COP">
+                <div class="card-header">
+                    <div class="ticker">COP</div>
+                    <div class="price-container">
+                        <div class="price" id="price-COP"><span class="price-loading">--</span></div>
+                        <div class="change" id="change-COP"></div>
+                    </div>
+                </div>
                 <div class="name">ConocoPhillips</div>
                 <div class="description">One of the largest oil exploration and production companies</div>
                 <span class="category-tag energy">Energy</span>
             </div>
 
-            <div class="card">
-                <div class="ticker">NTR</div>
+            <div class="card" data-ticker="NTR">
+                <div class="card-header">
+                    <div class="ticker">NTR</div>
+                    <div class="price-container">
+                        <div class="price" id="price-NTR"><span class="price-loading">--</span></div>
+                        <div class="change" id="change-NTR"></div>
+                    </div>
+                </div>
                 <div class="name">Nutrien Ltd</div>
                 <div class="description">World's largest fertilizer producer</div>
                 <span class="category-tag agriculture">Agriculture</span>
             </div>
 
-            <div class="card">
-                <div class="ticker">MOS</div>
+            <div class="card" data-ticker="MOS">
+                <div class="card-header">
+                    <div class="ticker">MOS</div>
+                    <div class="price-container">
+                        <div class="price" id="price-MOS"><span class="price-loading">--</span></div>
+                        <div class="change" id="change-MOS"></div>
+                    </div>
+                </div>
                 <div class="name">The Mosaic Company</div>
                 <div class="description">Major producer of potash and phosphate fertilizers</div>
                 <span class="category-tag agriculture">Agriculture</span>
             </div>
 
-            <div class="card">
-                <div class="ticker">MSTR</div>
+            <div class="card" data-ticker="MSTR">
+                <div class="card-header">
+                    <div class="ticker">MSTR</div>
+                    <div class="price-container">
+                        <div class="price" id="price-MSTR"><span class="price-loading">--</span></div>
+                        <div class="change" id="change-MSTR"></div>
+                    </div>
+                </div>
                 <div class="name">Strategy Inc. (formerly MicroStrategy)</div>
                 <div class="description">Known for large Bitcoin holdings</div>
                 <span class="category-tag crypto">Crypto Exposure</span>
@@ -234,5 +350,76 @@
             <p>InnerG Ecosystem • Not financial advice • DYOR</p>
         </footer>
     </div>
+
+    <script>
+        const API_KEY = 'd6qctv1r01qhcrmjo040d6qctv1r01qhcrmjo04g';
+        const tickers = ['USO', 'CORN', 'GSG', 'CANE', 'EMN', 'LYB', 'OLN', 'OXY', 'MTDR', 'COP', 'NTR', 'MOS', 'MSTR'];
+
+        async function fetchPrice(ticker) {
+            try {
+                const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${API_KEY}`);
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error(`Error fetching ${ticker}:`, error);
+                return null;
+            }
+        }
+
+        function formatPrice(price) {
+            return price ? `$${price.toFixed(2)}` : '--';
+        }
+
+        function formatChange(current, previousClose) {
+            if (!current || !previousClose) return { text: '', class: 'neutral' };
+            
+            const change = current - previousClose;
+            const percentChange = (change / previousClose) * 100;
+            
+            if (change > 0) {
+                return { text: `+${percentChange.toFixed(2)}%`, class: 'positive' };
+            } else if (change < 0) {
+                return { text: `${percentChange.toFixed(2)}%`, class: 'negative' };
+            } else {
+                return { text: '0.00%', class: 'neutral' };
+            }
+        }
+
+        async function updatePrices() {
+            const updatePromises = tickers.map(async (ticker, index) => {
+                // Stagger requests to avoid rate limiting
+                await new Promise(resolve => setTimeout(resolve, index * 200));
+                
+                const data = await fetchPrice(ticker);
+                
+                if (data && data.c) {
+                    const priceEl = document.getElementById(`price-${ticker}`);
+                    const changeEl = document.getElementById(`change-${ticker}`);
+                    
+                    if (priceEl) {
+                        priceEl.textContent = formatPrice(data.c);
+                    }
+                    
+                    if (changeEl) {
+                        const change = formatChange(data.c, data.pc);
+                        changeEl.textContent = change.text;
+                        changeEl.className = `change ${change.class}`;
+                    }
+                }
+            });
+
+            await Promise.all(updatePromises);
+            
+            const now = new Date();
+            document.getElementById('lastUpdated').textContent = 
+                `Prices updated: ${now.toLocaleDateString('en-US')} ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+        }
+
+        // Initial load
+        updatePrices();
+
+        // Refresh every 5 minutes
+        setInterval(updatePrices, 5 * 60 * 1000);
+    </script>
 </body>
 </html>
