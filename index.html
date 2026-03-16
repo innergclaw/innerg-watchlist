@@ -121,6 +121,35 @@
         .change.negative { color: #ff4444; }
         .change.neutral { color: #888; }
 
+        .high-low {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.8rem;
+        }
+
+        .high-low-item {
+            text-align: center;
+        }
+
+        .high-low-label {
+            color: #666;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .high-low-value {
+            color: #fff;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .high-value { color: #00ff88; }
+        .low-value { color: #ff4444; }
+
         .name {
             font-size: 0.95rem;
             font-weight: 600;
@@ -187,6 +216,16 @@
                 <div class="name">Crude Oil (via USO ETF)</div>
                 <div class="description">West Texas Intermediate crude oil exposure</div>
                 <span class="category-tag commodity">Commodity</span>
+                <div class="high-low">
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W High</div>
+                        <div class="high-low-value high-value" id="high-USO">--</div>
+                    </div>
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W Low</div>
+                        <div class="high-low-value low-value" id="low-USO">--</div>
+                    </div>
+                </div>
             </div>
 
             <div class="card" data-ticker="CORN">
@@ -200,6 +239,16 @@
                 <div class="name">Teucrium Corn Fund</div>
                 <div class="description">Commodity ETF tracking corn futures prices</div>
                 <span class="category-tag agriculture">Agriculture</span>
+                <div class="high-low">
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W High</div>
+                        <div class="high-low-value high-value" id="high-CORN">--</div>
+                    </div>
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W Low</div>
+                        <div class="high-low-value low-value" id="low-CORN">--</div>
+                    </div>
+                </div>
             </div>
 
             <div class="card" data-ticker="GSG">
@@ -213,6 +262,16 @@
                 <div class="name">iShares S&P GSCI Commodity-Indexed Trust</div>
                 <div class="description">All commodity strategy K-1 free ETF</div>
                 <span class="category-tag commodity">Commodity</span>
+                <div class="high-low">
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W High</div>
+                        <div class="high-low-value high-value" id="high-GSG">--</div>
+                    </div>
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W Low</div>
+                        <div class="high-low-value low-value" id="low-GSG">--</div>
+                    </div>
+                </div>
             </div>
 
             <div class="card" data-ticker="CANE">
@@ -226,6 +285,16 @@
                 <div class="name">Teucrium Sugar Fund</div>
                 <div class="description">Commodity ETF tracking sugar futures</div>
                 <span class="category-tag agriculture">Agriculture</span>
+                <div class="high-low">
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W High</div>
+                        <div class="high-low-value high-value" id="high-CANE">--</div>
+                    </div>
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W Low</div>
+                        <div class="high-low-value low-value" id="low-CANE">--</div>
+                    </div>
+                </div>
             </div>
 
             <div class="card" data-ticker="EMN">
@@ -239,6 +308,16 @@
                 <div class="name">Eastman Chemical Company</div>
                 <div class="description">Specialty materials and chemical manufacturing</div>
                 <span class="category-tag chemicals">Chemicals</span>
+                <div class="high-low">
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W High</div>
+                        <div class="high-low-value high-value" id="high-EMN">--</div>
+                    </div>
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W Low</div>
+                        <div class="high-low-value low-value" id="low-EMN">--</div>
+                    </div>
+                </div>
             </div>
 
             <div class="card" data-ticker="LYB">
@@ -252,6 +331,16 @@
                 <div class="name">LyondellBasell Industries</div>
                 <div class="description">Large global chemical and plastics manufacturer</div>
                 <span class="category-tag chemicals">Chemicals</span>
+                <div class="high-low">
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W High</div>
+                        <div class="high-low-value high-value" id="high-LYB">--</div>
+                    </div>
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W Low</div>
+                        <div class="high-low-value low-value" id="low-LYB">--</div>
+                    </div>
+                </div>
             </div>
 
             <div class="card" data-ticker="OLN">
@@ -265,6 +354,16 @@
                 <div class="name">Olin Corporation</div>
                 <div class="description">Chemicals + ammunition manufacturing</div>
                 <span class="category-tag chemicals">Chemicals</span>
+                <div class="high-low">
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W High</div>
+                        <div class="high-low-value high-value" id="high-OLN">--</div>
+                    </div>
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W Low</div>
+                        <div class="high-low-value low-value" id="low-OLN">--</div>
+                    </div>
+                </div>
             </div>
 
             <div class="card" data-ticker="OXY">
@@ -278,6 +377,16 @@
                 <div class="name">Occidental Petroleum Corporation</div>
                 <div class="description">Major U.S. oil and gas company</div>
                 <span class="category-tag energy">Energy</span>
+                <div class="high-low">
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W High</div>
+                        <div class="high-low-value high-value" id="high-OXY">--</div>
+                    </div>
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W Low</div>
+                        <div class="high-low-value low-value" id="low-OXY">--</div>
+                    </div>
+                </div>
             </div>
 
             <div class="card" data-ticker="MTDR">
@@ -291,6 +400,16 @@
                 <div class="name">Matador Resources Company</div>
                 <div class="description">Independent oil and gas exploration company</div>
                 <span class="category-tag energy">Energy</span>
+                <div class="high-low">
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W High</div>
+                        <div class="high-low-value high-value" id="high-MTDR">--</div>
+                    </div>
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W Low</div>
+                        <div class="high-low-value low-value" id="low-MTDR">--</div>
+                    </div>
+                </div>
             </div>
 
             <div class="card" data-ticker="COP">
@@ -304,6 +423,16 @@
                 <div class="name">ConocoPhillips</div>
                 <div class="description">One of the largest oil exploration and production companies</div>
                 <span class="category-tag energy">Energy</span>
+                <div class="high-low">
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W High</div>
+                        <div class="high-low-value high-value" id="high-COP">--</div>
+                    </div>
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W Low</div>
+                        <div class="high-low-value low-value" id="low-COP">--</div>
+                    </div>
+                </div>
             </div>
 
             <div class="card" data-ticker="NTR">
@@ -317,6 +446,16 @@
                 <div class="name">Nutrien Ltd</div>
                 <div class="description">World's largest fertilizer producer</div>
                 <span class="category-tag agriculture">Agriculture</span>
+                <div class="high-low">
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W High</div>
+                        <div class="high-low-value high-value" id="high-NTR">--</div>
+                    </div>
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W Low</div>
+                        <div class="high-low-value low-value" id="low-NTR">--</div>
+                    </div>
+                </div>
             </div>
 
             <div class="card" data-ticker="MOS">
@@ -330,6 +469,16 @@
                 <div class="name">The Mosaic Company</div>
                 <div class="description">Major producer of potash and phosphate fertilizers</div>
                 <span class="category-tag agriculture">Agriculture</span>
+                <div class="high-low">
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W High</div>
+                        <div class="high-low-value high-value" id="high-MOS">--</div>
+                    </div>
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W Low</div>
+                        <div class="high-low-value low-value" id="low-MOS">--</div>
+                    </div>
+                </div>
             </div>
 
             <div class="card" data-ticker="MSTR">
@@ -343,6 +492,16 @@
                 <div class="name">Strategy Inc. (formerly MicroStrategy)</div>
                 <div class="description">Known for large Bitcoin holdings</div>
                 <span class="category-tag crypto">Crypto Exposure</span>
+                <div class="high-low">
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W High</div>
+                        <div class="high-low-value high-value" id="high-MSTR">--</div>
+                    </div>
+                    <div class="high-low-item">
+                        <div class="high-low-label">52W Low</div>
+                        <div class="high-low-value low-value" id="low-MSTR">--</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -362,6 +521,17 @@
                 return data;
             } catch (error) {
                 console.error(`Error fetching ${ticker}:`, error);
+                return null;
+            }
+        }
+
+        async function fetchMetrics(ticker) {
+            try {
+                const response = await fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${ticker}&metric=all&token=${API_KEY}`);
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error(`Error fetching metrics ${ticker}:`, error);
                 return null;
             }
         }
@@ -388,22 +558,42 @@
         async function updatePrices() {
             const updatePromises = tickers.map(async (ticker, index) => {
                 // Stagger requests to avoid rate limiting
-                await new Promise(resolve => setTimeout(resolve, index * 200));
+                await new Promise(resolve => setTimeout(resolve, index * 300));
                 
-                const data = await fetchPrice(ticker);
+                const [priceData, metricData] = await Promise.all([
+                    fetchPrice(ticker),
+                    fetchMetrics(ticker)
+                ]);
                 
-                if (data && data.c) {
+                if (priceData && priceData.c) {
                     const priceEl = document.getElementById(`price-${ticker}`);
                     const changeEl = document.getElementById(`change-${ticker}`);
                     
                     if (priceEl) {
-                        priceEl.textContent = formatPrice(data.c);
+                        priceEl.textContent = formatPrice(priceData.c);
                     }
                     
                     if (changeEl) {
-                        const change = formatChange(data.c, data.pc);
+                        const change = formatChange(priceData.c, priceData.pc);
                         changeEl.textContent = change.text;
                         changeEl.className = `change ${change.class}`;
+                    }
+                }
+
+                // Update 52-week high/low
+                const highEl = document.getElementById(`high-${ticker}`);
+                const lowEl = document.getElementById(`low-${ticker}`);
+                
+                if (metricData && metricData.metric) {
+                    const metrics = metricData.metric;
+                    const high52 = metrics['52WeekHigh'] || metrics['weekHigh52'];
+                    const low52 = metrics['52WeekLow'] || metrics['weekLow52'];
+                    
+                    if (highEl && high52) {
+                        highEl.textContent = formatPrice(high52);
+                    }
+                    if (lowEl && low52) {
+                        lowEl.textContent = formatPrice(low52);
                     }
                 }
             });
