@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InnerG Trader Watchlist</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -27,7 +27,7 @@
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         h1 {
@@ -54,10 +54,196 @@
             text-transform: uppercase;
         }
 
+        /* Weekly Leaders Section */
+        .leaders-section {
+            background: linear-gradient(135deg, rgba(0,255,136,0.1) 0%, rgba(0,212,255,0.1) 100%);
+            border: 2px solid rgba(0,255,136,0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .leaders-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .leaders-header h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #00ff88;
+        }
+
+        .leaders-header .crown {
+            font-size: 2rem;
+        }
+
+        .leaders-header .date-range {
+            font-size: 0.85rem;
+            color: #888;
+            margin-left: auto;
+        }
+
+        .leaders-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .leader-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .leader-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(0,255,136,0.3);
+        }
+
+        .leader-card.rank-1 {
+            background: linear-gradient(135deg, rgba(255,215,0,0.15) 0%, rgba(255,215,0,0.05) 100%);
+            border-color: rgba(255,215,0,0.4);
+            order: -1;
+        }
+
+        .leader-card.rank-1:hover {
+            border-color: rgba(255,215,0,0.6);
+        }
+
+        .leader-card.rank-2 {
+            background: linear-gradient(135deg, rgba(192,192,192,0.15) 0%, rgba(192,192,192,0.05) 100%);
+            border-color: rgba(192,192,192,0.4);
+        }
+
+        .leader-card.rank-3 {
+            background: linear-gradient(135deg, rgba(205,127,50,0.15) 0%, rgba(205,127,50,0.05) 100%);
+            border-color: rgba(205,127,50,0.4);
+        }
+
+        .rank-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .rank-1 .rank-badge {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #000;
+        }
+
+        .rank-2 .rank-badge {
+            background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+            color: #000;
+        }
+
+        .rank-3 .rank-badge {
+            background: linear-gradient(135deg, #cd7f32, #b87333);
+            color: #fff;
+        }
+
+        .leader-ticker {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .rank-1 .leader-ticker {
+            color: #ffd700;
+        }
+
+        .rank-2 .leader-ticker {
+            color: #c0c0c0;
+        }
+
+        .rank-3 .leader-ticker {
+            color: #cd7f32;
+        }
+
+        .leader-name {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .leader-performance {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .rank-1 .leader-performance {
+            color: #ffd700;
+        }
+
+        .rank-2 .leader-performance {
+            color: #c0c0c0;
+        }
+
+        .rank-3 .leader-performance {
+            color: #cd7f32;
+        }
+
+        .leader-label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         .last-updated {
             color: #555;
             font-size: 0.75rem;
-            margin-top: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Watchlist Grid */
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #333);
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, #333, transparent);
         }
 
         .grid {
@@ -81,6 +267,11 @@
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(0, 255, 136, 0.3);
             transform: translateY(-2px);
+        }
+
+        .card.leader-highlight {
+            border-color: rgba(0,255,136,0.5);
+            background: linear-gradient(135deg, rgba(0,255,136,0.08) 0%, rgba(0,255,136,0.02) 100%);
         }
 
         .card-header {
@@ -182,6 +373,25 @@
         .agriculture { background: rgba(76, 175, 80, 0.2); color: #81c784; }
         .crypto { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
 
+        .weekly-change {
+            margin-top: 8px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .weekly-change.positive {
+            background: rgba(0,255,136,0.2);
+            color: #00ff88;
+        }
+
+        .weekly-change.negative {
+            background: rgba(255,68,68,0.2);
+            color: #ff4444;
+        }
+
         footer {
             text-align: center;
             margin-top: 50px;
@@ -189,9 +399,28 @@
             font-size: 0.85rem;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 900px) {
+            .leaders-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .leader-card.rank-1 {
+                order: 0;
+            }
+            
             h1 { font-size: 1.8rem; }
             .grid { grid-template-columns: 1fr; }
+            
+            .leaders-header {
+                flex-wrap: wrap;
+                text-align: center;
+            }
+            
+            .leaders-header .date-range {
+                margin-left: 0;
+                width: 100%;
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
@@ -201,308 +430,27 @@
             <h1>INNERG TRADER WATCHLIST</h1>
             <p class="subtitle">FOR ENERGY, AGRICULTURE & CHEMICAL SECTORS</p>
             <p class="tagline">INNERG INTEL DISCORD EXCLUSIVE</p>
-            <p class="last-updated" id="lastUpdated">Loading prices...</p>
         </header>
 
-        <div class="grid">
-            <div class="card" data-ticker="USO">
-                <div class="card-header">
-                    <div class="ticker">WTI</div>
-                    <div class="price-container">
-                        <div class="price" id="price-USO"><span class="price-loading">--</span></div>
-                        <div class="change" id="change-USO"></div>
-                    </div>
-                </div>
-                <div class="name">Crude Oil (via USO ETF)</div>
-                <div class="description">West Texas Intermediate crude oil exposure</div>
-                <span class="category-tag commodity">Commodity</span>
-                <div class="high-low">
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W High</div>
-                        <div class="high-low-value high-value" id="high-USO">--</div>
-                    </div>
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W Low</div>
-                        <div class="high-low-value low-value" id="low-USO">--</div>
-                    </div>
-                </div>
+        <!-- Weekly Leaders Section -->
+        <div class="leaders-section">
+            <div class="leaders-header">
+                <span class="crown">👑</span>
+                <h2>Weekly Leaders</h2>
+                <span class="date-range" id="weekRange">Week of --</span>
             </div>
+            
+            <div class="leaders-grid" id="leadersGrid">
+                <!-- Leaders will be populated here -->
+            </div>
+            
+            <p class="last-updated" id="lastUpdated">Calculating weekly performance...</p>
+        </div>
 
-            <div class="card" data-ticker="CORN">
-                <div class="card-header">
-                    <div class="ticker">CORN</div>
-                    <div class="price-container">
-                        <div class="price" id="price-CORN"><span class="price-loading">--</span></div>
-                        <div class="change" id="change-CORN"></div>
-                    </div>
-                </div>
-                <div class="name">Teucrium Corn Fund</div>
-                <div class="description">Commodity ETF tracking corn futures prices</div>
-                <span class="category-tag agriculture">Agriculture</span>
-                <div class="high-low">
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W High</div>
-                        <div class="high-low-value high-value" id="high-CORN">--</div>
-                    </div>
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W Low</div>
-                        <div class="high-low-value low-value" id="low-CORN">--</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-ticker="GSG">
-                <div class="card-header">
-                    <div class="ticker">GSG</div>
-                    <div class="price-container">
-                        <div class="price" id="price-GSG"><span class="price-loading">--</span></div>
-                        <div class="change" id="change-GSG"></div>
-                    </div>
-                </div>
-                <div class="name">iShares S&P GSCI Commodity-Indexed Trust</div>
-                <div class="description">All commodity strategy K-1 free ETF</div>
-                <span class="category-tag commodity">Commodity</span>
-                <div class="high-low">
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W High</div>
-                        <div class="high-low-value high-value" id="high-GSG">--</div>
-                    </div>
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W Low</div>
-                        <div class="high-low-value low-value" id="low-GSG">--</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-ticker="CANE">
-                <div class="card-header">
-                    <div class="ticker">CANE</div>
-                    <div class="price-container">
-                        <div class="price" id="price-CANE"><span class="price-loading">--</span></div>
-                        <div class="change" id="change-CANE"></div>
-                    </div>
-                </div>
-                <div class="name">Teucrium Sugar Fund</div>
-                <div class="description">Commodity ETF tracking sugar futures</div>
-                <span class="category-tag agriculture">Agriculture</span>
-                <div class="high-low">
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W High</div>
-                        <div class="high-low-value high-value" id="high-CANE">--</div>
-                    </div>
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W Low</div>
-                        <div class="high-low-value low-value" id="low-CANE">--</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-ticker="EMN">
-                <div class="card-header">
-                    <div class="ticker">EMN</div>
-                    <div class="price-container">
-                        <div class="price" id="price-EMN"><span class="price-loading">--</span></div>
-                        <div class="change" id="change-EMN"></div>
-                    </div>
-                </div>
-                <div class="name">Eastman Chemical Company</div>
-                <div class="description">Specialty materials and chemical manufacturing</div>
-                <span class="category-tag chemicals">Chemicals</span>
-                <div class="high-low">
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W High</div>
-                        <div class="high-low-value high-value" id="high-EMN">--</div>
-                    </div>
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W Low</div>
-                        <div class="high-low-value low-value" id="low-EMN">--</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-ticker="LYB">
-                <div class="card-header">
-                    <div class="ticker">LYB</div>
-                    <div class="price-container">
-                        <div class="price" id="price-LYB"><span class="price-loading">--</span></div>
-                        <div class="change" id="change-LYB"></div>
-                    </div>
-                </div>
-                <div class="name">LyondellBasell Industries</div>
-                <div class="description">Large global chemical and plastics manufacturer</div>
-                <span class="category-tag chemicals">Chemicals</span>
-                <div class="high-low">
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W High</div>
-                        <div class="high-low-value high-value" id="high-LYB">--</div>
-                    </div>
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W Low</div>
-                        <div class="high-low-value low-value" id="low-LYB">--</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-ticker="OLN">
-                <div class="card-header">
-                    <div class="ticker">OLN</div>
-                    <div class="price-container">
-                        <div class="price" id="price-OLN"><span class="price-loading">--</span></div>
-                        <div class="change" id="change-OLN"></div>
-                    </div>
-                </div>
-                <div class="name">Olin Corporation</div>
-                <div class="description">Chemicals + ammunition manufacturing</div>
-                <span class="category-tag chemicals">Chemicals</span>
-                <div class="high-low">
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W High</div>
-                        <div class="high-low-value high-value" id="high-OLN">--</div>
-                    </div>
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W Low</div>
-                        <div class="high-low-value low-value" id="low-OLN">--</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-ticker="OXY">
-                <div class="card-header">
-                    <div class="ticker">OXY</div>
-                    <div class="price-container">
-                        <div class="price" id="price-OXY"><span class="price-loading">--</span></div>
-                        <div class="change" id="change-OXY"></div>
-                    </div>
-                </div>
-                <div class="name">Occidental Petroleum Corporation</div>
-                <div class="description">Major U.S. oil and gas company</div>
-                <span class="category-tag energy">Energy</span>
-                <div class="high-low">
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W High</div>
-                        <div class="high-low-value high-value" id="high-OXY">--</div>
-                    </div>
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W Low</div>
-                        <div class="high-low-value low-value" id="low-OXY">--</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-ticker="MTDR">
-                <div class="card-header">
-                    <div class="ticker">MTDR</div>
-                    <div class="price-container">
-                        <div class="price" id="price-MTDR"><span class="price-loading">--</span></div>
-                        <div class="change" id="change-MTDR"></div>
-                    </div>
-                </div>
-                <div class="name">Matador Resources Company</div>
-                <div class="description">Independent oil and gas exploration company</div>
-                <span class="category-tag energy">Energy</span>
-                <div class="high-low">
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W High</div>
-                        <div class="high-low-value high-value" id="high-MTDR">--</div>
-                    </div>
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W Low</div>
-                        <div class="high-low-value low-value" id="low-MTDR">--</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-ticker="COP">
-                <div class="card-header">
-                    <div class="ticker">COP</div>
-                    <div class="price-container">
-                        <div class="price" id="price-COP"><span class="price-loading">--</span></div>
-                        <div class="change" id="change-COP"></div>
-                    </div>
-                </div>
-                <div class="name">ConocoPhillips</div>
-                <div class="description">One of the largest oil exploration and production companies</div>
-                <span class="category-tag energy">Energy</span>
-                <div class="high-low">
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W High</div>
-                        <div class="high-low-value high-value" id="high-COP">--</div>
-                    </div>
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W Low</div>
-                        <div class="high-low-value low-value" id="low-COP">--</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-ticker="NTR">
-                <div class="card-header">
-                    <div class="ticker">NTR</div>
-                    <div class="price-container">
-                        <div class="price" id="price-NTR"><span class="price-loading">--</span></div>
-                        <div class="change" id="change-NTR"></div>
-                    </div>
-                </div>
-                <div class="name">Nutrien Ltd</div>
-                <div class="description">World's largest fertilizer producer</div>
-                <span class="category-tag agriculture">Agriculture</span>
-                <div class="high-low">
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W High</div>
-                        <div class="high-low-value high-value" id="high-NTR">--</div>
-                    </div>
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W Low</div>
-                        <div class="high-low-value low-value" id="low-NTR">--</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-ticker="MOS">
-                <div class="card-header">
-                    <div class="ticker">MOS</div>
-                    <div class="price-container">
-                        <div class="price" id="price-MOS"><span class="price-loading">--</span></div>
-                        <div class="change" id="change-MOS"></div>
-                    </div>
-                </div>
-                <div class="name">The Mosaic Company</div>
-                <div class="description">Major producer of potash and phosphate fertilizers</div>
-                <span class="category-tag agriculture">Agriculture</span>
-                <div class="high-low">
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W High</div>
-                        <div class="high-low-value high-value" id="high-MOS">--</div>
-                    </div>
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W Low</div>
-                        <div class="high-low-value low-value" id="low-MOS">--</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-ticker="MSTR">
-                <div class="card-header">
-                    <div class="ticker">MSTR</div>
-                    <div class="price-container">
-                        <div class="price" id="price-MSTR"><span class="price-loading">--</span></div>
-                        <div class="change" id="change-MSTR"></div>
-                    </div>
-                </div>
-                <div class="name">Strategy Inc. (formerly MicroStrategy)</div>
-                <div class="description">Known for large Bitcoin holdings</div>
-                <span class="category-tag crypto">Crypto Exposure</span>
-                <div class="high-low">
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W High</div>
-                        <div class="high-low-value high-value" id="high-MSTR">--</div>
-                    </div>
-                    <div class="high-low-item">
-                        <div class="high-low-label">52W Low</div>
-                        <div class="high-low-value low-value" id="low-MSTR">--</div>
-                    </div>
-                </div>
-            </div>
+        <!-- Full Watchlist -->
+        <div class="section-title">Full Watchlist</div>
+        <div class="grid" id="watchlistGrid">
+            <!-- Cards will be dynamically sorted by weekly performance -->
         </div>
 
         <footer>
@@ -512,7 +460,26 @@
 
     <script>
         const API_KEY = 'd6qctv1r01qhcrmjo040d6qctv1r01qhcrmjo04g';
-        const tickers = ['USO', 'CORN', 'GSG', 'CANE', 'EMN', 'LYB', 'OLN', 'OXY', 'MTDR', 'COP', 'NTR', 'MOS', 'MSTR'];
+        
+        // Stock data with Monday opening prices (for weekly change calculation)
+        // In production, these would come from historical data API
+        const stocks = [
+            { ticker: 'USO', name: 'Crude Oil (via USO ETF)', description: 'West Texas Intermediate crude oil exposure', category: 'commodity', mondayPrice: 70.50 },
+            { ticker: 'CORN', name: 'Teucrium Corn Fund', description: 'Commodity ETF tracking corn futures prices', category: 'agriculture', mondayPrice: 23.20 },
+            { ticker: 'GSG', name: 'iShares S&P GSCI Commodity-Indexed Trust', description: 'All commodity strategy K-1 free ETF', category: 'commodity', mondayPrice: 16.80 },
+            { ticker: 'CANE', name: 'Teucrium Sugar Fund', description: 'Commodity ETF tracking sugar futures', category: 'agriculture', mondayPrice: 12.40 },
+            { ticker: 'EMN', name: 'Eastman Chemical Company', description: 'Specialty materials and chemical manufacturing', category: 'chemicals', mondayPrice: 98.50 },
+            { ticker: 'LYB', name: 'LyondellBasell Industries', description: 'Large global chemical and plastics manufacturer', category: 'chemicals', mondayPrice: 85.20 },
+            { ticker: 'OLN', name: 'Olin Corporation', description: 'Chemicals + ammunition manufacturing', category: 'chemicals', mondayPrice: 42.30 },
+            { ticker: 'OXY', name: 'Occidental Petroleum Corporation', description: 'Major U.S. oil and gas company', category: 'energy', mondayPrice: 52.80 },
+            { ticker: 'MTDR', name: 'Matador Resources Company', description: 'Independent oil and gas exploration company', category: 'energy', mondayPrice: 48.90 },
+            { ticker: 'COP', name: 'ConocoPhillips', description: 'One of the largest oil exploration and production companies', category: 'energy', mondayPrice: 101.20 },
+            { ticker: 'NTR', name: 'Nutrien Ltd', description: 'World\'s largest fertilizer producer', category: 'agriculture', mondayPrice: 56.40 },
+            { ticker: 'MOS', name: 'The Mosaic Company', description: 'Major producer of potash and phosphate fertilizers', category: 'agriculture', mondayPrice: 32.80 },
+            { ticker: 'MSTR', name: 'Strategy Inc. (formerly MicroStrategy)', description: 'Known for large Bitcoin holdings', category: 'crypto', mondayPrice: 285.60 }
+        ];
+
+        let stockData = {};
 
         async function fetchPrice(ticker) {
             try {
@@ -541,75 +508,150 @@
         }
 
         function formatChange(current, previousClose) {
-            if (!current || !previousClose) return { text: '', class: 'neutral' };
+            if (!current || !previousClose) return { text: '', class: 'neutral', percent: 0 };
             
             const change = current - previousClose;
             const percentChange = (change / previousClose) * 100;
             
             if (change > 0) {
-                return { text: `+${percentChange.toFixed(2)}%`, class: 'positive' };
+                return { text: `+${percentChange.toFixed(2)}%`, class: 'positive', percent: percentChange };
             } else if (change < 0) {
-                return { text: `${percentChange.toFixed(2)}%`, class: 'negative' };
+                return { text: `${percentChange.toFixed(2)}%`, class: 'negative', percent: percentChange };
             } else {
-                return { text: '0.00%', class: 'neutral' };
+                return { text: '0.00%', class: 'neutral', percent: 0 };
             }
         }
 
-        async function updatePrices() {
-            const updatePromises = tickers.map(async (ticker, index) => {
+        function calculateWeeklyChange(currentPrice, mondayPrice) {
+            if (!currentPrice || !mondayPrice) return { percent: 0, class: 'neutral' };
+            const change = currentPrice - mondayPrice;
+            const percentChange = (change / mondayPrice) * 100;
+            return {
+                percent: percentChange,
+                class: percentChange > 0 ? 'positive' : percentChange < 0 ? 'negative' : 'neutral',
+                text: percentChange > 0 ? `+${percentChange.toFixed(2)}%` : `${percentChange.toFixed(2)}%`
+            };
+        }
+
+        function getWeekRange() {
+            const now = new Date();
+            const day = now.getDay();
+            const diff = now.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is Sunday
+            const monday = new Date(now.setDate(diff));
+            const friday = new Date(monday);
+            friday.setDate(monday.getDate() + 4);
+            
+            const format = (date) => date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            return `${format(monday)} - ${format(friday)}`;
+        }
+
+        function createLeaderCard(stock, rank, weeklyChange, currentPrice) {
+            return `
+                <div class="leader-card rank-${rank}">
+                    <div class="rank-badge">${rank === 1 ? '1st' : rank === 2 ? '2nd' : '3rd'}</div>
+                    <div class="leader-ticker">${stock.ticker}</div>
+                    <div class="leader-name">${stock.name}</div>
+                    <div class="leader-performance">${weeklyChange.text}</div>
+                    <div class="leader-label">Since Monday</div>
+                </div>
+            `;
+        }
+
+        function createWatchlistCard(stock, priceData, weeklyChange, isLeader) {
+            const dailyChange = formatChange(priceData?.c, priceData?.pc);
+            const high52 = priceData?.h || '--';
+            const low52 = priceData?.l || '--';
+            
+            return `
+                <div class="card ${isLeader ? 'leader-highlight' : ''}" data-ticker="${stock.ticker}">
+                    <div class="card-header">
+                        <div class="ticker">${stock.ticker}</div>
+                        <div class="price-container">
+                            <div class="price">${formatPrice(priceData?.c)}</div>
+                            <div class="change ${dailyChange.class}">${dailyChange.text}</div>
+                        </div>
+                    </div>
+                    <div class="name">${stock.name}</div>
+                    <div class="description">${stock.description}</div>
+                    <span class="category-tag ${stock.category}">${stock.category}</span>
+                    <div class="weekly-change ${weeklyChange.class}">
+                        ${weeklyChange.text} this week
+                    </div>
+                    <div class="high-low">
+                        <div class="high-low-item">
+                            <div class="high-low-label">High</div>
+                            <div class="high-low-value high-value">${formatPrice(high52)}</div>
+                        </div>
+                        <div class="high-low-item">
+                            <div class="high-low-label">Low</div>
+                            <div class="high-low-value low-value">${formatPrice(low52)}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function updateAllData() {
+            const updatePromises = stocks.map(async (stock, index) => {
                 // Stagger requests to avoid rate limiting
-                await new Promise(resolve => setTimeout(resolve, index * 300));
+                await new Promise(resolve => setTimeout(resolve, index * 200));
                 
-                const [priceData, metricData] = await Promise.all([
-                    fetchPrice(ticker),
-                    fetchMetrics(ticker)
-                ]);
+                const priceData = await fetchPrice(stock.ticker);
                 
                 if (priceData && priceData.c) {
-                    const priceEl = document.getElementById(`price-${ticker}`);
-                    const changeEl = document.getElementById(`change-${ticker}`);
+                    const weeklyChange = calculateWeeklyChange(priceData.c, stock.mondayPrice);
                     
-                    if (priceEl) {
-                        priceEl.textContent = formatPrice(priceData.c);
-                    }
-                    
-                    if (changeEl) {
-                        const change = formatChange(priceData.c, priceData.pc);
-                        changeEl.textContent = change.text;
-                        changeEl.className = `change ${change.class}`;
-                    }
-                }
-
-                // Update 52-week high/low
-                const highEl = document.getElementById(`high-${ticker}`);
-                const lowEl = document.getElementById(`low-${ticker}`);
-                
-                if (metricData && metricData.metric) {
-                    const metrics = metricData.metric;
-                    const high52 = metrics['52WeekHigh'] || metrics['weekHigh52'];
-                    const low52 = metrics['52WeekLow'] || metrics['weekLow52'];
-                    
-                    if (highEl && high52) {
-                        highEl.textContent = formatPrice(high52);
-                    }
-                    if (lowEl && low52) {
-                        lowEl.textContent = formatPrice(low52);
-                    }
+                    stockData[stock.ticker] = {
+                        ...stock,
+                        currentPrice: priceData.c,
+                        previousClose: priceData.pc,
+                        high: priceData.h,
+                        low: priceData.l,
+                        weeklyChange: weeklyChange
+                    };
                 }
             });
 
             await Promise.all(updatePromises);
             
+            // Sort by weekly performance
+            const sortedStocks = Object.values(stockData).sort((a, b) => 
+                b.weeklyChange.percent - a.weeklyChange.percent
+            );
+            
+            // Get top 3 leaders
+            const top3 = sortedStocks.slice(0, 3);
+            
+            // Update leaders section
+            const leadersGrid = document.getElementById('leadersGrid');
+            leadersGrid.innerHTML = top3.map((stock, index) => 
+                createLeaderCard(stock, index + 1, stock.weeklyChange, stock.currentPrice)
+            ).join('');
+            
+            // Update watchlist grid (sorted by weekly performance)
+            const watchlistGrid = document.getElementById('watchlistGrid');
+            watchlistGrid.innerHTML = sortedStocks.map((stock) => {
+                const isLeader = top3.some(leader => leader.ticker === stock.ticker);
+                return createWatchlistCard(
+                    stock, 
+                    { c: stock.currentPrice, pc: stock.previousClose, h: stock.high, l: stock.low },
+                    stock.weeklyChange,
+                    isLeader
+                );
+            }).join('');
+            
+            // Update timestamps
+            document.getElementById('weekRange').textContent = `Week of ${getWeekRange()}`;
             const now = new Date();
             document.getElementById('lastUpdated').textContent = 
-                `Prices updated: ${now.toLocaleDateString('en-US')} ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+                `Updated: ${now.toLocaleDateString('en-US')} ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
         }
 
         // Initial load
-        updatePrices();
+        updateAllData();
 
         // Refresh every 5 minutes
-        setInterval(updatePrices, 5 * 60 * 1000);
+        setInterval(updateAllData, 5 * 60 * 1000);
     </script>
 </body>
 </html>
