@@ -461,23 +461,88 @@
     <script>
         const API_KEY = 'd6qctv1r01qhcrmjo040d6qctv1r01qhcrmjo04g';
         
-        // Stock data with Monday opening prices (for weekly change calculation)
-        // In production, these would come from historical data API
+        // Stock data — Monday baseline prices auto-fetched from API
         const stocks = [
-            { ticker: 'USO', name: 'Crude Oil (via USO ETF)', description: 'West Texas Intermediate crude oil exposure', category: 'commodity', mondayPrice: 70.50 },
-            { ticker: 'CORN', name: 'Teucrium Corn Fund', description: 'Commodity ETF tracking corn futures prices', category: 'agriculture', mondayPrice: 23.20 },
-            { ticker: 'GSG', name: 'iShares S&P GSCI Commodity-Indexed Trust', description: 'All commodity strategy K-1 free ETF', category: 'commodity', mondayPrice: 16.80 },
-            { ticker: 'CANE', name: 'Teucrium Sugar Fund', description: 'Commodity ETF tracking sugar futures', category: 'agriculture', mondayPrice: 12.40 },
-            { ticker: 'EMN', name: 'Eastman Chemical Company', description: 'Specialty materials and chemical manufacturing', category: 'chemicals', mondayPrice: 98.50 },
-            { ticker: 'LYB', name: 'LyondellBasell Industries', description: 'Large global chemical and plastics manufacturer', category: 'chemicals', mondayPrice: 85.20 },
-            { ticker: 'OLN', name: 'Olin Corporation', description: 'Chemicals + ammunition manufacturing', category: 'chemicals', mondayPrice: 42.30 },
-            { ticker: 'OXY', name: 'Occidental Petroleum Corporation', description: 'Major U.S. oil and gas company', category: 'energy', mondayPrice: 52.80 },
-            { ticker: 'MTDR', name: 'Matador Resources Company', description: 'Independent oil and gas exploration company', category: 'energy', mondayPrice: 48.90 },
-            { ticker: 'COP', name: 'ConocoPhillips', description: 'One of the largest oil exploration and production companies', category: 'energy', mondayPrice: 101.20 },
-            { ticker: 'NTR', name: 'Nutrien Ltd', description: 'World\'s largest fertilizer producer', category: 'agriculture', mondayPrice: 56.40 },
-            { ticker: 'MOS', name: 'The Mosaic Company', description: 'Major producer of potash and phosphate fertilizers', category: 'agriculture', mondayPrice: 32.80 },
-            { ticker: 'MSTR', name: 'Strategy Inc. (formerly MicroStrategy)', description: 'Known for large Bitcoin holdings', category: 'crypto', mondayPrice: 285.60 }
+            { ticker: 'USO', name: 'Crude Oil (via USO ETF)', description: 'West Texas Intermediate crude oil exposure', category: 'commodity' },
+            { ticker: 'CORN', name: 'Teucrium Corn Fund', description: 'Commodity ETF tracking corn futures prices', category: 'agriculture' },
+            { ticker: 'GSG', name: 'iShares S&P GSCI Commodity-Indexed Trust', description: 'All commodity strategy K-1 free ETF', category: 'commodity' },
+            { ticker: 'CANE', name: 'Teucrium Sugar Fund', description: 'Commodity ETF tracking sugar futures', category: 'agriculture' },
+            { ticker: 'EMN', name: 'Eastman Chemical Company', description: 'Specialty materials and chemical manufacturing', category: 'chemicals' },
+            { ticker: 'LYB', name: 'LyondellBasell Industries', description: 'Large global chemical and plastics manufacturer', category: 'chemicals' },
+            { ticker: 'OLN', name: 'Olin Corporation', description: 'Chemicals + ammunition manufacturing', category: 'chemicals' },
+            { ticker: 'OXY', name: 'Occidental Petroleum Corporation', description: 'Major U.S. oil and gas company', category: 'energy' },
+            { ticker: 'MTDR', name: 'Matador Resources Company', description: 'Independent oil and gas exploration company', category: 'energy' },
+            { ticker: 'COP', name: 'ConocoPhillips', description: 'One of the largest oil exploration and production companies', category: 'energy' },
+            { ticker: 'NTR', name: 'Nutrien Ltd', description: 'World\'s largest fertilizer producer', category: 'agriculture' },
+            { ticker: 'MOS', name: 'The Mosaic Company', description: 'Major producer of potash and phosphate fertilizers', category: 'agriculture' },
+            { ticker: 'MSTR', name: 'Strategy Inc. (formerly MicroStrategy)', description: 'Known for large Bitcoin holdings', category: 'crypto' }
         ];
+
+        // Cache Monday prices in localStorage for the week
+        function getMondayKey() {
+            const now = new Date();
+            const day = now.getDay();
+            const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+            const monday = new Date(now.setDate(diff));
+            return `watchlist_monday_${monday.toISOString().split('T')[0]}`;
+        }
+
+        function getCachedMondayPrices() {
+            const key = getMondayKey();
+            const cached = localStorage.getItem(key);
+            return cached ? JSON.parse(cached) : null;
+        }
+
+        function cacheMondayPrices(prices) {
+            const key = getMondayKey();
+            localStorage.setItem(key, JSON.stringify(prices));
+        }
+
+        async function fetchMondayOpen(ticker) {
+            try {
+                // Get Monday 9:30 AM timestamp (market open)
+                const now = new Date();
+                const day = now.getDay();
+                const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+                const monday = new Date(now.setDate(diff));
+                monday.setHours(9, 30, 0, 0);
+                const from = Math.floor(monday.getTime() / 1000);
+                const to = from + 3600; // 1 hour window
+                
+                const url = `https://finnhub.io/api/v1/stock/candle?symbol=${ticker}&resolution=1&from=${from}&to=${to}&token=${API_KEY}`;
+                const resp = await fetch(url);
+                const data = await resp.json();
+                
+                if (data.o && data.o.length > 0) {
+                    return data.o[0]; // Opening price
+                }
+                
+                // Fallback: use previous Friday's close
+                const quote = await fetchPrice(ticker);
+                return quote?.pc || null;
+            } catch (e) {
+                console.error(`Error fetching Monday open for ${ticker}:`, e);
+                return null;
+            }
+        }
+
+        async function getMondayPrices() {
+            let cached = getCachedMondayPrices();
+            if (cached) {
+                console.log('Using cached Monday prices');
+                return cached;
+            }
+            
+            console.log('Fetching fresh Monday prices...');
+            const prices = {};
+            for (let i = 0; i < stocks.length; i++) {
+                const price = await fetchMondayOpen(stocks[i].ticker);
+                if (price) prices[stocks[i].ticker] = price;
+                await new Promise(r => setTimeout(r, 250)); // Rate limit
+            }
+            cacheMondayPrices(prices);
+            return prices;
+        }
 
         let stockData = {};
 
@@ -523,7 +588,7 @@
         }
 
         function calculateWeeklyChange(currentPrice, mondayPrice) {
-            if (!currentPrice || !mondayPrice) return { percent: 0, class: 'neutral' };
+            if (!currentPrice || !mondayPrice) return { percent: 0, class: 'neutral', text: '—' };
             const change = currentPrice - mondayPrice;
             const percentChange = (change / mondayPrice) * 100;
             return {
@@ -592,14 +657,17 @@
         }
 
         async function updateAllData() {
+            const mondayPrices = await getMondayPrices();
+            
             const updatePromises = stocks.map(async (stock, index) => {
                 // Stagger requests to avoid rate limiting
                 await new Promise(resolve => setTimeout(resolve, index * 200));
                 
                 const priceData = await fetchPrice(stock.ticker);
+                const mondayPrice = mondayPrices[stock.ticker];
                 
-                if (priceData && priceData.c) {
-                    const weeklyChange = calculateWeeklyChange(priceData.c, stock.mondayPrice);
+                if (priceData && priceData.c && mondayPrice) {
+                    const weeklyChange = calculateWeeklyChange(priceData.c, mondayPrice);
                     
                     stockData[stock.ticker] = {
                         ...stock,
@@ -607,6 +675,7 @@
                         previousClose: priceData.pc,
                         high: priceData.h,
                         low: priceData.l,
+                        mondayPrice: mondayPrice,
                         weeklyChange: weeklyChange
                     };
                 }
