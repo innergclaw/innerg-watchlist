@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=public-pulse-1" />
-    <script type="module" src="app.js?v=public-pulse-1"></script>
+    <link rel="stylesheet" href="styles.css?v=paid-membership-1" />
+    <script type="module" src="app.js?v=paid-membership-1"></script>
   </head>
   <body>
     <a class="skip-link" href="#sectors">Skip to sectors</a>
@@ -44,7 +44,7 @@
         <div class="member-access__copy">
           <p class="eyebrow">HOME BASE MEMBER ACCESS</p>
           <h2 id="member-access-title">View the entire list.</h2>
-          <p>One asset from each sector and the weekly movers are open to everyone. Sign in to unlock all 30 assets and the complete sector view.</p>
+          <p>One asset from each sector and the weekly movers are open to everyone. Create an account, then complete membership payment to unlock all 30 assets.</p>
         </div>
         <div class="auth-panel" id="auth-panel">
           <div id="auth-loading" class="auth-state" role="status">Checking member access.</div>
@@ -61,13 +61,24 @@
                 <button type="button" class="secondary-button" id="create-account">CREATE ACCOUNT</button>
               </div>
             </form>
-            <p class="auth-status" id="auth-status" aria-live="polite"></p>
           </div>
           <div id="auth-signed-in" class="auth-state" hidden>
-            <span class="access-mark">ACCESS ACTIVE</span>
             <p>Signed in as <strong id="member-email-display"></strong></p>
+            <div class="payment-state" id="payment-required" hidden>
+              <span class="access-mark access-mark--pending">PAYMENT REQUIRED</span>
+              <h3>Finish your membership.</h3>
+              <p>Your account is saved. Complete payment through Stripe to open the full watchlist.</p>
+              <button class="payment-button" id="begin-payment" type="button">CONTINUE TO SECURE PAYMENT</button>
+              <small>Access turns on after Stripe confirms payment.</small>
+            </div>
+            <div class="payment-state" id="payment-active" hidden>
+              <span class="access-mark">PAID ACCESS ACTIVE</span>
+              <h3>The full watchlist is open.</h3>
+              <p>Your membership is confirmed.</p>
+            </div>
             <button class="secondary-button" id="sign-out" type="button">SIGN OUT</button>
           </div>
+          <p class="auth-status" id="auth-status" aria-live="polite"></p>
         </div>
       </section>
       <section class="sectors" id="sectors" aria-labelledby="sectors-title">

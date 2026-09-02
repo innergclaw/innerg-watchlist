@@ -58,7 +58,7 @@ h1 { max-width:11ch; margin:4vh 0; font-size:clamp(68px,14vw,196px); font-weight
 .auth-state { font-family:var(--mono); font-size:12px; }
 .auth-state label { display:block; margin:18px 0 8px; color:#bcbcb5; font-size:10px; letter-spacing:.05em; text-transform:uppercase; }
 .auth-state input { width:100%; min-height:50px; padding:0 14px; border:1px solid rgba(255,255,255,.24); border-radius:0; background:#151513; color:#fff; font:16px var(--display); }
-.google-button,.auth-actions button,.secondary-button { min-height:50px; border:1px solid #fff; border-radius:0; padding:0 18px; color:var(--ink); background:#fff; cursor:pointer; font:500 10px var(--mono); letter-spacing:.05em; transition:transform 140ms cubic-bezier(.2,0,0,1),background-color 140ms cubic-bezier(.2,0,0,1),color 140ms cubic-bezier(.2,0,0,1); }
+.google-button,.auth-actions button,.secondary-button,.payment-button { min-height:50px; border:1px solid #fff; border-radius:0; padding:0 18px; color:var(--ink); background:#fff; cursor:pointer; font:500 10px var(--mono); letter-spacing:.05em; transition:transform 140ms cubic-bezier(.2,0,0,1),background-color 140ms cubic-bezier(.2,0,0,1),color 140ms cubic-bezier(.2,0,0,1); }
 .google-button { width:100%; }
 .auth-divider { display:flex; align-items:center; gap:14px; margin:24px 0 8px; color:#77776f; font-size:9px; }
 .auth-divider::before,.auth-divider::after { flex:1; height:1px; background:rgba(255,255,255,.16); content:""; }
@@ -67,6 +67,11 @@ h1 { max-width:11ch; margin:4vh 0; font-size:clamp(68px,14vw,196px); font-weight
 .auth-status { min-height:38px; margin:18px 0 0; color:var(--signal); font-size:10px; line-height:1.5; }
 .auth-status--error { color:#ff8177; }
 .access-mark { display:inline-block; padding:8px 10px; color:var(--ink); background:var(--signal); font-size:9px; }
+.access-mark--pending { color:#fff; background:#6e6651; }
+.payment-state { display:grid; gap:14px; margin:22px 0; padding:22px 0; border-top:1px solid rgba(255,255,255,.18); border-bottom:1px solid rgba(255,255,255,.18); }
+.payment-state h3 { margin:0; font:700 clamp(28px,4vw,44px)/.98 var(--display); letter-spacing:-.05em; }
+.payment-state p,.payment-state small { margin:0; color:#bcbcb5; line-height:1.6; }
+.payment-button { width:100%; background:var(--signal); border-color:var(--signal); }
 #auth-signed-in p { margin:50px 0 28px; color:#aaa; line-height:1.6; }
 #auth-signed-in strong { display:block; color:#fff; overflow-wrap:anywhere; }
 .table-wrap { position:relative; }
@@ -97,7 +102,7 @@ td { padding:19px 12px; border-top:1px solid var(--line); font-family:var(--mono
 footer { min-height:120px; display:flex; align-items:center; justify-content:space-between; gap:20px; border-top:1px solid var(--line); color:var(--muted); font-size:9px; }
 footer a { color:var(--ink); font-weight:500; }
 :focus-visible { outline:3px solid #5d7a00; outline-offset:4px; }
-@media (hover:hover) and (pointer:fine) { .referral a:hover { color:var(--ink); background:transparent; transform:translateY(-2px); } .sector summary:hover .sector-toggle { background:var(--signal); } .google-button:hover,.auth-actions button:hover { color:var(--ink); background:var(--signal); border-color:var(--signal); transform:translateY(-2px); } }
+@media (hover:hover) and (pointer:fine) { .referral a:hover { color:var(--ink); background:transparent; transform:translateY(-2px); } .sector summary:hover .sector-toggle { background:var(--signal); } .google-button:hover,.auth-actions button:hover,.payment-button:hover { color:var(--ink); background:var(--signal); border-color:var(--signal); transform:translateY(-2px); } }
 @media (max-width:760px) {
   .site-header { padding:0 20px; }
   .market-state { max-width:150px; justify-content:flex-end; text-align:right; }

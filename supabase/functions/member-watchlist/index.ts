@@ -175,6 +175,14 @@ Deno.serve(async (req: Request) => {
   }
 
   const service = createClient(url, serviceKey);
+  const { data: membership, error: membershipError } = await service
+    .from("watchlist_memberships")
+    .select("status")
+    .eq("user_id", user.id)
+    .maybeSingle();
+  if (membershipError || membership?.status !== "active") {
+    return Response.json({ error: "Paid watchlist membership required." }, { status: 402, headers: corsHeaders });
+  }
   const { data: cached } = await service.from("member_watchlist_snapshots").select("payload, generated_at").eq("id", 1).maybeSingle();
   const generatedAt = cached?.generated_at ? new Date(cached.generated_at).getTime() : 0;
   let payload = cached?.payload ?? null;

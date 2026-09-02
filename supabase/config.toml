@@ -1,0 +1,8 @@
+[functions.member-watchlist]
+verify_jwt = true
+
+[functions.watchlist-checkout]
+verify_jwt = true
+
+[functions.watchlist-stripe-webhook]
+verify_jwt = false

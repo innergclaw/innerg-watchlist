@@ -4,6 +4,7 @@ const DATA_URL = "data/watchlist-preview.json";
 const SUPABASE_URL = "https://zkyhhoxcrjkhywblzehr.supabase.co";
 const SUPABASE_KEY = "sb_publishable_bdi3BexAKWDBaUIh40hJ_A_8CNVdnM_";
 const MEMBER_FUNCTION = "member-watchlist";
+const CHECKOUT_FUNCTION = "watchlist-checkout";
 const RETURN_URL = "https://innergclaw.github.io/innerg-watchlist/";
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -13,6 +14,9 @@ const elements = {
   signedIn: document.querySelector("#auth-signed-in"),
   status: document.querySelector("#auth-status"),
   memberEmail: document.querySelector("#member-email-display"),
+  paymentRequired: document.querySelector("#payment-required"),
+  paymentActive: document.querySelector("#payment-active"),
+  beginPayment: document.querySelector("#begin-payment"),
   count: document.querySelector("#asset-count"),
 };
 
@@ -98,11 +102,13 @@ function renderData(data, unlocked = false) {
   elements.count.textContent = unlocked ? `${data.assets.length} ASSETS / 6 SECTORS` : "PUBLIC PREVIEW / 6 SECTORS";
 }
 
-function setAuthView(session) {
+function setAuthView(session, membershipStatus = null) {
   elements.loading.hidden = true;
   elements.signedOut.hidden = Boolean(session);
   elements.signedIn.hidden = !session;
   elements.memberEmail.textContent = session?.user?.email || "Home Base member";
+  elements.paymentRequired.hidden = !session || membershipStatus === "active";
+  elements.paymentActive.hidden = !session || membershipStatus !== "active";
 }
 
 function setStatus(message, error = false) {
@@ -125,18 +131,50 @@ async function loadMemberData() {
   renderData(data, true);
 }
 
+async function getMembership(userId) {
+  const { data, error } = await supabase
+    .from("watchlist_memberships")
+    .select("status, access_source")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (error) throw error;
+  return data ?? { status: "payment_required", access_source: "signup" };
+}
+
+async function waitForPayment(userId) {
+  for (let attempt = 0; attempt < 6; attempt += 1) {
+    const membership = await getMembership(userId);
+    if (membership.status === "active") return membership;
+    await new Promise((resolve) => window.setTimeout(resolve, 2000));
+  }
+  return getMembership(userId);
+}
+
 async function applySession(session) {
-  setAuthView(session);
   if (!session) {
+    setAuthView(null);
     isMember = false;
     if (previewData) renderData(previewData, false);
     return;
   }
   try {
-    await loadMemberData();
+    const returningFromPayment = new URLSearchParams(window.location.search).get("payment") === "success";
+    if (returningFromPayment) setStatus("Confirming your Stripe payment.");
+    const membership = returningFromPayment ? await waitForPayment(session.user.id) : await getMembership(session.user.id);
+    setAuthView(session, membership.status);
+    if (membership.status === "active") {
+      await loadMemberData();
+      setStatus(returningFromPayment ? "Payment confirmed. Your full watchlist is open." : "");
+      if (returningFromPayment) window.history.replaceState({}, "", `${window.location.pathname}#member-access`);
+      return;
+    }
+    isMember = false;
+    if (previewData) renderData(previewData, false);
+    setStatus(returningFromPayment ? "Stripe is still confirming payment. Refresh this page in a moment." : "Complete payment to activate full access.", returningFromPayment);
   } catch (error) {
-    console.error("Member watchlist failed to load", error);
-    setStatus("Your account is active, but the member list could not load. Please try again.", true);
+    console.error("Membership check failed", error);
+    setAuthView(session, "payment_required");
+    setStatus("We could not confirm your membership. Please try again.", true);
     if (previewData) renderData(previewData, false);
   }
 }
@@ -170,7 +208,7 @@ document.querySelector("#email-auth-form").addEventListener("submit", async (eve
   const form = new FormData(event.currentTarget);
   setStatus("Signing in.");
   const { error } = await supabase.auth.signInWithPassword({ email: form.get("email"), password: form.get("password") });
-  setStatus(error ? error.message : "Access confirmed.", Boolean(error));
+  setStatus(error ? error.message : "Account confirmed. Checking membership.", Boolean(error));
 });
 
 document.querySelector("#create-account").addEventListener("click", async () => {
@@ -185,7 +223,19 @@ document.querySelector("#create-account").addEventListener("click", async () => 
   const { data, error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: RETURN_URL } });
   if (error) setStatus(error.message, true);
   else if (!data.session) setStatus("Check your email to confirm your account, then return here to sign in.");
-  else setStatus("Account created. Member access is active.");
+  else setStatus("Account created. Complete payment to activate full access.");
+});
+
+elements.beginPayment.addEventListener("click", async () => {
+  elements.beginPayment.disabled = true;
+  setStatus("Opening secure Stripe payment.");
+  const { data, error } = await supabase.functions.invoke(CHECKOUT_FUNCTION, { method: "POST" });
+  if (error || !data?.url) {
+    elements.beginPayment.disabled = false;
+    setStatus(data?.error || "Payment setup is not available yet.", true);
+    return;
+  }
+  window.location.assign(data.url);
 });
 
 document.querySelector("#sign-out").addEventListener("click", async () => {
