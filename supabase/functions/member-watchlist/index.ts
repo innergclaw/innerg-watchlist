@@ -83,6 +83,7 @@ async function yahooAsset(symbol: string, name: string, sector: string, provider
     dayLow: clean(meta.regularMarketDayLow) ?? lows.at(-1) ?? current,
     yearHigh: clean(meta.fiftyTwoWeekHigh) ?? Math.max(...highs, current),
     yearLow: clean(meta.fiftyTwoWeekLow) ?? Math.min(...lows, current),
+    weekSeries: points.slice(-7).map(([, close]) => close),
     returns: {
       day: clean(meta.regularMarketChangePercent) ?? change(current, points.at(-2)?.[1] ?? null),
       week: change(current, priorClose(points, now - 7 * 86400)),
@@ -111,6 +112,7 @@ async function purrAsset(symbol: string, name: string, sector: string) {
   return {
     symbol, name, sector, price: current, currency: "USD",
     dayHigh: highs.at(-1), dayLow: lows.at(-1), yearHigh: Math.max(...highs), yearLow: Math.min(...lows),
+    weekSeries: points.slice(-7).map(([, close]) => close),
     returns: {
       day: change(current, points.at(-2)?.[1] ?? null),
       week: change(current, priorClose(points, nowSeconds - 7 * 86400)),
@@ -131,17 +133,22 @@ async function refreshSnapshot(previous: Record<string, unknown> | null) {
       if (fallback) return fallback;
       return {
         symbol, name, sector, price: null, currency: "USD", dayHigh: null, dayLow: null,
-        yearHigh: null, yearLow: null, returns: { day: null, week: null, month: null },
+        yearHigh: null, yearLow: null, weekSeries: [], returns: { day: null, week: null, month: null },
         historySessions: 0, status: "unavailable",
       };
     }
   }));
+  const leaders = [...nextAssets]
+    .filter((item) => typeof item.returns?.week === "number")
+    .sort((a, b) => (b.returns.week ?? 0) - (a.returns.week ?? 0))
+    .slice(0, 3);
   return {
     generatedAt: new Date().toISOString(),
     marketLabel: "Private member snapshot",
     sources: ["Yahoo Finance chart data", "Hyperliquid public API"],
     sectors,
     assets: nextAssets,
+    leaders,
   };
 }
 
@@ -171,7 +178,8 @@ Deno.serve(async (req: Request) => {
   const { data: cached } = await service.from("member_watchlist_snapshots").select("payload, generated_at").eq("id", 1).maybeSingle();
   const generatedAt = cached?.generated_at ? new Date(cached.generated_at).getTime() : 0;
   let payload = cached?.payload ?? null;
-  if (!payload || Date.now() - generatedAt > 20 * 60 * 1000) {
+  const hasChartData = Array.isArray(payload?.leaders) && payload.leaders.every((item: Record<string, unknown>) => Array.isArray(item.weekSeries));
+  if (!payload || !hasChartData || Date.now() - generatedAt > 20 * 60 * 1000) {
     payload = await refreshSnapshot(payload);
     const { error } = await service.from("member_watchlist_snapshots").upsert({
       id: 1,

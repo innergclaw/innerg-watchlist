@@ -4,7 +4,7 @@ A member research view for Nasirr's Home Base ecosystem. Public visitors see one
 
 ## Data updates
 
-GitHub Actions builds `data/watchlist-preview.json` about every 30 minutes during U.S. market hours. The page checks for a newer preview every 60 seconds. The full 30-asset snapshot is stored in Supabase and returned only through the authenticated `member-watchlist` Edge Function.
+GitHub Actions builds `data/watchlist-preview.json` about every 30 minutes during U.S. market hours. The public snapshot includes one asset per sector, the three weekly leaders, and seven-session chart data. The page checks for a newer preview every 60 seconds. The full 30-asset snapshot is stored in Supabase and returned only through the authenticated `member-watchlist` Edge Function.
 
 Google and email/password sign-in use the same Supabase project as the other Home Base member sites. The Robinhood referral remains public.
 

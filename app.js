@@ -33,21 +33,34 @@ const percent = (value) => {
 const tone = (value) => !Number.isFinite(value) ? "unavailable" : value > 0 ? "positive" : value < 0 ? "negative" : "";
 const returnCell = (value) => `<td class="${tone(value)}">${percent(value)}</td>`;
 
-function renderLeaders(assets, unlocked) {
-  const target = document.querySelector("#leader-grid");
-  if (!unlocked) {
-    target.innerHTML = Array.from({ length: 3 }, (_, index) => `
-      <article class="leader-card leader-card--locked" aria-label="Weekly leader ${index + 1} requires member access">
-        <span class="leader-rank">0${index + 1} / MEMBER VIEW</span>
-        <strong>LOCKED</strong>
-        <p class="leader-name">Sign in to view this week's movement.</p>
-      </article>`).join("");
-    return;
-  }
+function sparkline(series, direction) {
+  const points = (series || []).filter(Number.isFinite);
+  if (points.length < 2) return '<span class="chart-unavailable">Seven-session chart unavailable</span>';
+  const width = 320;
+  const height = 96;
+  const min = Math.min(...points);
+  const max = Math.max(...points);
+  const range = max - min || 1;
+  const path = points.map((value, index) => {
+    const x = (index / (points.length - 1)) * width;
+    const y = height - 8 - ((value - min) / range) * (height - 16);
+    return `${index ? "L" : "M"} ${x.toFixed(2)} ${y.toFixed(2)}`;
+  }).join(" ");
+  return `<svg class="price-chart ${direction}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Seven-session closing price trend">
+    <line x1="0" y1="48" x2="320" y2="48" pathLength="1"></line>
+    <path d="${path}" pathLength="1"></path>
+  </svg>`;
+}
 
+function renderLeaders(assets) {
+  const target = document.querySelector("#leader-grid");
   const leaders = assets.filter((asset) => Number.isFinite(asset.returns?.week)).sort((a, b) => b.returns.week - a.returns.week).slice(0, 3);
   target.innerHTML = leaders.length ? leaders.map((asset, index) => `
-    <article class="leader-card"><span class="leader-rank">0${index + 1} / 1W MOVE</span><strong>${asset.symbol}</strong><p class="leader-name">${asset.name}</p><span class="return ${tone(asset.returns.week)}">${percent(asset.returns.week)}</span></article>`).join("") : '<p class="unavailable">Weekly movement is not available.</p>';
+    <article class="leader-card">
+      <span class="leader-rank">0${index + 1} / 1W MOVE</span>
+      <div class="leader-value"><div><strong>${asset.symbol}</strong><p class="leader-name">${asset.name}</p></div><span class="return ${tone(asset.returns.week)}">${percent(asset.returns.week)}</span></div>
+      ${sparkline(asset.weekSeries, tone(asset.returns.week))}
+    </article>`).join("") : '<p class="unavailable">Weekly movement is not available.</p>';
 }
 
 function lockedRows(count) {
@@ -80,7 +93,7 @@ function updateSnapshot(data) {
 
 function renderData(data, unlocked = false) {
   updateSnapshot(data);
-  renderLeaders(data.assets, unlocked);
+  renderLeaders(data.leaders?.length ? data.leaders : data.assets);
   renderSectors(data.sectors, data.assets, unlocked);
   elements.count.textContent = unlocked ? `${data.assets.length} ASSETS / 6 SECTORS` : "PUBLIC PREVIEW / 6 SECTORS";
 }

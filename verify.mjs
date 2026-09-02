@@ -7,6 +7,8 @@ const workflow = fs.readFileSync(".github/workflows/update-market-data.yml", "ut
 const memberFunction = fs.readFileSync("supabase/functions/member-watchlist/index.ts", "utf8");
 const checks = [
   [data.assets.length === 6, "one public preview asset per sector"],
+  [data.leaders.length === 3, "three public weekly leaders"],
+  [data.leaders.every((asset) => asset.weekSeries.length >= 2), "public leader chart history"],
   [data.sectors.length === 6, "six sector groups"],
   [new Set(data.assets.map((asset) => asset.sector)).size === 6, "each sector represented once"],
   [data.assets.every((asset) => ["day", "week", "month"].every((key) => key in asset.returns)), "all return windows"],
@@ -17,6 +19,7 @@ const checks = [
   [script.includes("signInWithPassword"), "email password sign in"],
   [script.includes("signUp"), "email account creation"],
   [script.includes('const MEMBER_FUNCTION = "member-watchlist"'), "protected member data endpoint"],
+  [script.includes('class="price-chart'), "animated weekly price charts"],
   [memberFunction.includes("auth.getUser(token)"), "member token verification"],
   [memberFunction.includes("SUPABASE_SERVICE_ROLE_KEY"), "private snapshot access stays server-side"],
   [!fs.existsSync("data/watchlist.json"), "full snapshot removed from public site"],

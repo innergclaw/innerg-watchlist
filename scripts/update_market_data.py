@@ -108,6 +108,7 @@ def yahoo_asset(symbol, name, sector, provider_symbol):
         "currency": meta.get("currency") or "USD", "dayHigh": day_high, "dayLow": day_low,
         "yearHigh": clean(meta.get("fiftyTwoWeekHigh")) or max(highs + [current]),
         "yearLow": clean(meta.get("fiftyTwoWeekLow")) or min(lows + [current]),
+        "weekSeries": [round(point[1], 6) for point in points[-7:]],
         "returns": {
             "day": clean(meta.get("regularMarketChangePercent")) or change(current, points[-2][1] if len(points) > 1 else None),
             "week": change(current, prior_close(points, now - 7 * 86400)),
@@ -130,6 +131,7 @@ def hyperliquid_asset(symbol, name, sector):
     return {
         "symbol": symbol, "name": name, "sector": sector, "price": current, "currency": "USD",
         "dayHigh": highs[-1], "dayLow": lows[-1], "yearHigh": max(highs), "yearLow": min(lows),
+        "weekSeries": [round(point[1], 6) for point in points[-7:]],
         "returns": {
             "day": change(current, points[-2][1] if len(points) > 1 else None),
             "week": change(current, prior_close(points, now_ms // 1000 - 7 * 86400)),
@@ -143,6 +145,7 @@ def unavailable(symbol, name, sector, message):
     return {
         "symbol": symbol, "name": name, "sector": sector, "price": None, "currency": "USD",
         "dayHigh": None, "dayLow": None, "yearHigh": None, "yearLow": None,
+        "weekSeries": [],
         "returns": {"day": None, "week": None, "month": None}, "historySessions": 0,
         "status": "unavailable", "error": message[:120],
     }
@@ -163,6 +166,11 @@ def main():
     first_by_sector = []
     for sector in SECTORS:
         first_by_sector.append(next(item for item in assets if item["sector"] == sector["id"]))
+    leaders = sorted(
+        (item for item in assets if item["returns"]["week"] is not None),
+        key=lambda item: item["returns"]["week"],
+        reverse=True,
+    )[:3]
 
     payload = {
         "generatedAt": now.isoformat().replace("+00:00", "Z"),
@@ -170,6 +178,7 @@ def main():
         "sources": ["Yahoo Finance chart data", "Hyperliquid public API"],
         "sectors": SECTORS,
         "assets": first_by_sector,
+        "leaders": leaders,
     }
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
