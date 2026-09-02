@@ -1,0 +1,144 @@
+{
+  "generatedAt": "2026-09-02T20:30:20.202557Z",
+  "marketLabel": "Latest scheduled snapshot",
+  "sources": [
+    "Yahoo Finance chart data",
+    "Hyperliquid public API"
+  ],
+  "sectors": [
+    {
+      "id": "ai-compute",
+      "name": "AI + Compute"
+    },
+    {
+      "id": "platforms",
+      "name": "Platforms + Fintech"
+    },
+    {
+      "id": "digital-assets",
+      "name": "Digital Assets"
+    },
+    {
+      "id": "energy",
+      "name": "Energy + Commodities"
+    },
+    {
+      "id": "materials",
+      "name": "Agriculture + Materials"
+    },
+    {
+      "id": "core-funds",
+      "name": "Core Funds"
+    }
+  ],
+  "assets": [
+    {
+      "symbol": "SKHY",
+      "name": "SK hynix ADR",
+      "sector": "ai-compute",
+      "price": 164.98,
+      "currency": "USD",
+      "dayHigh": 165.47,
+      "dayLow": 158.67,
+      "yearHigh": 194.8,
+      "yearLow": 124.8,
+      "returns": {
+        "day": 2.612,
+        "week": 4.4045,
+        "month": 15.597
+      },
+      "historySessions": 39,
+      "status": "ok"
+    },
+    {
+      "symbol": "HOOD",
+      "name": "Robinhood Markets",
+      "sector": "platforms",
+      "price": 106.99,
+      "currency": "USD",
+      "dayHigh": 107.46,
+      "dayLow": 101.89,
+      "yearHigh": 153.86,
+      "yearLow": 63.515,
+      "returns": {
+        "day": 3.362,
+        "week": -1.428,
+        "month": 18.4304
+      },
+      "historySessions": 253,
+      "status": "ok"
+    },
+    {
+      "symbol": "PURR",
+      "name": "Hyperliquid PURR",
+      "sector": "digital-assets",
+      "price": 0.10818,
+      "currency": "USD",
+      "dayHigh": 0.11454,
+      "dayLow": 0.10564,
+      "yearHigh": 0.26242,
+      "yearLow": 0.039706,
+      "returns": {
+        "day": -5.1053,
+        "week": -18.0889,
+        "month": 70.3005
+      },
+      "historySessions": 371,
+      "status": "ok"
+    },
+    {
+      "symbol": "USO",
+      "name": "United States Oil Fund",
+      "sector": "energy",
+      "price": 141.15,
+      "currency": "USD",
+      "dayHigh": 142.165,
+      "dayLow": 138.44,
+      "yearHigh": 154.08,
+      "yearLow": 65.99,
+      "returns": {
+        "day": 0.106,
+        "week": 10.8363,
+        "month": 15.583
+      },
+      "historySessions": 253,
+      "status": "ok"
+    },
+    {
+      "symbol": "CORN",
+      "name": "Teucrium Corn Fund",
+      "sector": "materials",
+      "price": 20.22,
+      "currency": "USD",
+      "dayHigh": 20.43,
+      "dayLow": 20.01,
+      "yearHigh": 20.43,
+      "yearLow": 16.37,
+      "returns": {
+        "day": -0.345,
+        "week": 0.9486,
+        "month": 12.7719
+      },
+      "historySessions": 252,
+      "status": "ok"
+    },
+    {
+      "symbol": "SCHD",
+      "name": "Schwab U.S. Dividend Equity ETF",
+      "sector": "core-funds",
+      "price": 35.01,
+      "currency": "USD",
+      "dayHigh": 35.1,
+      "dayLow": 34.81,
+      "yearHigh": 35.31,
+      "yearLow": 26.32,
+      "returns": {
+        "day": 0.575,
+        "week": -0.1141,
+        "month": 4.3206
+      },
+      "historySessions": 253,
+      "status": "ok"
+    }
+  ]
+}
