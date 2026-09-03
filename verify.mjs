@@ -6,7 +6,9 @@ const data = JSON.parse(fs.readFileSync("data/watchlist-preview.json", "utf8"));
 const workflow = fs.readFileSync(".github/workflows/update-market-data.yml", "utf8");
 const memberFunction = fs.readFileSync("supabase/functions/member-watchlist/index.ts", "utf8");
 const checkoutFunction = fs.readFileSync("supabase/functions/watchlist-checkout/index.ts", "utf8");
+const foundingCheckoutFunction = fs.readFileSync("supabase/functions/innerg-membership-checkout/index.ts", "utf8");
 const webhookFunction = fs.readFileSync("supabase/functions/watchlist-stripe-webhook/index.ts", "utf8");
+const memberNumberMigration = fs.readFileSync("supabase/migrations/20260903052039_founding_member_numbers.sql", "utf8");
 const functionConfig = fs.readFileSync("supabase/config.toml", "utf8");
 const checks = [
   [data.assets.length === 6, "one public preview asset per sector"],
@@ -25,8 +27,10 @@ const checks = [
   [script.includes("signInWithPassword"), "email password sign in"],
   [script.includes("signUp"), "email account creation"],
   [script.includes('from("watchlist_memberships")'), "paid membership status check"],
-  [script.includes('const CHECKOUT_FUNCTION = "watchlist-checkout"'), "server-issued Stripe payment link"],
+  [script.includes('const FOUNDING_CHECKOUT_FUNCTION = "innerg-membership-checkout"'), "server-issued membership checkout"],
   [html.includes("PAYMENT REQUIRED"), "payment wall shown after account creation"],
+  [html.includes("INNERG membership is $10 per month"), "fixed ten-dollar membership offer"],
+  [html.includes('id="membership-number"'), "member number shown to signed-in members"],
   [script.includes('const MEMBER_FUNCTION = "member-watchlist"'), "protected member data endpoint"],
   [script.includes('class="price-chart'), "animated weekly price charts"],
   [script.includes("IntersectionObserver"), "scroll reveal observer"],
@@ -38,8 +42,14 @@ const checks = [
   [memberFunction.includes("SUPABASE_SERVICE_ROLE_KEY"), "private snapshot access stays server-side"],
   [checkoutFunction.includes('client_reference_id'), "Stripe payment tied to signed-in member"],
   [checkoutFunction.includes('checkoutUrl.hostname !== "buy.stripe.com"'), "Stripe redirect host allowlist"],
+  [foundingCheckoutFunction.includes("const MONTHLY_AMOUNT = 1000"), "founding checkout fixed at ten dollars"],
+  [foundingCheckoutFunction.includes('membership?.status === "active"'), "existing members cannot be charged again"],
+  [script.includes('params.get("membership") === "success"'), "membership return confirmation"],
   [webhookFunction.includes("constructEventAsync(rawBody, signature, webhookSecret)"), "Stripe webhook signature verification"],
   [webhookFunction.includes('status: "active"'), "Stripe payment activates membership"],
+  [webhookFunction.includes("payment_verified: true"), "member status requires verified Stripe payment"],
+  [webhookFunction.includes("sendMemberEmail") && webhookFunction.includes("welcome_email_sent_at"), "member number email sent after payment"],
+  [memberNumberMigration.includes("'grandfathered'") && memberNumberMigration.includes("payment_verified"), "existing members preserved without payment"],
   [functionConfig.includes("[functions.watchlist-stripe-webhook]\nverify_jwt = false"), "external webhook JWT configuration"],
   [!fs.existsSync("data/watchlist.json"), "full snapshot removed from public site"],
   [script.includes("}, 60_000)"), "60-second snapshot check"],

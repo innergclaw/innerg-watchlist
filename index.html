@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css?v=scroll-motion-1" />
-    <script type="module" src="app.js?v=membership-checkout-6"></script>
+    <script type="module" src="app.js?v=member-numbers-1"></script>
   </head>
   <body>
     <a class="skip-link" href="#sectors">Skip to sectors</a>
@@ -66,20 +66,16 @@
             <p>Signed in as <strong id="member-email-display"></strong></p>
             <div class="payment-state" id="payment-required" hidden>
               <span class="access-mark access-mark--pending">PAYMENT REQUIRED</span>
-              <h3>Choose your founding rate.</h3>
-              <p>Set your monthly rate between $7 and $14. Founding membership pricing is open through December 31, 2026.</p>
-              <div class="founding-rate">
-                <label for="founding-rate-slider">Monthly rate <strong id="founding-rate-value">$10 / month</strong></label>
-                <input id="founding-rate-slider" type="range" min="7" max="14" step="1" value="10" />
-                <div class="founding-rate__scale" aria-hidden="true"><span>$7</span><span>$14</span></div>
-              </div>
+              <h3>Activate your membership.</h3>
+              <p>INNERG membership is $10 per month. Your member number is issued after Stripe confirms payment.</p>
+              <div class="membership-price"><strong>$10</strong><span>PER MONTH</span></div>
               <button class="payment-button" id="begin-payment" type="button">START FOUNDING MEMBERSHIP</button>
               <small>Secure recurring billing through Stripe. Cancel any time.</small>
             </div>
             <div class="payment-state" id="payment-active" hidden>
-              <span class="access-mark">PAID ACCESS ACTIVE</span>
+              <span class="access-mark" id="membership-access-label">MEMBER ACCESS ACTIVE</span>
               <h3>The full watchlist is open.</h3>
-              <p>Your membership is confirmed.</p>
+              <p>Your member number is <strong id="membership-number">being prepared</strong>.</p>
             </div>
             <button class="secondary-button" id="sign-out" type="button">SIGN OUT</button>
           </div>

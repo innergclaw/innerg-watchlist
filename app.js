@@ -4,7 +4,6 @@ const DATA_URL = "data/watchlist-preview.json";
 const SUPABASE_URL = "https://zkyhhoxcrjkhywblzehr.supabase.co";
 const SUPABASE_KEY = "sb_publishable_bdi3BexAKWDBaUIh40hJ_A_8CNVdnM_";
 const MEMBER_FUNCTION = "member-watchlist";
-const CHECKOUT_FUNCTION = "watchlist-checkout";
 const FOUNDING_CHECKOUT_FUNCTION = "innerg-membership-checkout";
 const RETURN_URL = "https://innergclaw.github.io/innerg-watchlist/";
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -18,9 +17,9 @@ const elements = {
   paymentRequired: document.querySelector("#payment-required"),
   paymentActive: document.querySelector("#payment-active"),
   beginPayment: document.querySelector("#begin-payment"),
+  membershipAccessLabel: document.querySelector("#membership-access-label"),
+  membershipNumber: document.querySelector("#membership-number"),
   count: document.querySelector("#asset-count"),
-  rateSlider: document.querySelector("#founding-rate-slider"),
-  rateValue: document.querySelector("#founding-rate-value"),
 };
 
 let previewData = null;
@@ -130,13 +129,20 @@ function renderData(data, unlocked = false) {
   initScrollMotion(document.querySelector("main"));
 }
 
-function setAuthView(session, membershipStatus = null) {
+function setAuthView(session, membership = null) {
+  const membershipActive = membership?.status === "active";
   elements.loading.hidden = true;
   elements.signedOut.hidden = Boolean(session);
   elements.signedIn.hidden = !session;
   elements.memberEmail.textContent = session?.user?.email || "Home Base member";
-  elements.paymentRequired.hidden = !session || membershipStatus === "active";
-  elements.paymentActive.hidden = !session || membershipStatus !== "active";
+  elements.paymentRequired.hidden = !session || membershipActive;
+  elements.paymentActive.hidden = !session || !membershipActive;
+  if (membershipActive) {
+    elements.membershipAccessLabel.textContent = membership.access_source === "grandfathered"
+      ? "FOUNDING MEMBER ACCESS"
+      : "PAID MEMBER ACCESS";
+    elements.membershipNumber.textContent = membership.membership_number || "being prepared";
+  }
 }
 
 function setStatus(message, error = false) {
@@ -168,11 +174,11 @@ async function getMembership(userId) {
   if (error && error.code !== "PGRST116") throw error;
   const { data: innerg, error: innergError } = await supabase
     .from("innerg_memberships")
-    .select("status, membership_type, monthly_amount_cents")
+    .select("status, membership_number, membership_type, monthly_amount_cents, access_source, payment_verified")
     .eq("user_id", userId)
     .maybeSingle();
   if (innergError && innergError.code !== "PGRST116") throw innergError;
-  if (innerg?.status === "active") return { status: "active", access_source: "innerg_membership", ...innerg };
+  if (innerg?.status === "active") return innerg;
   return data ?? { status: "payment_required", access_source: "signup" };
 }
 
@@ -194,10 +200,11 @@ async function applySession(session) {
     return;
   }
   try {
-    const returningFromPayment = new URLSearchParams(window.location.search).get("payment") === "success";
+    const params = new URLSearchParams(window.location.search);
+    const returningFromPayment = params.get("membership") === "success" || params.get("payment") === "success";
     if (returningFromPayment) setStatus("Confirming your Stripe payment.");
     const membership = returningFromPayment ? await waitForPayment(session.user.id) : await getMembership(session.user.id);
-    setAuthView(session, membership.status);
+    setAuthView(session, membership);
     if (membership.status === "active") {
       await loadMemberData();
       setStatus(returningFromPayment ? "Payment confirmed. Your full watchlist is open." : "");
@@ -209,7 +216,7 @@ async function applySession(session) {
     setStatus(returningFromPayment ? "Stripe is still confirming payment. Refresh this page in a moment." : "Complete payment to activate full access.", returningFromPayment);
   } catch (error) {
     console.error("Membership check failed", error);
-    setAuthView(session, "payment_required");
+    setAuthView(session, { status: "payment_required" });
     setStatus("We could not confirm your membership. Please try again.", true);
     if (previewData) renderData(previewData, false);
   }
@@ -265,7 +272,7 @@ document.querySelector("#create-account").addEventListener("click", async () => 
 elements.beginPayment.addEventListener("click", async () => {
   elements.beginPayment.disabled = true;
   setStatus("Opening secure Stripe payment.");
-  const amount = Number(elements.rateSlider?.value || 10);
+  const amount = 10;
   const { data: { session }, error: sessionError } = await supabase.auth.getSession();
   if (sessionError || !session?.access_token) {
     elements.beginPayment.disabled = false;
@@ -289,11 +296,6 @@ elements.beginPayment.addEventListener("click", async () => {
     return;
   }
   window.location.assign(data.url);
-});
-
-elements.rateSlider?.addEventListener("input", (event) => {
-  const amount = Number(event.currentTarget.value);
-  elements.rateValue.textContent = `$${amount} / month`;
 });
 
 document.querySelector("#sign-out").addEventListener("click", async () => {

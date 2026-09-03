@@ -8,6 +8,39 @@ const expectedPaymentLinkId = Deno.env.get("STRIPE_PAYMENT_LINK_ID") ?? "";
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 const text = (value: unknown) => typeof value === "string" ? value : value && typeof value === "object" && "id" in value ? String(value.id) : null;
+const escapeHtml = (value: string) => value
+  .replaceAll("&", "&amp;")
+  .replaceAll("<", "&lt;")
+  .replaceAll(">", "&gt;")
+  .replaceAll('"', "&quot;")
+  .replaceAll("'", "&#39;");
+
+async function sendMemberEmail(service: ReturnType<typeof createClient>, userId: string, membershipNumber: string) {
+  const resendKey = Deno.env.get("RESEND_API_KEY") ?? "";
+  if (!resendKey) throw new Error("RESEND_API_KEY is not configured");
+  const { data: { user }, error: userError } = await service.auth.admin.getUserById(userId);
+  if (userError || !user?.email) throw new Error("Member email is not available");
+
+  const safeNumber = escapeHtml(membershipNumber);
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${resendKey}` },
+    body: JSON.stringify({
+      from: Deno.env.get("INNERG_MEMBER_EMAIL_FROM") || "INNERG INTEL <updates@ownyourweb.xyz>",
+      to: [user.email],
+      subject: `Your INNERG member number: ${membershipNumber}`,
+      html: `<div style="font-family:Arial,sans-serif;color:#111;line-height:1.55;max-width:560px;margin:auto;padding:28px">
+        <p style="font-size:12px;letter-spacing:.12em">INNERG INTEL</p>
+        <h1 style="font-size:32px;line-height:1.1;margin:18px 0">Your membership is active.</h1>
+        <p>Stripe confirmed your $10 monthly membership.</p>
+        <p style="font-size:20px"><strong>Member number: ${safeNumber}</strong></p>
+        <p><a href="https://innergclaw.github.io/innerg-watchlist/#member-access">Open the full market watchlist</a></p>
+        <p style="color:#666;font-size:13px">Keep this number for your INNERG member records.</p>
+      </div>`,
+    }),
+  });
+  if (!response.ok) throw new Error(`Member email failed with ${response.status}`);
+}
 
 Deno.serve(async (req: Request) => {
   if (req.method !== "POST") return new Response("Method not allowed", { status: 405 });
@@ -36,13 +69,14 @@ Deno.serve(async (req: Request) => {
     }
     if (isFounding) {
       const amount = Number(session.metadata?.monthly_amount_cents ?? 0);
-      if (!Number.isInteger(amount) || amount < 700 || amount > 1400) return Response.json({ received: true });
+      if (amount !== 1000) return Response.json({ received: true });
       const { error } = await service.from("innerg_memberships").upsert({
         user_id: userId,
-        membership_number: `INNERG-${crypto.randomUUID().replaceAll("-", "").slice(0, 8).toUpperCase()}`,
         status: "active",
         membership_type: "founding",
         monthly_amount_cents: amount,
+        access_source: "stripe",
+        payment_verified: true,
         stripe_checkout_session_id: session.id,
         stripe_customer_id: text(session.customer),
         stripe_subscription_id: text(session.subscription),
@@ -50,12 +84,37 @@ Deno.serve(async (req: Request) => {
         updated_at: new Date().toISOString(),
       }, { onConflict: "user_id" });
       if (error) return new Response("Membership update failed", { status: 500 });
-      await service.from("watchlist_memberships").upsert({
+      const { error: watchlistError } = await service.from("watchlist_memberships").upsert({
         user_id: userId, status: "active", access_source: "innerg_membership",
         stripe_checkout_session_id: session.id, stripe_customer_id: text(session.customer),
         stripe_subscription_id: text(session.subscription), paid_at: new Date().toISOString(),
         access_granted_at: new Date().toISOString(), updated_at: new Date().toISOString(),
       }, { onConflict: "user_id" });
+      if (watchlistError) return new Response("Watchlist access update failed", { status: 500 });
+
+      const { data: membership, error: membershipError } = await service
+        .from("innerg_memberships")
+        .select("membership_number, welcome_email_sent_at")
+        .eq("user_id", userId)
+        .single();
+      if (membershipError || !membership?.membership_number) return new Response("Member number could not be issued", { status: 500 });
+      if (!membership.welcome_email_sent_at) {
+        try {
+          await sendMemberEmail(service, userId, membership.membership_number);
+          await service.from("innerg_memberships").update({
+            welcome_email_sent_at: new Date().toISOString(),
+            welcome_email_error: null,
+            updated_at: new Date().toISOString(),
+          }).eq("user_id", userId);
+        } catch (emailError) {
+          const message = emailError instanceof Error ? emailError.message : "Member email failed";
+          await service.from("innerg_memberships").update({
+            welcome_email_error: message.slice(0, 500),
+            updated_at: new Date().toISOString(),
+          }).eq("user_id", userId);
+          return new Response("Member email delivery failed", { status: 500 });
+        }
+      }
       return Response.json({ received: true });
     }
     if (text(session.payment_link) !== expectedPaymentLinkId) return Response.json({ received: true });
