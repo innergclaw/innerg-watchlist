@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T17:47:08.233154Z",
+  "generatedAt": "2026-09-03T20:54:47.385370Z",
   "marketLabel": "Latest scheduled snapshot",
   "sources": [
     "Yahoo Finance chart data",
@@ -36,9 +36,9 @@
       "symbol": "SKHY",
       "name": "SK hynix ADR",
       "sector": "ai-compute",
-      "price": 163.13,
+      "price": 163.68,
       "currency": "USD",
-      "dayHigh": 163.17,
+      "dayHigh": 164.625,
       "dayLow": 157.731,
       "yearHigh": 194.8,
       "yearLow": 124.8,
@@ -49,12 +49,12 @@
         164.580002,
         160.779999,
         164.979996,
-        163.130005
+        163.679993
       ],
       "returns": {
-        "day": -1.121,
-        "week": 0.9405,
-        "month": 5.6678
+        "day": -0.788,
+        "week": 1.2809,
+        "month": 6.0241
       },
       "historySessions": 40,
       "status": "ok"
@@ -63,9 +63,9 @@
       "symbol": "HOOD",
       "name": "Robinhood Markets",
       "sector": "platforms",
-      "price": 124.46,
+      "price": 124.72,
       "currency": "USD",
-      "dayHigh": 124.54,
+      "dayHigh": 124.88,
       "dayLow": 113.13,
       "yearHigh": 153.86,
       "yearLow": 63.515,
@@ -76,12 +76,12 @@
         104.809998,
         103.510002,
         106.989998,
-        124.459999
+        124.720001
       ],
       "returns": {
-        "day": 16.329,
-        "week": 13.3929,
-        "month": 33.0981
+        "day": 16.572,
+        "week": 13.6297,
+        "month": 33.3761
       },
       "historySessions": 253,
       "status": "ok"
@@ -90,11 +90,11 @@
       "symbol": "ZEC",
       "name": "Zcash",
       "sector": "crypto",
-      "price": 951.06,
+      "price": 957.32,
       "currency": "USD",
-      "dayHigh": 951.3763,
+      "dayHigh": 976.7614,
       "dayLow": 808.4016,
-      "yearHigh": 951.3763,
+      "yearHigh": 976.7614,
       "yearLow": 40.2149,
       "weekSeries": [
         800.741943,
@@ -103,12 +103,12 @@
         847.628906,
         829.687927,
         813.924438,
-        951.059998
+        957.320007
       ],
       "returns": {
-        "day": 16.96,
-        "week": 17.3883,
-        "month": 88.0104
+        "day": 17.6098,
+        "week": 18.161,
+        "month": 89.2479
       },
       "historySessions": 366,
       "status": "ok"
@@ -117,10 +117,10 @@
       "symbol": "USO",
       "name": "United States Oil Fund",
       "sector": "energy",
-      "price": 141.88,
+      "price": 142.09,
       "currency": "USD",
       "dayHigh": 143.46,
-      "dayLow": 141.202,
+      "dayLow": 140.972,
       "yearHigh": 154.08,
       "yearLow": 65.99,
       "weekSeries": [
@@ -130,12 +130,12 @@
         133.699997,
         141.0,
         141.149994,
-        141.880005
+        142.089996
       ],
       "returns": {
-        "day": 0.517,
-        "week": 9.1301,
-        "month": 22.5428
+        "day": 0.666,
+        "week": 9.2916,
+        "month": 22.7241
       },
       "historySessions": 253,
       "status": "ok"
@@ -144,9 +144,9 @@
       "symbol": "CORN",
       "name": "Teucrium Corn Fund",
       "sector": "materials",
-      "price": 20.165,
+      "price": 20.17,
       "currency": "USD",
-      "dayHigh": 20.19,
+      "dayHigh": 20.255,
       "dayLow": 19.73,
       "yearHigh": 20.43,
       "yearLow": 16.37,
@@ -157,12 +157,12 @@
         20.059999,
         20.290001,
         20.219999,
-        20.165001
+        20.17
       ],
       "returns": {
-        "day": -0.272,
-        "week": 1.8434,
-        "month": 13.6056
+        "day": -0.247,
+        "week": 1.8687,
+        "month": 13.6338
       },
       "historySessions": 253,
       "status": "ok"
@@ -171,7 +171,7 @@
       "symbol": "SCHD",
       "name": "Schwab U.S. Dividend Equity ETF",
       "sector": "core-funds",
-      "price": 35.1,
+      "price": 35.08,
       "currency": "USD",
       "dayHigh": 35.2,
       "dayLow": 34.89,
@@ -184,12 +184,12 @@
         34.889999,
         34.810001,
         35.009998,
-        35.099998
+        35.080002
       ],
       "returns": {
-        "day": 0.257,
-        "week": 0.7752,
-        "month": 3.6928
+        "day": 0.2,
+        "week": 0.7178,
+        "month": 3.6337
       },
       "historySessions": 253,
       "status": "ok"
@@ -200,11 +200,11 @@
       "symbol": "ZEC",
       "name": "Zcash",
       "sector": "crypto",
-      "price": 951.06,
+      "price": 957.32,
       "currency": "USD",
-      "dayHigh": 951.3763,
+      "dayHigh": 976.7614,
       "dayLow": 808.4016,
-      "yearHigh": 951.3763,
+      "yearHigh": 976.7614,
       "yearLow": 40.2149,
       "weekSeries": [
         800.741943,
@@ -213,12 +213,12 @@
         847.628906,
         829.687927,
         813.924438,
-        951.059998
+        957.320007
       ],
       "returns": {
-        "day": 16.96,
-        "week": 17.3883,
-        "month": 88.0104
+        "day": 17.6098,
+        "week": 18.161,
+        "month": 89.2479
       },
       "historySessions": 366,
       "status": "ok"
@@ -227,9 +227,9 @@
       "symbol": "HOOD",
       "name": "Robinhood Markets",
       "sector": "platforms",
-      "price": 124.46,
+      "price": 124.72,
       "currency": "USD",
-      "dayHigh": 124.54,
+      "dayHigh": 124.88,
       "dayLow": 113.13,
       "yearHigh": 153.86,
       "yearLow": 63.515,
@@ -240,12 +240,12 @@
         104.809998,
         103.510002,
         106.989998,
-        124.459999
+        124.720001
       ],
       "returns": {
-        "day": 16.329,
-        "week": 13.3929,
-        "month": 33.0981
+        "day": 16.572,
+        "week": 13.6297,
+        "month": 33.3761
       },
       "historySessions": 253,
       "status": "ok"
@@ -254,7 +254,7 @@
       "symbol": "NTR",
       "name": "Nutrien",
       "sector": "materials",
-      "price": 80.56,
+      "price": 80.73,
       "currency": "USD",
       "dayHigh": 80.92,
       "dayLow": 79.43,
@@ -267,12 +267,12 @@
         75.529999,
         77.690002,
         80.290001,
-        80.559998
+        80.730003
       ],
       "returns": {
-        "day": 0.336,
-        "week": 10.2655,
-        "month": 20.3825
+        "day": 0.548,
+        "week": 10.4982,
+        "month": 20.6366
       },
       "historySessions": 253,
       "status": "ok"
