@@ -34,7 +34,7 @@ Send these events to:
 - `invoice.payment_failed`
 - `customer.subscription.deleted`
 
-Equity, fund, Bitcoin, Solana, and Zcash data comes from Yahoo Finance chart data. HYPE data comes from the Hyperliquid public API. Cash Cat data comes from the CoinGecko public API. This project is for research and education. It is not financial advice.
+Equity, fund, Bitcoin, Solana, and Zcash data comes from Yahoo Finance chart data. HYPE data comes from the Hyperliquid public API. This project is for research and education. It is not financial advice.
 
 ## Local checks
 

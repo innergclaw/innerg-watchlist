@@ -24,9 +24,8 @@ const assets = [
   ["WDC", "Western Digital", "ai-compute", "WDC"],
   ["HOOD", "Robinhood Markets", "platforms", "HOOD"],
   ["OPEN", "Opendoor Technologies", "platforms", "OPEN"],
-  ["CASHCAT", "Cash Cat", "crypto", "cash-cat"],
-  ["HYPE", "Hyperliquid", "crypto", "HYPE"],
   ["ZEC", "Zcash", "crypto", "ZEC-USD"],
+  ["HYPE", "Hyperliquid", "crypto", "HYPE"],
   ["BTC", "Bitcoin", "crypto", "BTC-USD"],
   ["SOL", "Solana", "crypto", "SOL-USD"],
   ["USO", "United States Oil Fund", "energy", "USO"],
@@ -125,49 +124,10 @@ async function hyperliquidAsset(symbol: string, name: string, sector: string, pr
   };
 }
 
-async function coinGeckoAsset(symbol: string, name: string, sector: string, coinId: string) {
-  const encoded = encodeURIComponent(coinId);
-  const [chartResponse, marketResponse] = await Promise.all([
-    fetch(`https://api.coingecko.com/api/v3/coins/${encoded}/market_chart?vs_currency=usd&days=365&interval=daily`, {
-      headers: { "User-Agent": "InnerG-Watchlist/4.0" },
-    }),
-    fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${encoded}&price_change_percentage=24h%2C7d%2C30d`, {
-      headers: { "User-Agent": "InnerG-Watchlist/4.0" },
-    }),
-  ]);
-  if (!chartResponse.ok || !marketResponse.ok) throw new Error("CoinGecko market data unavailable");
-  const chart = await chartResponse.json();
-  const markets = await marketResponse.json();
-  const market = markets[0] ?? {};
-  const points: Array<[number, number]> = (chart.prices ?? []).flatMap(([timestamp, price]: [number, number]) => {
-    const cleanPrice = clean(price);
-    return cleanPrice === null ? [] : [[timestamp / 1000, cleanPrice] as [number, number]];
-  });
-  if (!points.length) throw new Error("No CoinGecko price history returned");
-  const current = clean(market.current_price) ?? points.at(-1)![1];
-  const prices = points.map(([, price]) => price);
-  const now = Math.floor(Date.now() / 1000);
-  return {
-    symbol, name, sector, price: current, currency: "USD",
-    dayHigh: clean(market.high_24h) ?? current,
-    dayLow: clean(market.low_24h) ?? current,
-    yearHigh: Math.max(...prices), yearLow: Math.min(...prices),
-    weekSeries: points.slice(-7).map(([, price]) => price),
-    returns: {
-      day: clean(market.price_change_percentage_24h) ?? change(current, points.at(-2)?.[1] ?? null),
-      week: clean(market.price_change_percentage_7d_in_currency) ?? change(current, priorClose(points, now - 7 * 86400)),
-      month: clean(market.price_change_percentage_30d_in_currency) ?? change(current, priorClose(points, now - 30 * 86400)),
-    },
-    historySessions: points.length,
-    status: "ok",
-  };
-}
-
 async function refreshSnapshot(previous: Record<string, unknown> | null) {
   const previousAssets = new Map(((previous?.assets as Array<Record<string, unknown>>) ?? []).map((item) => [item.symbol, item]));
   const nextAssets = await Promise.all(assets.map(async ([symbol, name, sector, provider]) => {
     try {
-      if (symbol === "CASHCAT") return await coinGeckoAsset(symbol, name, sector, provider);
       if (symbol === "HYPE") return await hyperliquidAsset(symbol, name, sector, provider);
       return await yahooAsset(symbol, name, sector, provider);
     } catch (error) {
@@ -187,7 +147,7 @@ async function refreshSnapshot(previous: Record<string, unknown> | null) {
   return {
     generatedAt: new Date().toISOString(),
     marketLabel: "Private member snapshot",
-    sources: ["Yahoo Finance chart data", "Hyperliquid public API", "CoinGecko public API"],
+    sources: ["Yahoo Finance chart data", "Hyperliquid public API"],
     sectors,
     assets: nextAssets,
     leaders,
