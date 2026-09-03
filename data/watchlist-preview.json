@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T20:54:47.385370Z",
+  "generatedAt": "2026-09-03T22:29:40.922522Z",
   "marketLabel": "Latest scheduled snapshot",
   "sources": [
     "Yahoo Finance chart data",
@@ -90,7 +90,7 @@
       "symbol": "ZEC",
       "name": "Zcash",
       "sector": "crypto",
-      "price": 957.32,
+      "price": 938.99,
       "currency": "USD",
       "dayHigh": 976.7614,
       "dayLow": 808.4016,
@@ -103,12 +103,12 @@
         847.628906,
         829.687927,
         813.924438,
-        957.320007
+        938.98999
       ],
       "returns": {
-        "day": 17.6098,
-        "week": 18.161,
-        "month": 89.2479
+        "day": 15.9562,
+        "week": 15.8985,
+        "month": 85.6243
       },
       "historySessions": 366,
       "status": "ok"
@@ -200,7 +200,7 @@
       "symbol": "ZEC",
       "name": "Zcash",
       "sector": "crypto",
-      "price": 957.32,
+      "price": 938.99,
       "currency": "USD",
       "dayHigh": 976.7614,
       "dayLow": 808.4016,
@@ -213,12 +213,12 @@
         847.628906,
         829.687927,
         813.924438,
-        957.320007
+        938.98999
       ],
       "returns": {
-        "day": 17.6098,
-        "week": 18.161,
-        "month": 89.2479
+        "day": 15.9562,
+        "week": 15.8985,
+        "month": 85.6243
       },
       "historySessions": 366,
       "status": "ok"
