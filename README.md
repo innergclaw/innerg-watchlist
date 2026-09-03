@@ -4,7 +4,7 @@ A paid member research view for Nasirr's Home Base ecosystem. Public visitors se
 
 ## Data updates
 
-GitHub Actions builds `data/watchlist-preview.json` about every 30 minutes during U.S. market hours. The public snapshot includes one asset per sector, the three weekly leaders, and seven-session chart data. The page checks for a newer preview every 60 seconds. The full 30-asset snapshot is stored in Supabase and returned only through the authenticated `member-watchlist` Edge Function.
+GitHub Actions builds `data/watchlist-preview.json` about every 30 minutes during U.S. market hours. The public snapshot includes one asset per sector, the three weekly leaders, and seven-session chart data. The page checks for a newer preview every 60 seconds. The full 32-asset snapshot is stored in Supabase and returned only through the authenticated `member-watchlist` Edge Function.
 
 Google and email/password sign-in use the same Supabase project as the other Home Base member sites. Account creation and paid access are separate states. The protected data function checks paid access on every request. The Robinhood referral remains public.
 
@@ -33,7 +33,7 @@ Send these events to:
 - `invoice.payment_failed`
 - `customer.subscription.deleted`
 
-Equity and fund data comes from Yahoo Finance chart data. PURR data comes from the Hyperliquid public API. This project is for research and education. It is not financial advice.
+Equity, fund, Bitcoin, Solana, and Zcash data comes from Yahoo Finance chart data. HYPE data comes from the Hyperliquid public API. Cash Cat data comes from the CoinGecko public API. This project is for research and education. It is not financial advice.
 
 ## Local checks
 

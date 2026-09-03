@@ -18,7 +18,7 @@ USER_AGENT = "InnerG-Watchlist/2.0"
 SECTORS = [
     {"id": "ai-compute", "name": "AI + Compute"},
     {"id": "platforms", "name": "Platforms + Fintech"},
-    {"id": "digital-assets", "name": "Digital Assets"},
+    {"id": "crypto", "name": "Crypto"},
     {"id": "energy", "name": "Energy + Commodities"},
     {"id": "materials", "name": "Agriculture + Materials"},
     {"id": "core-funds", "name": "Core Funds"},
@@ -34,9 +34,11 @@ ASSETS = [
     ("WDC", "Western Digital", "ai-compute", "WDC"),
     ("HOOD", "Robinhood Markets", "platforms", "HOOD"),
     ("OPEN", "Opendoor Technologies", "platforms", "OPEN"),
-    ("PURR", "Hyperliquid PURR", "digital-assets", "PURR"),
-    ("ZCSH", "Grayscale Zcash ETF", "digital-assets", "ZCSH"),
-    ("MSTR", "Strategy", "digital-assets", "MSTR"),
+    ("CASHCAT", "Cash Cat", "crypto", "cash-cat"),
+    ("HYPE", "Hyperliquid", "crypto", "HYPE"),
+    ("ZEC", "Zcash", "crypto", "ZEC-USD"),
+    ("BTC", "Bitcoin", "crypto", "BTC-USD"),
+    ("SOL", "Solana", "crypto", "SOL-USD"),
     ("USO", "United States Oil Fund", "energy", "USO"),
     ("GSG", "iShares S&P GSCI Commodity Trust", "energy", "GSG"),
     ("OXY", "Occidental Petroleum", "energy", "OXY"),
@@ -118,11 +120,11 @@ def yahoo_asset(symbol, name, sector, provider_symbol):
     }
 
 
-def hyperliquid_asset(symbol, name, sector):
+def hyperliquid_asset(symbol, name, sector, provider_symbol):
     now_ms = int(time.time() * 1000)
     candles = request_json("https://api.hyperliquid.xyz/info", {
         "type": "candleSnapshot",
-        "req": {"coin": "PURR", "interval": "1d", "startTime": now_ms - 370 * 86400000, "endTime": now_ms},
+        "req": {"coin": provider_symbol, "interval": "1d", "startTime": now_ms - 370 * 86400000, "endTime": now_ms},
     })
     points = [(int(item["t"]) // 1000, clean(item["c"])) for item in candles]
     current = points[-1][1]
@@ -136,6 +138,36 @@ def hyperliquid_asset(symbol, name, sector):
             "day": change(current, points[-2][1] if len(points) > 1 else None),
             "week": change(current, prior_close(points, now_ms // 1000 - 7 * 86400)),
             "month": change(current, prior_close(points, now_ms // 1000 - 30 * 86400)),
+        },
+        "historySessions": len(points), "status": "ok",
+    }
+
+
+def coingecko_asset(symbol, name, sector, coin_id):
+    encoded = urllib.parse.quote(coin_id, safe="")
+    chart = request_json(
+        f"https://api.coingecko.com/api/v3/coins/{encoded}/market_chart?vs_currency=usd&days=365&interval=daily"
+    )
+    markets = request_json(
+        f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids={encoded}&price_change_percentage=24h%2C7d%2C30d"
+    )
+    market = markets[0] if markets else {}
+    points = [(int(timestamp) // 1000, clean(price)) for timestamp, price in chart.get("prices", []) if price is not None]
+    if not points:
+        raise ValueError("No CoinGecko price history returned")
+    current = clean(market.get("current_price")) or points[-1][1]
+    prices = [price for _, price in points]
+    now = int(time.time())
+    return {
+        "symbol": symbol, "name": name, "sector": sector, "price": current, "currency": "USD",
+        "dayHigh": clean(market.get("high_24h")) or current,
+        "dayLow": clean(market.get("low_24h")) or current,
+        "yearHigh": max(prices), "yearLow": min(prices),
+        "weekSeries": [round(price, 8) for _, price in points[-7:]],
+        "returns": {
+            "day": clean(market.get("price_change_percentage_24h")) or change(current, points[-2][1] if len(points) > 1 else None),
+            "week": clean(market.get("price_change_percentage_7d_in_currency")) or change(current, prior_close(points, now - 7 * 86400)),
+            "month": clean(market.get("price_change_percentage_30d_in_currency")) or change(current, prior_close(points, now - 30 * 86400)),
         },
         "historySessions": len(points), "status": "ok",
     }
@@ -155,7 +187,12 @@ def main():
     assets = []
     for symbol, name, sector, provider_symbol in ASSETS:
         try:
-            item = hyperliquid_asset(symbol, name, sector) if symbol == "PURR" else yahoo_asset(symbol, name, sector, provider_symbol)
+            if symbol == "CASHCAT":
+                item = coingecko_asset(symbol, name, sector, provider_symbol)
+            elif symbol == "HYPE":
+                item = hyperliquid_asset(symbol, name, sector, provider_symbol)
+            else:
+                item = yahoo_asset(symbol, name, sector, provider_symbol)
         except Exception as exc:
             item = unavailable(symbol, name, sector, str(exc))
         assets.append(item)
@@ -175,7 +212,7 @@ def main():
     payload = {
         "generatedAt": now.isoformat().replace("+00:00", "Z"),
         "marketLabel": "Latest scheduled snapshot",
-        "sources": ["Yahoo Finance chart data", "Hyperliquid public API"],
+        "sources": ["Yahoo Finance chart data", "Hyperliquid public API", "CoinGecko public API"],
         "sectors": SECTORS,
         "assets": first_by_sector,
         "leaders": leaders,

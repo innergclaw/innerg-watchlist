@@ -1,9 +1,10 @@
 {
-  "generatedAt": "2026-09-02T22:33:03.274672Z",
+  "generatedAt": "2026-09-03T00:02:19.191066Z",
   "marketLabel": "Latest scheduled snapshot",
   "sources": [
     "Yahoo Finance chart data",
-    "Hyperliquid public API"
+    "Hyperliquid public API",
+    "CoinGecko public API"
   ],
   "sectors": [
     {
@@ -15,8 +16,8 @@
       "name": "Platforms + Fintech"
     },
     {
-      "id": "digital-assets",
-      "name": "Digital Assets"
+      "id": "crypto",
+      "name": "Crypto"
     },
     {
       "id": "energy",
@@ -43,20 +44,20 @@
       "yearHigh": 194.8,
       "yearLow": 124.8,
       "weekSeries": [
+        155.369995,
         159.529999,
         158.020004,
         161.610001,
         161.039993,
         164.580002,
-        160.779999,
-        164.979996
+        160.779999
       ],
       "returns": {
         "day": 2.612,
         "week": 4.4045,
         "month": 15.597
       },
-      "historySessions": 39,
+      "historySessions": 38,
       "status": "ok"
     },
     {
@@ -70,47 +71,47 @@
       "yearHigh": 153.86,
       "yearLow": 63.515,
       "weekSeries": [
+        103.620003,
         112.089996,
         108.540001,
         109.760002,
         104.260002,
         104.809998,
-        103.510002,
-        106.989998
+        103.510002
       ],
       "returns": {
         "day": 3.362,
         "week": -1.428,
         "month": 18.4304
       },
-      "historySessions": 253,
+      "historySessions": 251,
       "status": "ok"
     },
     {
-      "symbol": "PURR",
-      "name": "Hyperliquid PURR",
-      "sector": "digital-assets",
-      "price": 0.10789,
+      "symbol": "CASHCAT",
+      "name": "Cash Cat",
+      "sector": "crypto",
+      "price": 0.278767,
       "currency": "USD",
-      "dayHigh": 0.11454,
-      "dayLow": 0.10564,
-      "yearHigh": 0.26242,
-      "yearLow": 0.039706,
+      "dayHigh": 0.294543,
+      "dayLow": 0.218185,
+      "yearHigh": 0.2787667005981291,
+      "yearLow": 0.002317273407151716,
       "weekSeries": [
-        0.13679,
-        0.11634,
-        0.11792,
-        0.12012,
-        0.12179,
-        0.114,
-        0.10789
+        0.22942916,
+        0.20122639,
+        0.21353789,
+        0.20448565,
+        0.19462923,
+        0.21909741,
+        0.2787667
       ],
       "returns": {
-        "day": -5.3596,
-        "week": -18.3085,
-        "month": 69.844
+        "day": 27.28769,
+        "week": 17.2,
+        "month": 339.3
       },
-      "historySessions": 371,
+      "historySessions": 65,
       "status": "ok"
     },
     {
@@ -124,20 +125,20 @@
       "yearHigh": 154.08,
       "yearLow": 65.99,
       "weekSeries": [
+        132.210007,
         126.150002,
         127.349998,
         130.009995,
         129.699997,
         133.699997,
-        141.0,
-        141.149994
+        141.0
       ],
       "returns": {
         "day": 0.106,
         "week": 10.8363,
         "month": 15.583
       },
-      "historySessions": 253,
+      "historySessions": 251,
       "status": "ok"
     },
     {
@@ -151,20 +152,20 @@
       "yearHigh": 20.43,
       "yearLow": 16.37,
       "weekSeries": [
+        19.01,
+        19.219999,
         19.59,
         20.030001,
         19.799999,
-        19.950001,
         20.059999,
-        20.290001,
-        20.219999
+        20.290001
       ],
       "returns": {
         "day": -0.345,
         "week": 0.9486,
         "month": 12.7719
       },
-      "historySessions": 253,
+      "historySessions": 250,
       "status": "ok"
     },
     {
@@ -178,24 +179,51 @@
       "yearHigh": 35.31,
       "yearLow": 26.32,
       "weekSeries": [
+        35.209999,
         35.110001,
         35.049999,
         34.830002,
         34.900002,
         34.889999,
-        34.810001,
-        35.009998
+        34.810001
       ],
       "returns": {
         "day": 0.575,
         "week": -0.1141,
         "month": 4.3206
       },
-      "historySessions": 253,
+      "historySessions": 251,
       "status": "ok"
     }
   ],
   "leaders": [
+    {
+      "symbol": "CASHCAT",
+      "name": "Cash Cat",
+      "sector": "crypto",
+      "price": 0.278767,
+      "currency": "USD",
+      "dayHigh": 0.294543,
+      "dayLow": 0.218185,
+      "yearHigh": 0.2787667005981291,
+      "yearLow": 0.002317273407151716,
+      "weekSeries": [
+        0.22942916,
+        0.20122639,
+        0.21353789,
+        0.20448565,
+        0.19462923,
+        0.21909741,
+        0.2787667
+      ],
+      "returns": {
+        "day": 27.28769,
+        "week": 17.2,
+        "month": 339.3
+      },
+      "historySessions": 65,
+      "status": "ok"
+    },
     {
       "symbol": "USO",
       "name": "United States Oil Fund",
@@ -207,20 +235,20 @@
       "yearHigh": 154.08,
       "yearLow": 65.99,
       "weekSeries": [
+        132.210007,
         126.150002,
         127.349998,
         130.009995,
         129.699997,
         133.699997,
-        141.0,
-        141.149994
+        141.0
       ],
       "returns": {
         "day": 0.106,
         "week": 10.8363,
         "month": 15.583
       },
-      "historySessions": 253,
+      "historySessions": 251,
       "status": "ok"
     },
     {
@@ -234,47 +262,20 @@
       "yearHigh": 85.36,
       "yearLow": 53.03,
       "weekSeries": [
+        75.269997,
+        74.290001,
         72.839996,
         73.610001,
         73.059998,
-        73.510002,
         75.529999,
-        77.690002,
-        80.290001
+        77.690002
       ],
       "returns": {
         "day": 3.347,
         "week": 9.0749,
         "month": 21.7253
       },
-      "historySessions": 253,
-      "status": "ok"
-    },
-    {
-      "symbol": "MTDR",
-      "name": "Matador Resources",
-      "sector": "energy",
-      "price": 59.58,
-      "currency": "USD",
-      "dayHigh": 60.07,
-      "dayLow": 58.875,
-      "yearHigh": 66.84,
-      "yearLow": 37.14,
-      "weekSeries": [
-        55.549999,
-        55.25,
-        56.740002,
-        56.389999,
-        58.009998,
-        59.209999,
-        59.580002
-      ],
-      "returns": {
-        "day": 0.625,
-        "week": 7.8371,
-        "month": 22.0152
-      },
-      "historySessions": 253,
+      "historySessions": 250,
       "status": "ok"
     }
   ]
