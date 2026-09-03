@@ -26,6 +26,7 @@ const elements = {
 let previewData = null;
 let isMember = false;
 let motionObserver = null;
+let activeSession = null;
 
 function initScrollMotion(root = document) {
   const targets = root.querySelectorAll(".reveal:not(.motion-observed)");
@@ -185,6 +186,7 @@ async function waitForPayment(userId) {
 }
 
 async function applySession(session) {
+  activeSession = session;
   if (!session) {
     setAuthView(null);
     isMember = false;
@@ -264,7 +266,7 @@ elements.beginPayment.addEventListener("click", async () => {
   elements.beginPayment.disabled = true;
   setStatus("Opening secure Stripe payment.");
   const amount = Number(elements.rateSlider?.value || 10);
-  const { data: { session } } = await supabase.auth.getSession();
+  const session = activeSession;
   if (!session?.access_token) {
     elements.beginPayment.disabled = false;
     setStatus("Sign in before starting membership.", true);
