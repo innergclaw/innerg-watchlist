@@ -26,7 +26,6 @@ const elements = {
 let previewData = null;
 let isMember = false;
 let motionObserver = null;
-let activeSession = null;
 
 function initScrollMotion(root = document) {
   const targets = root.querySelectorAll(".reveal:not(.motion-observed)");
@@ -186,15 +185,12 @@ async function waitForPayment(userId) {
 }
 
 async function applySession(session) {
-  activeSession = session;
   if (!session) {
-    sessionStorage.removeItem("innerg_checkout_token");
     setAuthView(null);
     isMember = false;
     if (previewData) renderData(previewData, false);
     return;
   }
-  sessionStorage.setItem("innerg_checkout_token", session.access_token);
   try {
     const returningFromPayment = new URLSearchParams(window.location.search).get("payment") === "success";
     if (returningFromPayment) setStatus("Confirming your Stripe payment.");
@@ -268,25 +264,18 @@ elements.beginPayment.addEventListener("click", async () => {
   elements.beginPayment.disabled = true;
   setStatus("Opening secure Stripe payment.");
   const amount = Number(elements.rateSlider?.value || 10);
-  const accessToken = activeSession?.access_token || sessionStorage.getItem("innerg_checkout_token");
-  if (!accessToken) {
-    elements.beginPayment.disabled = false;
-    setStatus("Sign in before starting membership.", true);
-    return;
-  }
-  const response = await fetch(`${SUPABASE_URL}/functions/v1/${FOUNDING_CHECKOUT_FUNCTION}`, {
+  const { data, error } = await supabase.functions.invoke(FOUNDING_CHECKOUT_FUNCTION, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      apikey: SUPABASE_KEY,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ amount }),
+    body: { amount },
   });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok || !data?.url) {
+  if (error || !data?.url) {
+    let message = data?.error;
+    if (!message && error?.context) {
+      const body = await error.context.json().catch(() => ({}));
+      message = body?.error;
+    }
     elements.beginPayment.disabled = false;
-    setStatus(data?.error || "Payment setup is not available yet.", true);
+    setStatus(message || "Payment setup is not available yet.", true);
     return;
   }
   window.location.assign(data.url);
