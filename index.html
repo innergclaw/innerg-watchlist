@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=member-numbers-2" />
+    <link rel="stylesheet" href="styles.css?v=signup-funnel-1" />
     <script type="module" src="app.js?v=member-numbers-2"></script>
   </head>
   <body>
@@ -41,14 +41,32 @@
         <small>Referral link. We may both receive a reward. Investing involves risk.</small>
       </aside>
       <section class="member-access" id="member-access" aria-labelledby="member-access-title">
+        <ol class="member-flow reveal reveal--rise" aria-label="Membership signup steps">
+          <li><span>01</span><strong>Preview</strong></li>
+          <li><span>02</span><strong>Create account</strong></li>
+          <li><span>03</span><strong>Activate</strong></li>
+          <li><span>04</span><strong>Full access</strong></li>
+        </ol>
         <div class="member-access__copy reveal reveal--from-left">
-          <p class="eyebrow">HOME BASE MEMBER ACCESS</p>
-          <h2 id="member-access-title">Join the founding membership.</h2>
-          <p>One asset from each sector and the weekly movers are open to everyone. Join the INNERG founding membership to unlock the full watchlist and the broader member experience.</p>
+          <p class="eyebrow">INNERG FOUNDING MEMBERSHIP</p>
+          <h2 id="member-access-title">Open the full research desk.</h2>
+          <p class="member-intro">Move beyond the public preview. Follow the complete watchlist across six sectors and return each week with more context.</p>
+          <div class="member-offer" aria-label="Membership price">
+            <strong>$10</strong>
+            <span>PER MONTH</span>
+          </div>
+          <ul class="member-benefits">
+            <li>Full 31-asset watchlist</li>
+            <li>Daily, weekly, and 30-day movement</li>
+            <li>Your INNERG member number after payment</li>
+          </ul>
         </div>
         <div class="auth-panel reveal reveal--from-right" id="auth-panel">
           <div id="auth-loading" class="auth-state" role="status">Checking member access.</div>
           <div id="auth-signed-out" class="auth-state" hidden>
+            <p class="auth-kicker">STEP 02 / CREATE OR RETURN</p>
+            <h3>Start with your account.</h3>
+            <p class="auth-intro">Use Google or email. New members continue to secure payment after sign in.</p>
             <button class="google-button" id="google-sign-in" type="button">CONTINUE WITH GOOGLE</button>
             <div class="auth-divider"><span>OR USE EMAIL</span></div>
             <form id="email-auth-form">
@@ -57,10 +75,11 @@
               <label for="member-password">Password</label>
               <input id="member-password" name="password" type="password" autocomplete="current-password" minlength="8" required />
               <div class="auth-actions">
-                <button type="submit" data-auth-action="signin">SIGN IN</button>
-                <button type="button" class="secondary-button" id="create-account">CREATE ACCOUNT</button>
+                <button type="button" id="create-account">CREATE NEW ACCOUNT</button>
+                <button type="submit" class="secondary-button" data-auth-action="signin">SIGN IN TO CONTINUE</button>
               </div>
             </form>
+            <p class="auth-note">Already an INNERG member? Sign in with the account you used before. You will not pay again.</p>
           </div>
           <div id="auth-signed-in" class="auth-state" hidden>
             <p>Signed in as <strong id="member-email-display"></strong></p>
