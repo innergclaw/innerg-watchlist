@@ -22,6 +22,29 @@ const elements = {
 
 let previewData = null;
 let isMember = false;
+let motionObserver = null;
+
+function initScrollMotion(root = document) {
+  const targets = root.querySelectorAll(".reveal:not(.motion-observed)");
+  if (!targets.length) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    targets.forEach((target) => target.classList.add("motion-observed", "is-visible"));
+    return;
+  }
+  if (!motionObserver) {
+    motionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        motionObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
+  }
+  targets.forEach((target) => {
+    target.classList.add("motion-observed");
+    motionObserver.observe(target);
+  });
+}
 
 const money = (value, currency = "USD") => {
   if (!Number.isFinite(value)) return "Not available";
@@ -60,7 +83,7 @@ function renderLeaders(assets) {
   const target = document.querySelector("#leader-grid");
   const leaders = assets.filter((asset) => Number.isFinite(asset.returns?.week)).sort((a, b) => b.returns.week - a.returns.week).slice(0, 3);
   target.innerHTML = leaders.length ? leaders.map((asset, index) => `
-    <article class="leader-card">
+    <article class="leader-card reveal reveal--rise" style="--reveal-delay:${index * 60}ms">
       <span class="leader-rank">0${index + 1} / 1W MOVE</span>
       <div class="leader-value"><div><strong>${asset.symbol}</strong><p class="leader-name">${asset.name}</p></div><span class="return ${tone(asset.returns.week)}">${percent(asset.returns.week)}</span></div>
       ${sparkline(asset.weekSeries, tone(asset.returns.week))}
@@ -81,7 +104,7 @@ function renderSectors(sectors, assets, unlocked) {
   document.querySelector("#sector-list").innerHTML = sectors.map((sector, index) => {
     const rows = bySector.get(sector.id) || [];
     const visibleCount = unlocked ? rows.length : 1;
-    return `<details class="sector" ${index === 0 ? "open" : ""}>
+    return `<details class="sector reveal reveal--rise" style="--reveal-delay:${Math.min(index * 60, 300)}ms" ${index === 0 ? "open" : ""}>
       <summary><span class="sector-index">0${index + 1}</span><span class="sector-name">${sector.name}</span><span class="sector-count">${unlocked ? `${rows.length} ASSETS` : "1 OPEN / MORE FOR MEMBERS"}</span><span class="sector-toggle" aria-hidden="true">+</span></summary>
       <div class="table-wrap"><table><thead><tr><th>Asset</th><th>Price</th><th>1D</th><th>1W</th><th>30D</th><th>Day high</th><th>Day low</th><th>52W high</th><th>52W low</th></tr></thead>
       <tbody>${rows.slice(0, visibleCount).map((asset) => `<tr><td><div class="asset"><strong>${asset.symbol}</strong><span title="${asset.name}">${asset.name}</span></div></td><td>${money(asset.price, asset.currency)}</td>${returnCell(asset.returns?.day)}${returnCell(asset.returns?.week)}${returnCell(asset.returns?.month)}<td>${money(asset.dayHigh, asset.currency)}</td><td>${money(asset.dayLow, asset.currency)}</td><td>${money(asset.yearHigh, asset.currency)}</td><td>${money(asset.yearLow, asset.currency)}</td></tr>`).join("")}${unlocked ? "" : lockedRows(2)}</tbody></table>${unlocked ? "" : '<a class="table-lock" href="#member-access">MEMBER ACCESS REQUIRED TO VIEW THE ENTIRE LIST</a>'}</div>
@@ -100,6 +123,7 @@ function renderData(data, unlocked = false) {
   renderLeaders(data.leaders?.length ? data.leaders : data.assets);
   renderSectors(data.sectors, data.assets, unlocked);
   elements.count.textContent = unlocked ? `${data.assets.length} ASSETS / 6 SECTORS` : "PUBLIC PREVIEW / 6 SECTORS";
+  initScrollMotion(document.querySelector("main"));
 }
 
 function setAuthView(session, membershipStatus = null) {
@@ -247,6 +271,8 @@ supabase.auth.onAuthStateChange((event, session) => {
 });
 
 initialize();
+document.documentElement.classList.add("motion-ready");
+initScrollMotion();
 window.setInterval(() => {
   if (isMember) loadMemberData().catch((error) => console.error("Member refresh failed", error));
   else loadPreview().catch((error) => console.error("Preview refresh failed", error));
