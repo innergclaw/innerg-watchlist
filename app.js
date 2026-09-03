@@ -264,8 +264,23 @@ elements.beginPayment.addEventListener("click", async () => {
   elements.beginPayment.disabled = true;
   setStatus("Opening secure Stripe payment.");
   const amount = Number(elements.rateSlider?.value || 10);
-  const { data, error } = await supabase.functions.invoke(FOUNDING_CHECKOUT_FUNCTION, { method: "POST", body: { amount } });
-  if (error || !data?.url) {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.access_token) {
+    elements.beginPayment.disabled = false;
+    setStatus("Sign in before starting membership.", true);
+    return;
+  }
+  const response = await fetch(`${SUPABASE_URL}/functions/v1/${FOUNDING_CHECKOUT_FUNCTION}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${session.access_token}`,
+      apikey: SUPABASE_KEY,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ amount }),
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || !data?.url) {
     elements.beginPayment.disabled = false;
     setStatus(data?.error || "Payment setup is not available yet.", true);
     return;
