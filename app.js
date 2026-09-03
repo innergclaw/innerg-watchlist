@@ -26,6 +26,7 @@ const elements = {
 let previewData = null;
 let isMember = false;
 let motionObserver = null;
+let activeSession = null;
 
 function initScrollMotion(root = document) {
   const targets = root.querySelectorAll(".reveal:not(.motion-observed)");
@@ -185,6 +186,7 @@ async function waitForPayment(userId) {
 }
 
 async function applySession(session) {
+  activeSession = session;
   if (!session) {
     setAuthView(null);
     isMember = false;
@@ -267,6 +269,9 @@ elements.beginPayment.addEventListener("click", async () => {
   const { data, error } = await supabase.functions.invoke(FOUNDING_CHECKOUT_FUNCTION, {
     method: "POST",
     body: { amount },
+    headers: activeSession?.access_token
+      ? { Authorization: `Bearer ${activeSession.access_token}` }
+      : undefined,
   });
   if (error || !data?.url) {
     let message = data?.error;
