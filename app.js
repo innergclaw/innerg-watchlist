@@ -188,11 +188,13 @@ async function waitForPayment(userId) {
 async function applySession(session) {
   activeSession = session;
   if (!session) {
+    sessionStorage.removeItem("innerg_checkout_token");
     setAuthView(null);
     isMember = false;
     if (previewData) renderData(previewData, false);
     return;
   }
+  sessionStorage.setItem("innerg_checkout_token", session.access_token);
   try {
     const returningFromPayment = new URLSearchParams(window.location.search).get("payment") === "success";
     if (returningFromPayment) setStatus("Confirming your Stripe payment.");
@@ -266,8 +268,8 @@ elements.beginPayment.addEventListener("click", async () => {
   elements.beginPayment.disabled = true;
   setStatus("Opening secure Stripe payment.");
   const amount = Number(elements.rateSlider?.value || 10);
-  const session = activeSession;
-  if (!session?.access_token) {
+  const accessToken = activeSession?.access_token || sessionStorage.getItem("innerg_checkout_token");
+  if (!accessToken) {
     elements.beginPayment.disabled = false;
     setStatus("Sign in before starting membership.", true);
     return;
@@ -275,7 +277,7 @@ elements.beginPayment.addEventListener("click", async () => {
   const response = await fetch(`${SUPABASE_URL}/functions/v1/${FOUNDING_CHECKOUT_FUNCTION}`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${session.access_token}`,
+      Authorization: `Bearer ${accessToken}`,
       apikey: SUPABASE_KEY,
       "Content-Type": "application/json",
     },
