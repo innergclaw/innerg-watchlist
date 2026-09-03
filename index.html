@@ -66,10 +66,15 @@
             <p>Signed in as <strong id="member-email-display"></strong></p>
             <div class="payment-state" id="payment-required" hidden>
               <span class="access-mark access-mark--pending">PAYMENT REQUIRED</span>
-              <h3>Finish your membership.</h3>
-              <p>Your account is saved. Complete payment through Stripe to open the full watchlist.</p>
-              <button class="payment-button" id="begin-payment" type="button">CONTINUE TO SECURE PAYMENT</button>
-              <small>Access turns on after Stripe confirms payment.</small>
+              <h3>Choose your founding rate.</h3>
+              <p>Set your monthly rate between $7 and $14. Founding membership pricing is open through December 31, 2026.</p>
+              <div class="founding-rate">
+                <label for="founding-rate-slider">Monthly rate <strong id="founding-rate-value">$10 / month</strong></label>
+                <input id="founding-rate-slider" type="range" min="7" max="14" step="1" value="10" />
+                <div class="founding-rate__scale" aria-hidden="true"><span>$7</span><span>$14</span></div>
+              </div>
+              <button class="payment-button" id="begin-payment" type="button">START FOUNDING MEMBERSHIP</button>
+              <small>Secure recurring billing through Stripe. Cancel any time.</small>
             </div>
             <div class="payment-state" id="payment-active" hidden>
               <span class="access-mark">PAID ACCESS ACTIVE</span>

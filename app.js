@@ -5,6 +5,7 @@ const SUPABASE_URL = "https://zkyhhoxcrjkhywblzehr.supabase.co";
 const SUPABASE_KEY = "sb_publishable_bdi3BexAKWDBaUIh40hJ_A_8CNVdnM_";
 const MEMBER_FUNCTION = "member-watchlist";
 const CHECKOUT_FUNCTION = "watchlist-checkout";
+const FOUNDING_CHECKOUT_FUNCTION = "innerg-membership-checkout";
 const RETURN_URL = "https://innergclaw.github.io/innerg-watchlist/";
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -18,6 +19,8 @@ const elements = {
   paymentActive: document.querySelector("#payment-active"),
   beginPayment: document.querySelector("#begin-payment"),
   count: document.querySelector("#asset-count"),
+  rateSlider: document.querySelector("#founding-rate-slider"),
+  rateValue: document.querySelector("#founding-rate-value"),
 };
 
 let previewData = null;
@@ -161,7 +164,14 @@ async function getMembership(userId) {
     .select("status, access_source")
     .eq("user_id", userId)
     .maybeSingle();
-  if (error) throw error;
+  if (error && error.code !== "PGRST116") throw error;
+  const { data: innerg, error: innergError } = await supabase
+    .from("innerg_memberships")
+    .select("status, membership_type, monthly_amount_cents")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (innergError && innergError.code !== "PGRST116") throw innergError;
+  if (innerg?.status === "active") return { status: "active", access_source: "innerg_membership", ...innerg };
   return data ?? { status: "payment_required", access_source: "signup" };
 }
 
@@ -253,13 +263,19 @@ document.querySelector("#create-account").addEventListener("click", async () => 
 elements.beginPayment.addEventListener("click", async () => {
   elements.beginPayment.disabled = true;
   setStatus("Opening secure Stripe payment.");
-  const { data, error } = await supabase.functions.invoke(CHECKOUT_FUNCTION, { method: "POST" });
+  const amount = Number(elements.rateSlider?.value || 10);
+  const { data, error } = await supabase.functions.invoke(FOUNDING_CHECKOUT_FUNCTION, { method: "POST", body: { amount } });
   if (error || !data?.url) {
     elements.beginPayment.disabled = false;
     setStatus(data?.error || "Payment setup is not available yet.", true);
     return;
   }
   window.location.assign(data.url);
+});
+
+elements.rateSlider?.addEventListener("input", (event) => {
+  const amount = Number(event.currentTarget.value);
+  elements.rateValue.textContent = `$${amount} / month`;
 });
 
 document.querySelector("#sign-out").addEventListener("click", async () => {

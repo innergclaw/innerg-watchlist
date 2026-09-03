@@ -6,3 +6,6 @@ verify_jwt = true
 
 [functions.watchlist-stripe-webhook]
 verify_jwt = false
+
+[functions.innerg-membership-checkout]
+verify_jwt = true

@@ -30,9 +30,35 @@ Deno.serve(async (req: Request) => {
   if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
     const session = event.data.object as Stripe.Checkout.Session;
     const userId = session.client_reference_id ?? "";
-    if (text(session.payment_link) !== expectedPaymentLinkId || !uuidPattern.test(userId) || session.payment_status === "unpaid") {
+    const isFounding = session.metadata?.membership_type === "innerg_founding";
+    if (!uuidPattern.test(userId) || session.payment_status === "unpaid") {
       return Response.json({ received: true });
     }
+    if (isFounding) {
+      const amount = Number(session.metadata?.monthly_amount_cents ?? 0);
+      if (!Number.isInteger(amount) || amount < 700 || amount > 1400) return Response.json({ received: true });
+      const { error } = await service.from("innerg_memberships").upsert({
+        user_id: userId,
+        membership_number: `INNERG-${crypto.randomUUID().replaceAll("-", "").slice(0, 8).toUpperCase()}`,
+        status: "active",
+        membership_type: "founding",
+        monthly_amount_cents: amount,
+        stripe_checkout_session_id: session.id,
+        stripe_customer_id: text(session.customer),
+        stripe_subscription_id: text(session.subscription),
+        joined_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }, { onConflict: "user_id" });
+      if (error) return new Response("Membership update failed", { status: 500 });
+      await service.from("watchlist_memberships").upsert({
+        user_id: userId, status: "active", access_source: "innerg_membership",
+        stripe_checkout_session_id: session.id, stripe_customer_id: text(session.customer),
+        stripe_subscription_id: text(session.subscription), paid_at: new Date().toISOString(),
+        access_granted_at: new Date().toISOString(), updated_at: new Date().toISOString(),
+      }, { onConflict: "user_id" });
+      return Response.json({ received: true });
+    }
+    if (text(session.payment_link) !== expectedPaymentLinkId) return Response.json({ received: true });
     const { error } = await service.from("watchlist_memberships").upsert({
       user_id: userId,
       status: "active",
@@ -51,6 +77,7 @@ Deno.serve(async (req: Request) => {
   if (event.type === "customer.subscription.deleted") {
     const subscription = event.data.object as Stripe.Subscription;
     await service.from("watchlist_memberships").update({ status: "canceled", updated_at: new Date().toISOString() }).eq("stripe_subscription_id", subscription.id);
+    await service.from("innerg_memberships").update({ status: "canceled", updated_at: new Date().toISOString() }).eq("stripe_subscription_id", subscription.id);
   }
 
   if (event.type === "invoice.payment_failed" || event.type === "invoice.paid") {
@@ -58,6 +85,9 @@ Deno.serve(async (req: Request) => {
     const subscriptionId = text(invoice.parent?.subscription_details?.subscription);
     if (subscriptionId) {
       await service.from("watchlist_memberships")
+        .update({ status: event.type === "invoice.paid" ? "active" : "past_due", updated_at: new Date().toISOString() })
+        .eq("stripe_subscription_id", subscriptionId);
+      await service.from("innerg_memberships")
         .update({ status: event.type === "invoice.paid" ? "active" : "past_due", updated_at: new Date().toISOString() })
         .eq("stripe_subscription_id", subscriptionId);
     }

@@ -222,7 +222,12 @@ Deno.serve(async (req: Request) => {
     .select("status")
     .eq("user_id", user.id)
     .maybeSingle();
-  if (membershipError || membership?.status !== "active") {
+  const { data: innergMembership, error: innergError } = await service
+    .from("innerg_memberships")
+    .select("status")
+    .eq("user_id", user.id)
+    .maybeSingle();
+  if ((membershipError && membershipError.code !== "PGRST116") || (innergError && innergError.code !== "PGRST116") || (membership?.status !== "active" && innergMembership?.status !== "active")) {
     return Response.json({ error: "Paid watchlist membership required." }, { status: 402, headers: corsHeaders });
   }
   const { data: cached } = await service.from("member_watchlist_snapshots").select("payload, generated_at").eq("id", 1).maybeSingle();
