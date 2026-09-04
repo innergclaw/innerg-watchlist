@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T22:29:40.922522Z",
+  "generatedAt": "2026-09-04T17:03:03.262110Z",
   "marketLabel": "Latest scheduled snapshot",
   "sources": [
     "Yahoo Finance chart data",
@@ -36,52 +36,52 @@
       "symbol": "SKHY",
       "name": "SK hynix ADR",
       "sector": "ai-compute",
-      "price": 163.68,
+      "price": 173.17,
       "currency": "USD",
-      "dayHigh": 164.625,
-      "dayLow": 157.731,
+      "dayHigh": 173.64,
+      "dayLow": 164.795,
       "yearHigh": 194.8,
       "yearLow": 124.8,
       "weekSeries": [
-        158.020004,
         161.610001,
         161.039993,
         164.580002,
         160.779999,
         164.979996,
-        163.679993
+        163.679993,
+        173.169998
       ],
       "returns": {
-        "day": -0.788,
-        "week": 1.2809,
-        "month": 6.0241
+        "day": 5.8,
+        "week": 7.5323,
+        "month": 14.6593
       },
-      "historySessions": 40,
+      "historySessions": 41,
       "status": "ok"
     },
     {
       "symbol": "HOOD",
       "name": "Robinhood Markets",
       "sector": "platforms",
-      "price": 124.72,
+      "price": 123.93,
       "currency": "USD",
-      "dayHigh": 124.88,
-      "dayLow": 113.13,
+      "dayHigh": 124.6,
+      "dayLow": 119.82,
       "yearHigh": 153.86,
       "yearLow": 63.515,
       "weekSeries": [
-        108.540001,
         109.760002,
         104.260002,
         104.809998,
         103.510002,
         106.989998,
-        124.720001
+        124.720001,
+        123.93
       ],
       "returns": {
-        "day": 16.572,
-        "week": 13.6297,
-        "month": 33.3761
+        "day": -0.633,
+        "week": 18.8663,
+        "month": 33.5453
       },
       "historySessions": 253,
       "status": "ok"
@@ -90,25 +90,25 @@
       "symbol": "ZEC",
       "name": "Zcash",
       "sector": "crypto",
-      "price": 938.99,
+      "price": 1039.01,
       "currency": "USD",
-      "dayHigh": 976.7614,
-      "dayLow": 808.4016,
-      "yearHigh": 976.7614,
-      "yearLow": 40.2149,
+      "dayHigh": 1036.5845,
+      "dayLow": 935.3527,
+      "yearHigh": 1036.5845,
+      "yearLow": 40.6381,
       "weekSeries": [
-        800.741943,
         842.116028,
         835.75238,
         847.628906,
         829.687927,
         813.924438,
-        938.98999
+        951.968445,
+        1039.01001
       ],
       "returns": {
-        "day": 15.9562,
-        "week": 15.8985,
-        "month": 85.6243
+        "day": 9.4963,
+        "week": 29.7559,
+        "month": 103.047
       },
       "historySessions": 366,
       "status": "ok"
@@ -117,25 +117,25 @@
       "symbol": "USO",
       "name": "United States Oil Fund",
       "sector": "energy",
-      "price": 142.09,
+      "price": 141.9,
       "currency": "USD",
-      "dayHigh": 143.46,
-      "dayLow": 140.972,
+      "dayHigh": 141.965,
+      "dayLow": 138.01,
       "yearHigh": 154.08,
       "yearLow": 65.99,
       "weekSeries": [
-        127.349998,
         130.009995,
         129.699997,
         133.699997,
         141.0,
         141.149994,
-        142.089996
+        142.089996,
+        141.899994
       ],
       "returns": {
-        "day": 0.666,
-        "week": 9.2916,
-        "month": 22.7241
+        "day": -0.134,
+        "week": 9.4063,
+        "month": 23.5202
       },
       "historySessions": 253,
       "status": "ok"
@@ -144,25 +144,25 @@
       "symbol": "CORN",
       "name": "Teucrium Corn Fund",
       "sector": "materials",
-      "price": 20.17,
+      "price": 20.095,
       "currency": "USD",
-      "dayHigh": 20.255,
-      "dayLow": 19.73,
+      "dayHigh": 20.21,
+      "dayLow": 20.065,
       "yearHigh": 20.43,
       "yearLow": 16.37,
       "weekSeries": [
-        20.030001,
         19.799999,
         19.950001,
         20.059999,
         20.290001,
         20.219999,
-        20.17
+        20.17,
+        20.094999
       ],
       "returns": {
-        "day": -0.247,
-        "week": 1.8687,
-        "month": 13.6338
+        "day": -0.372,
+        "week": 0.7268,
+        "month": 14.0465
       },
       "historySessions": 253,
       "status": "ok"
@@ -171,25 +171,25 @@
       "symbol": "SCHD",
       "name": "Schwab U.S. Dividend Equity ETF",
       "sector": "core-funds",
-      "price": 35.08,
+      "price": 34.889,
       "currency": "USD",
-      "dayHigh": 35.2,
-      "dayLow": 34.89,
+      "dayHigh": 34.95,
+      "dayLow": 34.78,
       "yearHigh": 35.31,
       "yearLow": 26.32,
       "weekSeries": [
-        35.049999,
         34.830002,
         34.900002,
         34.889999,
         34.810001,
         35.009998,
-        35.080002
+        35.080002,
+        34.888901
       ],
       "returns": {
-        "day": 0.2,
-        "week": 0.7178,
-        "month": 3.6337
+        "day": -0.545,
+        "week": -0.0315,
+        "month": 3.7128
       },
       "historySessions": 253,
       "status": "ok"
@@ -200,79 +200,79 @@
       "symbol": "ZEC",
       "name": "Zcash",
       "sector": "crypto",
-      "price": 938.99,
+      "price": 1039.01,
       "currency": "USD",
-      "dayHigh": 976.7614,
-      "dayLow": 808.4016,
-      "yearHigh": 976.7614,
-      "yearLow": 40.2149,
+      "dayHigh": 1036.5845,
+      "dayLow": 935.3527,
+      "yearHigh": 1036.5845,
+      "yearLow": 40.6381,
       "weekSeries": [
-        800.741943,
         842.116028,
         835.75238,
         847.628906,
         829.687927,
         813.924438,
-        938.98999
+        951.968445,
+        1039.01001
       ],
       "returns": {
-        "day": 15.9562,
-        "week": 15.8985,
-        "month": 85.6243
+        "day": 9.4963,
+        "week": 29.7559,
+        "month": 103.047
       },
       "historySessions": 366,
+      "status": "ok"
+    },
+    {
+      "symbol": "IREN",
+      "name": "IREN Limited",
+      "sector": "ai-compute",
+      "price": 43.685,
+      "currency": "USD",
+      "dayHigh": 43.885,
+      "dayLow": 41.0,
+      "yearHigh": 76.87,
+      "yearLow": 25.31,
+      "weekSeries": [
+        40.529999,
+        35.450001,
+        37.115002,
+        36.82,
+        39.599998,
+        41.650002,
+        43.685001
+      ],
+      "returns": {
+        "day": 4.886,
+        "week": 23.2299,
+        "month": 12.3296
+      },
+      "historySessions": 253,
       "status": "ok"
     },
     {
       "symbol": "HOOD",
       "name": "Robinhood Markets",
       "sector": "platforms",
-      "price": 124.72,
+      "price": 123.93,
       "currency": "USD",
-      "dayHigh": 124.88,
-      "dayLow": 113.13,
+      "dayHigh": 124.6,
+      "dayLow": 119.82,
       "yearHigh": 153.86,
       "yearLow": 63.515,
       "weekSeries": [
-        108.540001,
         109.760002,
         104.260002,
         104.809998,
         103.510002,
         106.989998,
-        124.720001
+        124.720001,
+        123.93
       ],
       "returns": {
-        "day": 16.572,
-        "week": 13.6297,
-        "month": 33.3761
-      },
-      "historySessions": 253,
-      "status": "ok"
-    },
-    {
-      "symbol": "NTR",
-      "name": "Nutrien",
-      "sector": "materials",
-      "price": 80.73,
-      "currency": "USD",
-      "dayHigh": 80.92,
-      "dayLow": 79.43,
-      "yearHigh": 85.36,
-      "yearLow": 53.03,
-      "weekSeries": [
-        73.610001,
-        73.059998,
-        73.510002,
-        75.529999,
-        77.690002,
-        80.290001,
-        80.730003
-      ],
-      "returns": {
-        "day": 0.548,
-        "week": 10.4982,
-        "month": 20.6366
+        "day": -0.633,
+        "week": 18.8663,
+        "month": 33.5453
       },
       "historySessions": 253,
       "status": "ok"
