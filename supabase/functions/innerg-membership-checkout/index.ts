@@ -11,7 +11,7 @@ const allowedOrigins = new Set([
   "http://127.0.0.1:4173",
 ]);
 const MONTHLY_AMOUNT = 1000;
-const returnUrl = "https://nasirr.innergintel.org/innergid/?membership=success#member-panel";
+const returnUrl = "https://nasirr.innergintel.org/innerg-id/?membership=success#media-hub";
 
 Deno.serve(async (req: Request) => {
   const origin = req.headers.get("Origin") ?? "";
