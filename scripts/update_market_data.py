@@ -12,7 +12,7 @@ import urllib.parse
 import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "data" / "watchlist-preview.json"
+OUTPUT = ROOT / "data" / "watchlist.json"
 USER_AGENT = "InnerG-Watchlist/2.0"
 
 SECTORS = [
@@ -167,9 +167,6 @@ def main():
         time.sleep(0.08)
 
     now = dt.datetime.now(dt.timezone.utc)
-    first_by_sector = []
-    for sector in SECTORS:
-        first_by_sector.append(next(item for item in assets if item["sector"] == sector["id"]))
     leaders = sorted(
         (item for item in assets if item["returns"]["week"] is not None),
         key=lambda item: item["returns"]["week"],
@@ -181,7 +178,7 @@ def main():
         "marketLabel": "Latest scheduled snapshot",
         "sources": ["Yahoo Finance chart data", "Hyperliquid public API"],
         "sectors": SECTORS,
-        "assets": first_by_sector,
+        "assets": assets,
         "leaders": leaders,
     }
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)

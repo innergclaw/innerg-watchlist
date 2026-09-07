@@ -1,67 +1,36 @@
-import fs from "node:fs";
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import { test } from 'node:test';
+import { filterAssets, money, percent, chartPath, escapeHTML } from './display.mjs';
+const html=fs.readFileSync('index.html','utf8');
+const script=fs.readFileSync('app.js','utf8');
+const css=fs.readFileSync('styles.css','utf8');
+const data=JSON.parse(fs.readFileSync('data/watchlist.json','utf8'));
+test('all 31 assets and six sectors are public',()=>{assert.equal(data.assets.length,31);assert.equal(data.sectors.length,6);assert.equal(new Set(data.assets.map(a=>a.symbol)).size,31);});
+test('Zcash stays first and Cash Cat stays removed',()=>assert.deepEqual(data.assets.filter(a=>a.sector==='crypto').map(a=>a.symbol),['ZEC','HYPE','BTC','SOL']));
+test('search ticker and name without case sensitivity',()=>{assert.equal(filterAssets(data.assets,' zEc ')[0].symbol,'ZEC');assert.equal(filterAssets(data.assets,'bitcoin')[0].symbol,'BTC');});
+test('sector filter and empty search results',()=>{assert.equal(filterAssets(data.assets,'','crypto').length,4);assert.equal(filterAssets(data.assets,'not-a-real-ticker').length,0);});
+test('sort handles missing values and does not mutate source',()=>{const assets=[{symbol:'B',returns:{week:null}},{symbol:'A',returns:{week:0}},{symbol:'C',returns:{week:-2}}];assert.deepEqual(filterAssets(assets,'','all','week').map(a=>a.symbol),['A','C','B']);assert.deepEqual(filterAssets(assets,'','all','loss').map(a=>a.symbol),['C','A','B']);assert.equal(assets[0].symbol,'B');});
+test('number formatting handles zero, losses, and missing data',()=>{assert.equal(money(0),'$0.0000');assert.equal(percent(0),'0.00%');assert.equal(percent(-2),'-2.00%');assert.equal(percent(null),'Unavailable');});
+test('charts handle flat lines and unavailable history',()=>{assert.equal(chartPath([1]),'');assert.ok(chartPath([3,3,3]).includes('40.00'));assert.ok(!chartPath([2,null,4]).includes('NaN'));});
+test('external strings are escaped',()=>assert.equal(escapeHTML('<script>'),'&lt;script&gt;'));
+test('public client has no auth or checkout calls',()=>{assert.ok(!/supabase|stripe|signIn|password|payment-required|locked-row/i.test(script));assert.ok(!/auth-panel|payment-required|email-auth-form/.test(html));});
+test('help and referral remain public',()=>{assert.ok(html.includes('How to read the numbers'));assert.ok(html.includes('https://join.robinhood.com/nasirrm'));assert.ok(html.includes('noopener noreferrer sponsored'));assert.ok(html.includes('not a live trading feed'));});
+test('accessible controls and reduced motion remain',()=>{assert.ok(html.includes('type="search"'));assert.ok(html.includes('role="status"'));assert.ok(css.includes(':focus-visible'));assert.ok(css.includes('prefers-reduced-motion:reduce'));assert.ok(css.includes('min-height:44px'));});
+test('workflow refreshes full public snapshot',()=>assert.ok(fs.readFileSync('.github/workflows/update-market-data.yml','utf8').includes('git add data/watchlist.json')));
 
-const html = fs.readFileSync("index.html", "utf8");
-const script = fs.readFileSync("app.js", "utf8");
-const data = JSON.parse(fs.readFileSync("data/watchlist-preview.json", "utf8"));
-const workflow = fs.readFileSync(".github/workflows/update-market-data.yml", "utf8");
-const memberFunction = fs.readFileSync("supabase/functions/member-watchlist/index.ts", "utf8");
-const checkoutFunction = fs.readFileSync("supabase/functions/watchlist-checkout/index.ts", "utf8");
-const foundingCheckoutFunction = fs.readFileSync("supabase/functions/innerg-membership-checkout/index.ts", "utf8");
-const webhookFunction = fs.readFileSync("supabase/functions/watchlist-stripe-webhook/index.ts", "utf8");
-const memberNumberMigration = fs.readFileSync("supabase/migrations/20260903052039_founding_member_numbers.sql", "utf8");
-const functionConfig = fs.readFileSync("supabase/config.toml", "utf8");
-const checks = [
-  [data.assets.length === 6, "one public preview asset per sector"],
-  [data.leaders.length === 3, "three public weekly leaders"],
-  [data.leaders.every((asset) => asset.weekSeries.length >= 2), "public leader chart history"],
-  [data.sectors.length === 6, "six sector groups"],
-  [new Set(data.assets.map((asset) => asset.sector)).size === 6, "each sector represented once"],
-  [data.sectors.some((sector) => sector.id === "crypto" && sector.name === "Crypto"), "crypto sector label"],
-  [["ZEC", "HYPE", "BTC", "SOL"].every((symbol) => memberFunction.includes(`["${symbol}"`)) && !memberFunction.includes('["CASHCAT"'), "four requested crypto assets without Cash Cat"],
-  [data.assets.find((asset) => asset.sector === "crypto")?.symbol === "ZEC", "Zcash is the public crypto preview"],
-  [!memberFunction.includes('"ZCSH"') && !memberFunction.includes('"PURR"') && !memberFunction.includes('"MSTR"'), "legacy digital asset entries removed"],
-  [data.assets.every((asset) => ["day", "week", "month"].every((key) => key in asset.returns)), "all return windows"],
-  [html.includes("https://join.robinhood.com/nasirrm"), "Robinhood referral"],
-  [html.includes("https://nasirr.innergintel.org/"), "Home Base link"],
-  [html.indexOf("join.robinhood.com") < html.indexOf("member-access"), "referral remains outside member gate"],
-  [script.includes('signInWithOAuth({ provider: "google"'), "Google sign in"],
-  [script.includes("signInWithPassword"), "email password sign in"],
-  [script.includes("signUp"), "email account creation"],
-  [script.includes('from("watchlist_memberships")'), "paid membership status check"],
-  [script.includes('const FOUNDING_CHECKOUT_FUNCTION = "innerg-membership-checkout"'), "server-issued membership checkout"],
-  [html.includes("PAYMENT REQUIRED"), "payment wall shown after account creation"],
-  [html.includes("INNERG membership is $10 per month"), "fixed ten-dollar membership offer"],
-  [html.includes('id="membership-number"'), "member number shown to signed-in members"],
-  [script.includes('const MEMBER_FUNCTION = "member-watchlist"'), "protected member data endpoint"],
-  [script.includes('class="price-chart'), "animated weekly price charts"],
-  [script.includes("IntersectionObserver"), "scroll reveal observer"],
-  [script.includes('class="leader-card reveal reveal--rise"'), "staggered leader card reveals"],
-  [html.includes("reveal--from-left") && html.includes("reveal--from-right"), "directional section reveals"],
-  [html.includes("signup-funnel-1"), "signup funnel cache version"],
-  [html.includes("Open the full research desk.") && html.includes("Full 31-asset watchlist"), "member funnel value copy"],
-  [html.includes("01</span><strong>Preview") && html.includes("04</span><strong>Full access"), "four-step signup flow"],
-  [html.includes('id="payment-active"') && html.includes("The full watchlist is open."), "active member view preserved"],
-  [fs.readFileSync("styles.css", "utf8").includes('.payment-state[hidden]'), "inactive payment state stays hidden"],
-  [memberFunction.includes("auth.getUser(token)"), "member token verification"],
-  [memberFunction.includes('membership?.status !== "active"'), "paid access enforced at data endpoint"],
-  [memberFunction.includes("SUPABASE_SERVICE_ROLE_KEY"), "private snapshot access stays server-side"],
-  [checkoutFunction.includes('client_reference_id'), "Stripe payment tied to signed-in member"],
-  [checkoutFunction.includes('checkoutUrl.hostname !== "buy.stripe.com"'), "Stripe redirect host allowlist"],
-  [foundingCheckoutFunction.includes("const MONTHLY_AMOUNT = 1000"), "founding checkout fixed at ten dollars"],
-  [foundingCheckoutFunction.includes('membership?.status === "active"'), "existing members cannot be charged again"],
-  [script.includes('params.get("membership") === "success"'), "membership return confirmation"],
-  [webhookFunction.includes("constructEventAsync(rawBody, signature, webhookSecret)"), "Stripe webhook signature verification"],
-  [webhookFunction.includes('status: "active"'), "Stripe payment activates membership"],
-  [webhookFunction.includes("payment_verified: true"), "member status requires verified Stripe payment"],
-  [webhookFunction.includes("sendMemberEmail") && webhookFunction.includes("welcome_email_sent_at"), "member number email sent after payment"],
-  [memberNumberMigration.includes("'grandfathered'") && memberNumberMigration.includes("payment_verified"), "existing members preserved without payment"],
-  [functionConfig.includes("[functions.watchlist-stripe-webhook]\nverify_jwt = false"), "external webhook JWT configuration"],
-  [!fs.existsSync("data/watchlist.json"), "full snapshot removed from public site"],
-  [script.includes("}, 60_000)"), "60-second snapshot check"],
-  [workflow.includes("America/New_York"), "market-hours timezone"],
-  [!html.includes("API_KEY"), "no browser API key"],
-];
-for (const [passed, label] of checks) {
-  if (!passed) throw new Error(`Failed: ${label}`);
-  console.log(`PASS ${label}`);
+function harness({failure=false,hash=''}={}) {
+  const nodes=new Map();
+  const get=id=>{if(!nodes.has(id))nodes.set(id,{value:id==='#sector-filter'?'all':id==='#sort'?'default':'',innerHTML:'',textContent:'',addEventListener(){},querySelectorAll(){return [];}});return nodes.get(id);};
+  let fail=failure;const calls=[];const redirects=[];
+  const context={Intl,Date,Number,Set,Array,String,console,document:{querySelector:get,querySelectorAll:()=>[],hidden:false},window:{},matchMedia:()=>({matches:true}),location:{hash,replace:path=>redirects.push(path)},setInterval:()=>{},fetch:async url=>{calls.push(url);if(fail)throw Error('offline');return {ok:true,json:async()=>structuredClone(data)};}};
+  vm.createContext(context);
+  vm.runInContext(fs.readFileSync('display.mjs','utf8').replaceAll('export ','')+'\n'+script.replace(/^import[^\n]+\n/,''),context);
+  return {nodes,get,calls,redirects,context,setFailure:value=>{fail=value;},settle:()=>new Promise(resolve=>setImmediate(resolve))};
 }
+test('signed-out load renders full data with only a public JSON request',async()=>{const h=harness();await h.settle();assert.equal((h.get('#sector-list').innerHTML.match(/class="asset-card"/g)||[]).length,31);assert.equal(h.calls.length,1);assert.match(h.calls[0],/^data\/watchlist.json/);assert.equal(h.get('#results-status').textContent,'31 of 31 assets shown');});
+test('rendered search and empty state',async()=>{const h=harness();await h.settle();h.get('#search').value='Zcash';vm.runInContext('renderAssets()',h.context);assert.equal(h.get('#results-status').textContent,'1 of 31 assets shown');h.get('#search').value='no matching';vm.runInContext('renderAssets()',h.context);assert.ok(h.get('#sector-list').innerHTML.includes('No matching assets'));});
+test('load failure offers retry, not a paywall',async()=>{const h=harness({failure:true});await h.settle();assert.equal(h.get('#market-state').textContent,'Snapshot unavailable');assert.equal(h.get('#refresh').disabled,false);});
+test('refresh failure retains usable data',async()=>{const h=harness();await h.settle();h.setFailure(true);await vm.runInContext('loadData()',h.context);assert.ok(h.get('#market-state').textContent.includes('Refresh failed'));assert.equal((h.get('#sector-list').innerHTML.match(/class="asset-card"/g)||[]).length,31);});
+test('old member-access links lead to public data',async()=>{const h=harness({hash:'#member-access'});await h.settle();assert.deepEqual(h.redirects,['#sectors']);});

@@ -1,45 +1,24 @@
-# InnerG Market Watchlist
+# INNERG Market Watchlist
 
-A member research view for Nasirr's Home Base ecosystem. Public visitors see one asset from each sector and the weekly market movers. Existing members keep access without a new charge. New members create a shared Home Base account, pay $10 per month through Stripe, and then receive full access.
+Public research page for the Home Base ecosystem. All 31 assets across six sectors are available without login or payment. The page does not load Supabase Auth or call checkout. Paid INNERG ID membership, private videos, and other ecosystem access are unchanged.
 
-## Data updates
+## Data
 
-GitHub Actions builds `data/watchlist-preview.json` about every 30 minutes during U.S. market hours. The public snapshot includes one asset per sector, the three weekly leaders, and seven-session chart data. The page checks for a newer preview every 60 seconds. The full 32-asset snapshot is stored in Supabase and returned only through the authenticated `member-watchlist` Edge Function.
+`scripts/update_market_data.py` collects Yahoo Finance chart data and Hyperliquid public data into `data/watchlist.json`. The existing GitHub Actions schedule refreshes the file about every 30 minutes during U.S. weekday market hours. The page checks the published file every 60 seconds while visible. Refresh data checks that file; it does not request a new trade quote. This is scheduled data, not a real-time feed.
 
-Google and email/password sign-in use the same Supabase project as the other Home Base member sites. Account creation and membership are separate states. New accounts stay in `payment_required` until Stripe confirms payment. The protected data function checks active access on every request. The Robinhood referral remains public.
+Missing data stays unavailable. Snapshots older than 48 hours are labeled. All price points and change windows remain visible through cards, search, sector filters, and sort within each sector. Each chart has an independent scale. Percentage changes exclude dividends. The latest daily point may be incomplete.
 
-## Stripe activation
+Legacy files in `supabase/` are retained for the existing shared membership infrastructure. They are not deployed or changed by this public-page update. Do not remove shared billing or member security based on the public Watchlist status. `data/watchlist-preview.json` remains for older cached clients; the current page uses the full file.
 
-Stripe Checkout creates a fixed $10 monthly subscription. The checkout function adds the signed-in Supabase user ID as Stripe's `client_reference_id`. Stripe sends that value back in the signed payment event. The webhook then activates the matching membership, issues a sequential `INNERG-000000` member number, and emails that number once. No member number is created for an unpaid signup.
+The Robinhood referral is public and disclosed. This page is research and education, not financial advice.
 
-The membership checkout requires these Supabase Edge Function secrets:
-
-- `STRIPE_SECRET_KEY`
-- `STRIPE_WEBHOOK_SECRET`
-- `RESEND_API_KEY`
-
-The member email defaults to `INNERG INTEL <updates@ownyourweb.xyz>`. Set `INNERG_MEMBER_EMAIL_FROM` if a different verified sender is required.
-
-Set the Stripe Payment Link redirect to:
-
-`https://innergclaw.github.io/innerg-watchlist/?membership=success#member-access`
-
-Send these events to:
-
-`https://zkyhhoxcrjkhywblzehr.supabase.co/functions/v1/watchlist-stripe-webhook`
-
-- `checkout.session.completed`
-- `checkout.session.async_payment_succeeded`
-- `invoice.paid`
-- `invoice.payment_failed`
-- `customer.subscription.deleted`
-
-Equity, fund, Bitcoin, Solana, and Zcash data comes from Yahoo Finance chart data. HYPE data comes from the Hyperliquid public API. This project is for research and education. It is not financial advice.
-
-## Local checks
+## Checks and deployment
 
 ```sh
 python3 scripts/update_market_data.py
-node verify.mjs
+node --check app.js
+node --test verify.mjs
 python3 -m http.server 4173
 ```
+
+GitHub Pages publishes the root of `main`. Verify the public route and `data/watchlist.json` after pushing. Test search, sorting, ranges, refresh failure, and 390px mobile layout. No test user or payment is needed.

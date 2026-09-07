@@ -1,114 +1,44 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#11110f" />
-    <meta name="description" content="Nasirr's sector watchlist with current market ranges and return windows." />
-    <title>Market Watchlist | Nasirr G. Mayo</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=signup-funnel-1" />
-    <script type="module" src="app.js?v=member-numbers-2"></script>
-  </head>
-  <body>
-    <a class="skip-link" href="#sectors">Skip to sectors</a>
-    <header class="site-header">
-      <a class="home-link" href="https://nasirr.innergintel.org/">NASIRR G. MAYO / HOME BASE</a>
-      <span class="market-state" id="market-state">Loading market snapshot</span>
-    </header>
-    <main>
-      <section class="hero" aria-labelledby="page-title">
-        <p class="eyebrow reveal reveal--rise">INNERG INTEL / RESEARCH DESK</p>
-        <h1 class="reveal reveal--hero" id="page-title">MARKET<br />WATCHLIST</h1>
-        <div class="hero-bottom reveal reveal--rise">
-          <p class="hero-copy">A focused view of the companies, funds, commodities, and crypto assets on my radar.</p>
-          <div class="snapshot-clock" aria-live="polite">
-            <span>DATA SNAPSHOT</span><strong id="snapshot-time">Loading</strong>
-            <small>Checks for a new snapshot every 60 seconds.</small>
-          </div>
-        </div>
-      </section>
-      <section class="pulse" aria-labelledby="pulse-title">
-        <div class="section-heading reveal reveal--rise"><p class="eyebrow">PUBLIC MARKET PULSE</p><h2 id="pulse-title">What moved this week.</h2></div>
-        <div class="leader-grid" id="leader-grid" aria-live="polite"></div>
-      </section>
-      <aside class="referral reveal reveal--from-right" aria-labelledby="referral-title">
-        <p class="eyebrow">A STARTING POINT FOR NEW INVESTORS</p>
-        <div><h2 id="referral-title">Learn first. Start small. Move at your own pace.</h2><p>If investing is new to you, this is one simple place to begin exploring.</p></div>
-        <a href="https://join.robinhood.com/nasirrm" target="_blank" rel="noopener noreferrer sponsored">OPEN THE ROBINHOOD INVITE</a>
-        <small>Referral link. We may both receive a reward. Investing involves risk.</small>
-      </aside>
-      <section class="member-access" id="member-access" aria-labelledby="member-access-title">
-        <ol class="member-flow reveal reveal--rise" aria-label="Membership signup steps">
-          <li><span>01</span><strong>Preview</strong></li>
-          <li><span>02</span><strong>Create account</strong></li>
-          <li><span>03</span><strong>Activate</strong></li>
-          <li><span>04</span><strong>Full access</strong></li>
-        </ol>
-        <div class="member-access__copy reveal reveal--from-left">
-          <p class="eyebrow">INNERG FOUNDING MEMBERSHIP</p>
-          <h2 id="member-access-title">Open the full research desk.</h2>
-          <p class="member-intro">Move beyond the public preview. Follow the complete watchlist across six sectors and return each week with more context.</p>
-          <div class="member-offer" aria-label="Membership price">
-            <strong>$10</strong>
-            <span>PER MONTH</span>
-          </div>
-          <ul class="member-benefits">
-            <li>Full 31-asset watchlist</li>
-            <li>Daily, weekly, and 30-day movement</li>
-            <li>Your INNERG member number after payment</li>
-          </ul>
-        </div>
-        <div class="auth-panel reveal reveal--from-right" id="auth-panel">
-          <div id="auth-loading" class="auth-state" role="status">Checking member access.</div>
-          <div id="auth-signed-out" class="auth-state" hidden>
-            <p class="auth-kicker">STEP 02 / CREATE OR RETURN</p>
-            <h3>Start with your account.</h3>
-            <p class="auth-intro">Use Google or email. New members continue to secure payment after sign in.</p>
-            <button class="google-button" id="google-sign-in" type="button">CONTINUE WITH GOOGLE</button>
-            <div class="auth-divider"><span>OR USE EMAIL</span></div>
-            <form id="email-auth-form">
-              <label for="member-email">Email address</label>
-              <input id="member-email" name="email" type="email" autocomplete="email" required />
-              <label for="member-password">Password</label>
-              <input id="member-password" name="password" type="password" autocomplete="current-password" minlength="8" required />
-              <div class="auth-actions">
-                <button type="button" id="create-account">CREATE NEW ACCOUNT</button>
-                <button type="submit" class="secondary-button" data-auth-action="signin">SIGN IN TO CONTINUE</button>
-              </div>
-            </form>
-            <p class="auth-note">Already an INNERG member? Sign in with the account you used before. You will not pay again.</p>
-          </div>
-          <div id="auth-signed-in" class="auth-state" hidden>
-            <p>Signed in as <strong id="member-email-display"></strong></p>
-            <div class="payment-state" id="payment-required" hidden>
-              <span class="access-mark access-mark--pending">PAYMENT REQUIRED</span>
-              <h3>Activate your membership.</h3>
-              <p>INNERG membership is $10 per month. Your member number is issued after Stripe confirms payment.</p>
-              <div class="membership-price"><strong>$10</strong><span>PER MONTH</span></div>
-              <button class="payment-button" id="begin-payment" type="button">START FOUNDING MEMBERSHIP</button>
-              <small>Secure recurring billing through Stripe. Cancel any time.</small>
-            </div>
-            <div class="payment-state" id="payment-active" hidden>
-              <span class="access-mark" id="membership-access-label">MEMBER ACCESS ACTIVE</span>
-              <h3>The full watchlist is open.</h3>
-              <p>Your member number is <strong id="membership-number">being prepared</strong>.</p>
-            </div>
-            <button class="secondary-button" id="sign-out" type="button">SIGN OUT</button>
-          </div>
-          <p class="auth-status" id="auth-status" aria-live="polite"></p>
-        </div>
-      </section>
-      <section class="sectors" id="sectors" aria-labelledby="sectors-title">
-        <div class="section-heading section-heading--row reveal reveal--rise">
-          <div><p class="eyebrow" id="asset-count">PUBLIC PREVIEW / 6 SECTORS</p><h2 id="sectors-title">Choose a lane.</h2></div>
-          <p class="data-note">Prices can be delayed. New listings use the history available since launch.</p>
-        </div>
-        <div id="sector-list" class="sector-list"></div>
-      </section>
-    </main>
-    <footer class="reveal reveal--rise"><p>Research view only. Not financial advice.</p><a href="https://nasirr.innergintel.org/">RETURN TO HOME BASE</a></footer>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#151513" />
+  <meta name="description" content="Explore the public INNERG market watchlist. Price charts, daily and weekly changes, and market ranges. No account required." />
+  <title>Market Watchlist | INNERG INTEL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=public-desk-1" />
+  <script type="module" src="app.js?v=public-desk-1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#sectors">Skip to watchlist</a>
+  <header class="site-header"><a href="https://nasirr.innergintel.org/">INNERG INTEL / HOME BASE</a><span class="public-label">Open research</span></header>
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <div><p class="eyebrow">Research desk</p><h1 id="page-title">Market watchlist.</h1><p class="hero-copy">See the movement. Understand the numbers.</p><p class="intro">The companies, funds, commodities, and crypto on my radar. The full list is open. No account or payment needed.</p></div>
+      <div class="snapshot-clock"><span id="market-state">Loading snapshot</span><strong id="snapshot-time">Please wait</strong><small>Scheduled data, not a live trading feed.</small><button id="refresh" type="button">Refresh data</button></div>
+    </section>
+    <section class="pulse" aria-labelledby="pulse-title">
+      <div class="section-heading"><div><p class="eyebrow">Weekly movers</p><h2 id="pulse-title">What moved this week.</h2></div><a href="#sectors">Explore all assets</a></div>
+      <p class="section-note">The three highest weekly changes in this watchlist. A move is context, not a buy signal.</p>
+      <div class="leader-grid" id="leader-grid"><p role="status">Loading weekly charts.</p></div>
+    </section>
+    <section class="sectors" id="sectors" aria-labelledby="sectors-title">
+      <div class="section-heading"><div><p class="eyebrow" id="asset-count">Full public watchlist</p><h2 id="sectors-title">Find what interests you.</h2></div></div>
+      <div class="filters">
+        <label>Search assets<input id="search" type="search" placeholder="Ticker or name, e.g. ZEC" autocomplete="off" /></label>
+        <label>Sector<select id="sector-filter" aria-label="Sector"><option value="all">All sectors</option></select></label>
+        <label>Sort within sector<select id="sort" aria-label="Sort within sector"><option value="default">Watchlist order</option><option value="week">Weekly gain</option><option value="loss">Weekly decline</option><option value="name">Ticker A to Z</option></select></label>
+      </div>
+      <details class="guide"><summary>How to read the numbers</summary><p><strong>1 day</strong> compares the latest price with the prior session close. <strong>1 week</strong> and <strong>30 days</strong> compare it with the available close on or before that date. These are price changes, not returns including dividends.</p><p>Each chart shows the last seven daily price points. The latest point can reflect an unfinished session. Each chart uses its own scale, so compare percentages, not line angles. Open an asset's ranges for daily and 52-week highs and lows. New assets may have less than a year of history.</p><p>Prices can be delayed. Snapshot time is when this page's data was collected, not the time of each trade. Unavailable data is marked, never filled with an estimate.</p></details>
+      <p id="results-status" class="section-note" role="status"></p>
+      <div id="sector-list"></div>
+      <noscript><p>Enable JavaScript to explore charts, or <a href="data/watchlist.json">download the full public data</a>.</p></noscript>
+    </section>
+    <aside class="referral" aria-labelledby="referral-title"><div><p class="eyebrow">New to investing?</p><h2 id="referral-title">Learn first. Start at your own pace.</h2><p>Explore Robinhood through my referral link. We may both receive a reward. Investing involves risk.</p></div><a href="https://join.robinhood.com/nasirrm" target="_blank" rel="noopener noreferrer sponsored">View my Robinhood invite</a></aside>
+  </main>
+  <footer><p>Research and education. Not financial advice.<br />Data: Yahoo Finance and Hyperliquid.</p><a href="https://nasirr.innergintel.org/">Return to Home Base</a></footer>
+</body>
 </html>
