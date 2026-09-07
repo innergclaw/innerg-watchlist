@@ -1,4 +1,5 @@
 import { escapeHTML, money, percent, tone, filterAssets, chartPath } from './display.mjs';
+import { chartMarkup, bindCharts } from './interactive-charts.mjs';
 
 const DATA_URL = 'data/watchlist.json';
 let snapshot = null;
@@ -9,12 +10,7 @@ const sort = document.querySelector('#sort');
 const refresh = document.querySelector('#refresh');
 const esc = escapeHTML;
 
-function chart(asset) {
-  const points = (asset.weekSeries || []).filter(Number.isFinite);
-  const path = chartPath(points);
-  if (!path) return '<p class="chart-empty">Chart unavailable</p>';
-  return `<figure class="chart"><svg viewBox="0 0 320 80" role="img" aria-label="${esc(asset.symbol)}: last seven daily price points, ${esc(money(points[0], asset.currency))} to ${esc(money(points.at(-1), asset.currency))}"><line x1="0" y1="40" x2="320" y2="40"/><path class="${tone(points.at(-1) - points[0])}" d="${path}" pathLength="1" /></svg><figcaption><span>7 daily points</span><span>${money(points[0], asset.currency)} → ${money(points.at(-1), asset.currency)}</span></figcaption></figure>`;
-}
+function chart(asset, context='asset') { return chartMarkup(asset,context); }
 
 function assetCard(asset) {
   return `<article class="asset-card" id="asset-${esc(asset.symbol)}"><div class="asset-heading"><div><h4>${esc(asset.symbol)}</h4><p>${esc(asset.name)}</p></div><strong class="price">${money(asset.price, asset.currency)}</strong></div>${chart(asset)}<dl class="returns">${[['1 day','day'],['1 week','week'],['30 days','month']].map(([label,key])=>`<div><dt>${label}</dt><dd class="${tone(asset.returns?.[key])}">${percent(asset.returns?.[key])}</dd></div>`).join('')}</dl><details class="ranges" data-symbol="${esc(asset.symbol)}"><summary>Daily &amp; 52-week ranges</summary><dl>${[['Day low','dayLow'],['Day high','dayHigh'],['52-week low','yearLow'],['52-week high','yearHigh']].map(([label,key])=>`<div><dt>${label}</dt><dd>${money(asset[key],asset.currency)}</dd></div>`).join('')}</dl><p>${Number(asset.historySessions) || 0} daily data points available.</p></details></article>`;
@@ -32,6 +28,7 @@ function renderAssets() {
     return `<section class="sector-group" aria-labelledby="group-${esc(sector.id)}"><h3 id="group-${esc(sector.id)}">${esc(sector.name)} <span>${rows.length} ${rows.length===1?'asset':'assets'}</span></h3><div class="asset-grid">${rows.map(assetCard).join('')}</div></section>`;
   }).join('') : '<p class="empty-state">No matching assets. Try another ticker or choose all sectors.</p>';
   document.querySelectorAll('.ranges').forEach(el=>{ el.open = openRanges.has(el.dataset.symbol); });
+  bindCharts(snapshot.assets);
   observeCharts();
 }
 
@@ -54,7 +51,7 @@ function renderSnapshot(data) {
   sectorFilter.value = selected;
   document.querySelector('#asset-count').textContent = `${data.assets.length} assets / ${data.sectors.length} sectors / Free access`;
   const leaders = [...data.assets].filter(a=>Number.isFinite(a.returns?.week)).sort((a,b)=>b.returns.week-a.returns.week).slice(0,3);
-  document.querySelector('#leader-grid').innerHTML = leaders.length ? leaders.map(a=>`<article class="leader-card"><div class="leader-top"><div><h3>${esc(a.symbol)}</h3><p>${esc(a.name)}</p></div><strong class="${tone(a.returns.week)}">${percent(a.returns.week)}<small>1 week</small></strong></div>${chart(a)}</article>`).join('') : '<p>Weekly data is unavailable. Try refreshing shortly.</p>';
+  document.querySelector('#leader-grid').innerHTML = leaders.length ? leaders.map(a=>`<article class="leader-card"><div class="leader-top"><div><h3>${esc(a.symbol)}</h3><p>${esc(a.name)}</p></div><strong class="${tone(a.returns.week)}">${percent(a.returns.week)}<small>1 week</small></strong></div>${chart(a,'leader')}</article>`).join('') : '<p>Weekly data is unavailable. Try refreshing shortly.</p>';
   renderAssets();
 }
 
@@ -81,4 +78,4 @@ sort.addEventListener('change', renderAssets);
 refresh.addEventListener('click', loadData);
 if(location.hash === '#member-access') location.replace('#sectors');
 loadData();
-setInterval(()=>{if(!document.hidden) loadData();}, 60_000);
+setInterval(()=>{if(!document.hidden && !document.activeElement?.closest('.interactive-chart')) loadData();}, 60_000);

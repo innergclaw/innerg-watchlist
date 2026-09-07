@@ -10,6 +10,7 @@ import pathlib
 import time
 import urllib.parse
 import urllib.request
+from zoneinfo import ZoneInfo
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "data" / "watchlist.json"
@@ -89,6 +90,31 @@ def prior_close(points, target_timestamp):
     return candidates[-1] if candidates else None
 
 
+def chart_points(points):
+    return [[int(ts), round(value, 6)] for ts, value in sorted(dict(points).items())
+            if value is not None and math.isfinite(value)]
+
+
+def history_charts(points, intraday, crypto=False, timezone="America/New_York", now=None):
+    now = int(time.time()) if now is None else now
+    daily = chart_points(points)
+    intraday = chart_points(intraday)
+    if intraday:
+        if crypto:
+            intraday = [point for point in intraday if point[0] >= now - 86400]
+        else:
+            zone = ZoneInfo(timezone)
+            latest = dt.datetime.fromtimestamp(intraday[-1][0], zone).date()
+            intraday = [point for point in intraday if dt.datetime.fromtimestamp(point[0], zone).date() == latest]
+    if len(intraday) < 2:
+        intraday = []
+    return {
+        "day": {"points": intraday, "label": "Latest 24 hours" if crypto else "Latest trading session", "interval": "5-minute samples"},
+        "week": {"points": [point for point in daily if point[0] >= now - 7 * 86400], "label": "Past 7 calendar days", "interval": "Daily samples"},
+        "month": {"points": [point for point in daily if point[0] >= now - 30 * 86400], "label": "Past 30 calendar days", "interval": "Daily samples"},
+    }
+
+
 def yahoo_asset(symbol, name, sector, provider_symbol):
     encoded = urllib.parse.quote(provider_symbol, safe="")
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{encoded}?range=1y&interval=1d&includePrePost=true&events=div%2Csplits"
@@ -106,12 +132,19 @@ def yahoo_asset(symbol, name, sector, provider_symbol):
     lows = [clean(value) for value in quote.get("low", []) if value is not None]
     day_high = clean(meta.get("regularMarketDayHigh")) or (highs[-1] if highs else current)
     day_low = clean(meta.get("regularMarketDayLow")) or (lows[-1] if lows else current)
+    intraday = []
+    try:
+        recent = request_json(f"https://query1.finance.yahoo.com/v8/finance/chart/{encoded}?range=5d&interval=5m&includePrePost=false")["chart"]["result"][0]
+        intraday = [(ts, clean(close)) for ts, close in zip(recent.get("timestamp", []), recent["indicators"]["quote"][0].get("close", []))]
+    except Exception as exc:
+        print(f"{symbol}: intraday unavailable ({type(exc).__name__})")
     return {
         "symbol": symbol, "name": name, "sector": sector, "price": current,
         "currency": meta.get("currency") or "USD", "dayHigh": day_high, "dayLow": day_low,
         "yearHigh": clean(meta.get("fiftyTwoWeekHigh")) or max(highs + [current]),
         "yearLow": clean(meta.get("fiftyTwoWeekLow")) or min(lows + [current]),
         "weekSeries": [round(point[1], 6) for point in points[-7:]],
+        "charts": history_charts(points, intraday, sector == "crypto", meta.get("exchangeTimezoneName") or "America/New_York"),
         "returns": {
             "day": clean(meta.get("regularMarketChangePercent")) or change(current, points[-2][1] if len(points) > 1 else None),
             "week": change(current, prior_close(points, now - 7 * 86400)),
@@ -131,10 +164,17 @@ def hyperliquid_asset(symbol, name, sector, provider_symbol):
     current = points[-1][1]
     highs = [clean(item["h"]) for item in candles]
     lows = [clean(item["l"]) for item in candles]
+    intraday = []
+    try:
+        recent = request_json("https://api.hyperliquid.xyz/info", {"type": "candleSnapshot", "req": {"coin": provider_symbol, "interval": "5m", "startTime": now_ms - 86400000, "endTime": now_ms}})
+        intraday = [(int(item["t"]) // 1000, clean(item["c"])) for item in recent]
+    except Exception as exc:
+        print(f"{symbol}: intraday unavailable ({type(exc).__name__})")
     return {
         "symbol": symbol, "name": name, "sector": sector, "price": current, "currency": "USD",
         "dayHigh": highs[-1], "dayLow": lows[-1], "yearHigh": max(highs), "yearLow": min(lows),
         "weekSeries": [round(point[1], 6) for point in points[-7:]],
+        "charts": history_charts(points, intraday, True),
         "returns": {
             "day": change(current, points[-2][1] if len(points) > 1 else None),
             "week": change(current, prior_close(points, now_ms // 1000 - 7 * 86400)),
@@ -149,6 +189,7 @@ def unavailable(symbol, name, sector, message):
         "symbol": symbol, "name": name, "sector": sector, "price": None, "currency": "USD",
         "dayHigh": None, "dayLow": None, "yearHigh": None, "yearLow": None,
         "weekSeries": [],
+        "charts": history_charts([], []),
         "returns": {"day": None, "week": None, "month": None}, "historySessions": 0,
         "status": "unavailable", "error": message[:120],
     }

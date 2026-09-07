@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=sunday-1" />
-  <script type="module" src="app.js?v=public-desk-1"></script>
+  <link rel="stylesheet" href="styles.css?v=interactive-1" />
+  <script type="module" src="app.js?v=interactive-1"></script>
   <script type="module" src="brief.mjs?v=sunday-1"></script>
 </head>
 <body>
@@ -44,7 +44,7 @@
         <label>Sector<select id="sector-filter" aria-label="Sector"><option value="all">All sectors</option></select></label>
         <label>Sort within sector<select id="sort" aria-label="Sort within sector"><option value="default">Watchlist order</option><option value="week">Weekly gain</option><option value="loss">Weekly decline</option><option value="name">Ticker A to Z</option></select></label>
       </div>
-      <details class="guide"><summary>How to read the numbers</summary><p><strong>1 day</strong> compares the latest price with the prior session close. <strong>1 week</strong> and <strong>30 days</strong> compare it with the available close on or before that date. These are price changes, not returns including dividends.</p><p>Each chart shows the last seven daily price points. The latest point can reflect an unfinished session. Each chart uses its own scale, so compare percentages, not line angles. Open an asset's ranges for daily and 52-week highs and lows. New assets may have less than a year of history.</p><p>Prices can be delayed. Snapshot time is when this page's data was collected, not the time of each trade. Unavailable data is marked, never filled with an estimate.</p></details>
+      <details class="guide"><summary>How to read the numbers</summary><p><strong>1 day</strong> compares the latest price with the prior session close. <strong>1 week</strong> and <strong>30 days</strong> compare it with the available close on or before that date. These are price changes, not returns including dividends.</p><p>Choose <strong>1D, 1W, or 30D</strong> on any chart. Drag across the line or move the slider to see recorded prices. Arrow keys move one sample; Home and End jump to the first and last. 1D shows five-minute samples from the latest regular stock session, or the latest 24 hours for crypto. Mutual funds may not have intraday data. 1W and 30D show daily samples within the last 7 or 30 calendar days.</p><p>Daily dates use UTC, matching the provider's crypto day boundaries. Intraday times use Eastern time and identify the start of each five-minute bar; its price is that bar's recorded closing value. The latest bar may still be forming. Lines connect samples; they do not supply prices between them. Each chart uses its own scale. Chart windows and return comparisons can start on different dates. Open an asset's ranges for daily and 52-week highs and lows.</p><p>Prices can be delayed. Snapshot time is when this page's data was collected, not the time of each trade. Unavailable data is marked, never filled with an estimate.</p></details>
       <p id="results-status" class="section-note" role="status"></p>
       <div id="sector-list"></div>
       <noscript><p>Enable JavaScript to explore charts, or <a href="data/watchlist.json">download the full public data</a>.</p></noscript>

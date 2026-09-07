@@ -27,6 +27,8 @@ jobs:
           python-version: "3.12"
       - name: Build market snapshot
         run: python scripts/update_market_data.py
+      - name: Check history windows
+        run: python scripts/test_market_history.py
       - name: Commit changed data
         run: |
           if git diff --quiet -- data/watchlist.json; then

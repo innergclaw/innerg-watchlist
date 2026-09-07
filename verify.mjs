@@ -4,10 +4,17 @@ import vm from 'node:vm';
 import { test } from 'node:test';
 import { filterAssets, money, percent, chartPath, escapeHTML } from './display.mjs';
 import { validateBrief, renderBrief, briefDate, safeSource, loadBrief } from './brief.mjs';
+import { seriesFor, coordinates, nearestPoint, chartMarkup, pointTime } from './interactive-charts.mjs';
 const html=fs.readFileSync('index.html','utf8');
 const script=fs.readFileSync('app.js','utf8');
 const css=fs.readFileSync('styles.css','utf8');
 const data=JSON.parse(fs.readFileSync('data/watchlist.json','utf8'));
+test('all assets have three dated chart windows with valid ordered prices',()=>{for(const asset of data.assets){for(const period of ['day','week','month']){const points=seriesFor(asset,period);assert.ok(asset.charts[period]);assert.equal(points.length,asset.charts[period].points.length);assert.ok(points.every((p,i)=>Number.isFinite(p[1])&&(!i||p[0]>points[i-1][0])));}}});
+test('scrubbing snaps to actual timestamps and clamps to endpoints',()=>{const points=[[100,5],[110,8],[200,6]];assert.equal(nearestPoint(points,-1),0);assert.equal(nearestPoint(points,0.1),1);assert.equal(nearestPoint(points,1.1),2);assert.equal(nearestPoint([],0),-1);assert.equal(coordinates(points)[1].x,35.2);});
+test('flat and single-point geometry stays finite',()=>{assert.deepEqual(coordinates([[100,2]]),[{x:160,y:50}]);assert.ok(coordinates([[100,2],[200,2]]).every(p=>p.y===50));});
+test('daily UTC candle dates are not shifted into the prior Eastern day',()=>assert.equal(pointTime(Date.parse('2026-09-07T00:00:00Z')/1000,'week'),'Sep 7, 2026'));
+test('chart data cleaning never converts missing prices to zero',()=>{assert.deepEqual(seriesFor({charts:{day:{points:[[100,null],[200,0],[200,3],[50,2]]}}},'day'),[[50,2],[200,3]]);});
+test('chart controls are labeled, have native keyboard slider, and preserve missing state',()=>{const chart=chartMarkup(data.assets.find(a=>a.symbol==='HAFN'));for(const label of ['1D','1W','30D'])assert.ok(chart.includes(`>${label}</button>`));assert.ok(chart.includes('type="range"'));assert.ok(chart.includes('aria-valuetext'));assert.ok(chartMarkup({symbol:'NONE'}).includes('chart unavailable'));assert.ok(pointTime(1788530400,'day').includes('EDT'));});
 const brief=JSON.parse(fs.readFileSync('data/sunday-brief.json','utf8'));
 test('Hafnia dividend reference retains USD amount and separate exchange dates',()=>{const edition=brief.weekOf==='2026-09-07'?brief:JSON.parse(fs.readFileSync('data/briefs/2026-09-07.json','utf8'));const hafnia=edition.items.find(item=>item.symbol==='HAFN');assert.ok(hafnia.fact.includes('US$0.5003 per share'));assert.ok(hafnia.fact.includes('NOK equivalent'));assert.ok(hafnia.watchFor.includes('September 7, 2026'));assert.ok(hafnia.watchFor.includes('September 8, 2026'));assert.ok(hafnia.watchFor.includes('September 23'));assert.ok(hafnia.watchFor.includes('September 18'));assert.ok(hafnia.sources.some(source=>source.url.includes('key-information-relating-to-dividend')));});
 test('ASST and HAFN have distinct verified ticker identities',()=>{assert.equal(data.assets.find(a=>a.symbol==='ASST').name,'Strive');assert.equal(data.assets.find(a=>a.symbol==='HAFN').name,'Hafnia Limited');});
@@ -35,7 +42,7 @@ function harness({failure=false,hash=''}={}) {
   let fail=failure;const calls=[];const redirects=[];
   const context={Intl,Date,Number,Set,Array,String,console,document:{querySelector:get,querySelectorAll:()=>[],hidden:false},window:{},matchMedia:()=>({matches:true}),location:{hash,replace:path=>redirects.push(path)},setInterval:()=>{},fetch:async url=>{calls.push(url);if(fail)throw Error('offline');return {ok:true,json:async()=>structuredClone(data)};}};
   vm.createContext(context);
-  vm.runInContext(fs.readFileSync('display.mjs','utf8').replaceAll('export ','')+'\n'+script.replace(/^import[^\n]+\n/,''),context);
+  vm.runInContext(fs.readFileSync('display.mjs','utf8').replaceAll('export ','')+'\n'+fs.readFileSync('interactive-charts.mjs','utf8').replace(/^import[^\n]+\n/gm,'').replaceAll('export ','')+'\n'+script.replace(/^import[^\n]+\n/gm,''),context);
   return {nodes,get,calls,redirects,context,setFailure:value=>{fail=value;},settle:()=>new Promise(resolve=>setImmediate(resolve))};
 }
 test('signed-out load renders full data with only a public JSON request',async()=>{const h=harness();await h.settle();assert.equal((h.get('#sector-list').innerHTML.match(/class="asset-card"/g)||[]).length,33);assert.equal(h.calls.length,1);assert.match(h.calls[0],/^data\/watchlist.json/);assert.equal(h.get('#results-status').textContent,'33 of 33 assets shown');});
