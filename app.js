@@ -1,5 +1,6 @@
 import { escapeHTML, money, percent, tone, filterAssets, chartPath } from './display.mjs';
 import { chartMarkup, bindCharts } from './interactive-charts.mjs';
+import { topWeeklyMover, moverExplanation } from './weekly-mover.mjs';
 
 const DATA_URL = 'data/watchlist.json';
 let snapshot = null;
@@ -50,8 +51,8 @@ function renderSnapshot(data) {
   sectorFilter.innerHTML = '<option value="all">All sectors</option>' + data.sectors.map(s=>`<option value="${esc(s.id)}">${esc(s.name)}</option>`).join('');
   sectorFilter.value = selected;
   document.querySelector('#asset-count').textContent = `${data.assets.length} assets / ${data.sectors.length} sectors / Free access`;
-  const leaders = [...data.assets].filter(a=>Number.isFinite(a.returns?.week)).sort((a,b)=>b.returns.week-a.returns.week).slice(0,3);
-  document.querySelector('#leader-grid').innerHTML = leaders.length ? leaders.map(a=>`<article class="leader-card"><div class="leader-top"><div><h3>${esc(a.symbol)}</h3><p>${esc(a.name)}</p></div><strong class="${tone(a.returns.week)}">${percent(a.returns.week)}<small>1 week</small></strong></div>${chart(a,'leader')}</article>`).join('') : '<p>Weekly data is unavailable. Try refreshing shortly.</p>';
+  const a = topWeeklyMover(data.assets);
+  document.querySelector('#leader-grid').innerHTML = a ? `<article class="leader-card"><div class="leader-top"><div><h3>${esc(a.symbol)}</h3><p>${esc(a.name)}</p></div><strong class="${tone(a.returns.week)}">${percent(a.returns.week)}<small>1 week</small></strong></div>${chart(a,'leader')}${moverExplanation(a.symbol)}</article>` : '<p>Weekly data is unavailable. Try refreshing shortly.</p>';
   renderAssets();
 }
 
