@@ -7,6 +7,7 @@ const html=fs.readFileSync('index.html','utf8');
 const script=fs.readFileSync('app.js','utf8');
 const css=fs.readFileSync('styles.css','utf8');
 const data=JSON.parse(fs.readFileSync('data/watchlist.json','utf8'));
+test('Market Pulse name and approved tagline match page and sharing metadata',()=>{assert.ok(html.includes('<h1 id="page-title">INNERG Market Pulse</h1>'));assert.ok(html.includes('<title>INNERG Market Pulse | INNERG INTEL</title>'));assert.ok(html.includes('What moved. What matters. What I\'m watching.'));assert.ok(html.includes('property="og:title" content="INNERG Market Pulse"'));});
 test('all 31 assets and six sectors are public',()=>{assert.equal(data.assets.length,31);assert.equal(data.sectors.length,6);assert.equal(new Set(data.assets.map(a=>a.symbol)).size,31);});
 test('Zcash stays first and Cash Cat stays removed',()=>assert.deepEqual(data.assets.filter(a=>a.sector==='crypto').map(a=>a.symbol),['ZEC','HYPE','BTC','SOL']));
 test('search ticker and name without case sensitivity',()=>{assert.equal(filterAssets(data.assets,' zEc ')[0].symbol,'ZEC');assert.equal(filterAssets(data.assets,'bitcoin')[0].symbol,'BTC');});

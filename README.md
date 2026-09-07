@@ -1,6 +1,8 @@
-# INNERG Market Watchlist
+# INNERG Market Pulse
 
 Public research page for the Home Base ecosystem. All 31 assets across six sectors are available without login or payment. The page does not load Supabase Auth or call checkout. Paid INNERG ID membership, private videos, and other ecosystem access are unchanged.
+
+Public name: INNERG Market Pulse. Tagline: What moved. What matters. What I'm watching. The existing `innerg-watchlist` URL stays unchanged. Future live shows or daily editions are not yet advertised as available or scheduled.
 
 ## Data
 
