@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T17:56:40.193704Z",
+  "generatedAt": "2026-09-07T18:22:22.823179Z",
   "marketLabel": "Latest scheduled snapshot",
   "sources": [
     "Yahoo Finance chart data",
@@ -306,7 +306,7 @@
       "symbol": "ZEC",
       "name": "Zcash",
       "sector": "crypto",
-      "price": 1169.97,
+      "price": 1160.53,
       "currency": "USD",
       "dayHigh": 1227.8398,
       "dayLow": 1146.5918,
@@ -319,12 +319,12 @@
         1024.216675,
         1024.817627,
         1228.025757,
-        1169.969971
+        1160.530029
       ],
       "returns": {
-        "day": -3.0133,
-        "week": 38.0286,
-        "month": 130.4346
+        "day": -5.3417,
+        "week": 36.9149,
+        "month": 128.5753
       },
       "historySessions": 366,
       "status": "ok"
@@ -333,7 +333,7 @@
       "symbol": "HYPE",
       "name": "Hyperliquid",
       "sector": "crypto",
-      "price": 85.205,
+      "price": 85.109,
       "currency": "USD",
       "dayHigh": 88.308,
       "dayLow": 84.698,
@@ -346,12 +346,12 @@
         84.452,
         85.428,
         87.943,
-        85.205
+        85.109
       ],
       "returns": {
-        "day": -3.1134,
-        "week": 1.2285,
-        "month": 54.71
+        "day": -3.2225,
+        "week": 1.1144,
+        "month": 54.5357
       },
       "historySessions": 371,
       "status": "ok"
@@ -360,7 +360,7 @@
       "symbol": "BTC",
       "name": "Bitcoin",
       "sector": "crypto",
-      "price": 79167.52,
+      "price": 79184.63,
       "currency": "USD",
       "dayHigh": 80387.91,
       "dayLow": 78773.36,
@@ -373,12 +373,12 @@
         79671.96875,
         79823.867188,
         80350.046875,
-        79167.523438
+        79184.632812
       ],
       "returns": {
-        "day": -0.719,
-        "week": 0.7879,
-        "month": 21.975
+        "day": -0.947,
+        "week": 0.8097,
+        "month": 22.0014
       },
       "historySessions": 366,
       "status": "ok"
@@ -387,7 +387,7 @@
       "symbol": "SOL",
       "name": "Solana",
       "sector": "crypto",
-      "price": 104.08,
+      "price": 103.96,
       "currency": "USD",
       "dayHigh": 106.80235,
       "dayLow": 103.17939,
@@ -400,12 +400,12 @@
         101.949486,
         103.18763,
         106.447632,
-        104.080002
+        103.959999
       ],
       "returns": {
-        "day": -1.99623,
-        "week": 1.0516,
-        "month": 36.9974
+        "day": -1.90602,
+        "week": 0.9351,
+        "month": 36.8395
       },
       "historySessions": 366,
       "status": "ok"
@@ -929,7 +929,7 @@
       "symbol": "ZEC",
       "name": "Zcash",
       "sector": "crypto",
-      "price": 1169.97,
+      "price": 1160.53,
       "currency": "USD",
       "dayHigh": 1227.8398,
       "dayLow": 1146.5918,
@@ -942,12 +942,12 @@
         1024.216675,
         1024.817627,
         1228.025757,
-        1169.969971
+        1160.530029
       ],
       "returns": {
-        "day": -3.0133,
-        "week": 38.0286,
-        "month": 130.4346
+        "day": -5.3417,
+        "week": 36.9149,
+        "month": 128.5753
       },
       "historySessions": 366,
       "status": "ok"
