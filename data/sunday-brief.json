@@ -1,0 +1,34 @@
+{
+  "edition": "Launch edition",
+  "publishedAt": "2026-09-07T18:00:00Z",
+  "weekOf": "2026-09-07",
+  "priceCapturedAt": "2026-09-07T17:56:40.193704Z",
+  "items": [
+    {
+      "symbol": "ASST",
+      "name": "Strive",
+      "price": 27.14,
+      "headline": "Bitcoin funding plans meet the execution test",
+      "newsDate": "2026-09-03",
+      "context": "Recent reporting",
+      "fact": "The Block reported that Strive's CEO discussed potential funding from warrants expiring in October. The larger Bitcoin accumulation scenario was conditional, not his base case.",
+      "bullCase": "Additional capital could support Bitcoin purchases if warrant holders exercise. That is a possible outcome, not completed funding.",
+      "watchFor": "Check company filings for actual warrant exercises and Bitcoin per share. Separate completed purchases from management targets.",
+      "risk": "New shares can dilute existing holders. Bitcoin can fall, and potential warrant proceeds are not guaranteed.",
+      "sources": [{"label": "The Block · Sep 3", "url": "https://www.theblock.co/news/markets/2026-09-03-strive-ceo-company-could-end-2026-second-largest-bitcoin-holder-asst-413455"}]
+    },
+    {
+      "symbol": "HAFN",
+      "name": "Hafnia Limited",
+      "price": 9.22,
+      "headline": "Strong results, but watch the next freight rates",
+      "newsDate": "2026-08-28",
+      "context": "Older results context",
+      "fact": "Hafnia reported Q2 net profit of $277.8 million, versus $75.3 million a year earlier. Profit included $39.3 million from vessel sales.",
+      "bullCase": "Stronger earnings and a lower debt-to-vessel-value ratio support the company's financial position.",
+      "watchFor": "Compare the next fleet booking update with Q2. Rates already booked for 80% of Q3 earning days averaged $30,716 per day, below Q2's $44,093.",
+      "risk": "Tanker rates are cyclical. Lower rates and non-recurring vessel-sale gains mean Q2 profit is not a promise of future earnings or dividends.",
+      "sources": [{"label": "Hafnia company release · Aug 28", "url": "https://markets.financialcontent.com/wss/article/bizwire-2026-8-28-hafnia-limited-announces-financial-results-for-the-three-and-six-months-ended-30-june-2026"}]
+    }
+  ]
+}

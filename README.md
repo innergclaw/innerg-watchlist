@@ -1,6 +1,6 @@
 # INNERG Market Pulse
 
-Public research page for the Home Base ecosystem. All 31 assets across six sectors are available without login or payment. The page does not load Supabase Auth or call checkout. Paid INNERG ID membership, private videos, and other ecosystem access are unchanged.
+Public research page for the Home Base ecosystem. All 33 assets across six sectors are available without login or payment. The page does not load Supabase Auth or call checkout. Paid INNERG ID membership, private videos, and other ecosystem access are unchanged.
 
 Public name: INNERG Market Pulse. Tagline: What moved. What matters. What I'm watching. The existing `innerg-watchlist` URL stays unchanged. Future live shows or daily editions are not yet advertised as available or scheduled.
 
@@ -14,11 +14,18 @@ Legacy files in `supabase/` are retained for the existing shared membership infr
 
 The Robinhood referral is public and disclosed. This page is research and education, not financial advice.
 
-## Checks and deployment
+## Sunday brief
+
+`data/sunday-brief.json` supplies the compact public "What to watch for" section. Each item separates dated news, bullish interpretation, a development to watch, and downside risk. Prices are fixed references for that edition, not entry targets. Editions older than eight days are labeled as previous editions. A brief error does not block the watchlist.
+
+Follow [the Sunday research workflow](docs/sunday-research.md) to add tickers, research, archive, test, and publish. The Sunday 11 AM Eastern Codex heartbeat is a local scheduled research run, not a guaranteed cloud news feed. The existing GitHub price refresh remains separate.
+
+## Verification
 
 ```sh
 python3 scripts/update_market_data.py
 node --check app.js
+node --check brief.mjs
 node --test verify.mjs
 python3 -m http.server 4173
 ```

@@ -13,8 +13,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=public-desk-1" />
+  <link rel="stylesheet" href="styles.css?v=sunday-1" />
   <script type="module" src="app.js?v=public-desk-1"></script>
+  <script type="module" src="brief.mjs?v=sunday-1"></script>
 </head>
 <body>
   <a class="skip-link" href="#sectors">Skip to watchlist</a>
@@ -28,6 +29,13 @@
       <div class="section-heading"><div><p class="eyebrow">Weekly movers</p><h2 id="pulse-title">What moved this week.</h2></div><a href="#sectors">Explore all assets</a></div>
       <p class="section-note">The three highest weekly changes in this watchlist. A move is context, not a buy signal.</p>
       <div class="leader-grid" id="leader-grid"><p role="status">Loading weekly charts.</p></div>
+    </section>
+    <section class="sunday-brief" id="sunday-brief" aria-labelledby="brief-title">
+      <div class="section-heading"><div><p class="eyebrow">The Sunday brief</p><h2 id="brief-title">What to watch for.</h2></div></div>
+      <p class="section-note">Bullish developments. Questions worth asking. Risks worth knowing. Research, not trade instructions.</p>
+      <p id="brief-date" class="section-note" role="status">Loading the latest edition.</p>
+      <div id="brief-items"></div>
+      <noscript><a href="data/sunday-brief.json">Read the latest research data</a></noscript>
     </section>
     <section class="sectors" id="sectors" aria-labelledby="sectors-title">
       <div class="section-heading"><div><p class="eyebrow" id="asset-count">Full public watchlist</p><h2 id="sectors-title">Find what interests you.</h2></div></div>
