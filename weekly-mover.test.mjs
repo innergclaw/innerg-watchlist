@@ -14,3 +14,7 @@ test('context cannot follow a different leader or outlive its review',()=>{
   assert.doesNotMatch(moverExplanation('ZEC',now+8*86400000),/Wu Blockchain/);
   assert.match(moverExplanation('ZEC',now),/noopener noreferrer/);
 });
+test('published mover explanation excludes Reddit material and links',()=>{
+  assert.doesNotMatch(JSON.stringify(moverContext),/reddit/i);
+  assert.doesNotMatch(moverExplanation('ZEC',Date.parse(moverContext.reviewedAt)),/reddit/i);
+});

@@ -1,6 +1,6 @@
 import { escapeHTML, money, percent, tone, filterAssets, chartPath } from './display.mjs';
 import { chartMarkup, bindCharts } from './interactive-charts.mjs';
-import { topWeeklyMover, moverExplanation } from './weekly-mover.mjs';
+import { topWeeklyMover, moverExplanation } from './weekly-mover.mjs?v=financial-1';
 
 const DATA_URL = 'data/watchlist.json';
 let snapshot = null;
