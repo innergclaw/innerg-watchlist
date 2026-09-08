@@ -1,0 +1,267 @@
+{
+  "checkedAt": "2026-09-08T17:46:55.592063+00:00",
+  "lastSuccessfulAt": "2026-09-08T17:46:55.592063+00:00",
+  "sources": [
+    {
+      "name": "CoinDesk",
+      "status": "ok",
+      "checkedAt": "2026-09-08T17:46:55.592063+00:00"
+    },
+    {
+      "name": "GlobeNewswire public companies",
+      "status": "ok",
+      "checkedAt": "2026-09-08T17:46:55.592063+00:00"
+    },
+    {
+      "name": "GlobeNewswire dividends",
+      "status": "ok",
+      "checkedAt": "2026-09-08T17:46:55.592063+00:00"
+    },
+    {
+      "name": "GlobeNewswire earnings",
+      "status": "ok",
+      "checkedAt": "2026-09-08T17:46:55.592063+00:00"
+    }
+  ],
+  "coverage": [
+    {
+      "symbol": "SKHY",
+      "name": "SK hynix ADR",
+      "count": 0
+    },
+    {
+      "symbol": "ARM",
+      "name": "Arm Holdings",
+      "count": 0
+    },
+    {
+      "symbol": "DRAM",
+      "name": "Themes Generative AI ETF",
+      "count": 0
+    },
+    {
+      "symbol": "IREN",
+      "name": "IREN Limited",
+      "count": 0
+    },
+    {
+      "symbol": "MRVL",
+      "name": "Marvell Technology",
+      "count": 0
+    },
+    {
+      "symbol": "CRWV",
+      "name": "CoreWeave",
+      "count": 0
+    },
+    {
+      "symbol": "WDC",
+      "name": "Western Digital",
+      "count": 0
+    },
+    {
+      "symbol": "HOOD",
+      "name": "Robinhood Markets",
+      "count": 0
+    },
+    {
+      "symbol": "OPEN",
+      "name": "Opendoor Technologies",
+      "count": 0
+    },
+    {
+      "symbol": "ASST",
+      "name": "Strive",
+      "count": 0
+    },
+    {
+      "symbol": "ZEC",
+      "name": "Zcash",
+      "count": 1
+    },
+    {
+      "symbol": "HYPE",
+      "name": "Hyperliquid",
+      "count": 0
+    },
+    {
+      "symbol": "BTC",
+      "name": "Bitcoin",
+      "count": 8
+    },
+    {
+      "symbol": "SOL",
+      "name": "Solana",
+      "count": 0
+    },
+    {
+      "symbol": "USO",
+      "name": "United States Oil Fund",
+      "count": 0
+    },
+    {
+      "symbol": "GSG",
+      "name": "iShares S&P GSCI Commodity Trust",
+      "count": 0
+    },
+    {
+      "symbol": "OXY",
+      "name": "Occidental Petroleum",
+      "count": 0
+    },
+    {
+      "symbol": "MTDR",
+      "name": "Matador Resources",
+      "count": 0
+    },
+    {
+      "symbol": "COP",
+      "name": "ConocoPhillips",
+      "count": 0
+    },
+    {
+      "symbol": "HAFN",
+      "name": "Hafnia Limited",
+      "count": 0
+    },
+    {
+      "symbol": "CORN",
+      "name": "Teucrium Corn Fund",
+      "count": 0
+    },
+    {
+      "symbol": "CANE",
+      "name": "Teucrium Sugar Fund",
+      "count": 0
+    },
+    {
+      "symbol": "EMN",
+      "name": "Eastman Chemical",
+      "count": 0
+    },
+    {
+      "symbol": "LYB",
+      "name": "LyondellBasell Industries",
+      "count": 0
+    },
+    {
+      "symbol": "OLN",
+      "name": "Olin Corporation",
+      "count": 0
+    },
+    {
+      "symbol": "NTR",
+      "name": "Nutrien",
+      "count": 0
+    },
+    {
+      "symbol": "MOS",
+      "name": "The Mosaic Company",
+      "count": 0
+    },
+    {
+      "symbol": "SCHD",
+      "name": "Schwab U.S. Dividend Equity ETF",
+      "count": 0
+    },
+    {
+      "symbol": "VOO",
+      "name": "Vanguard S&P 500 ETF",
+      "count": 0
+    },
+    {
+      "symbol": "QQQ",
+      "name": "Invesco QQQ Trust",
+      "count": 0
+    },
+    {
+      "symbol": "VTV",
+      "name": "Vanguard Value ETF",
+      "count": 0
+    },
+    {
+      "symbol": "VTI",
+      "name": "Vanguard Total Stock Market ETF",
+      "count": 0
+    },
+    {
+      "symbol": "FXAIX",
+      "name": "Fidelity 500 Index Fund",
+      "count": 0
+    }
+  ],
+  "items": [
+    {
+      "headline": "Bitcoin rally has more room as volatility shorts unwind, Two Prime CEO says",
+      "url": "https://www.coindesk.com/markets/2026/09/03/bitcoin-rally-has-more-room-as-volatility-shorts-unwind-two-prime-ceo-says",
+      "publishedAt": "2026-09-08T13:18:21+00:00",
+      "source": "CoinDesk",
+      "kind": "reporting",
+      "symbol": "BTC"
+    },
+    {
+      "headline": "Bitcoin\u2019s complexity paradox: How layer-2 scalers became AI's main target",
+      "url": "https://www.coindesk.com/markets/2026/09/08/bitcoin-security-risks-grow-as-ai-uncovers-hidden-vulnerabilities",
+      "publishedAt": "2026-09-08T12:09:26+00:00",
+      "source": "CoinDesk",
+      "kind": "reporting",
+      "symbol": "BTC"
+    },
+    {
+      "headline": "Bitcoin ETFs are still $1 billion shy of breaking even in 2026",
+      "url": "https://www.coindesk.com/daybook-us/2026/09/08/bitcoin-etfs-are-still-usd1-billion-shy-of-breaking-even-in-2026",
+      "publishedAt": "2026-09-08T11:26:27+00:00",
+      "source": "CoinDesk",
+      "kind": "reporting",
+      "symbol": "BTC"
+    },
+    {
+      "headline": "Bitcoin slips to $78,800 as BNB and DeFi tokens buck the selloff",
+      "url": "https://www.coindesk.com/markets/2026/09/08/bitcoin-slips-to-usd78-800-as-bnb-and-defi-tokens-buck-the-selloff",
+      "publishedAt": "2026-09-08T10:33:17+00:00",
+      "source": "CoinDesk",
+      "kind": "reporting",
+      "symbol": "BTC"
+    },
+    {
+      "headline": "Live updates: Bitcoin climbs from sessions lows as oil prices pull back",
+      "url": "https://www.coindesk.com/tech/2026/09/08/live-updates",
+      "publishedAt": "2026-09-08T08:30:30+00:00",
+      "source": "CoinDesk",
+      "kind": "reporting",
+      "symbol": "BTC"
+    },
+    {
+      "headline": "Bitcoin\u2019s golden cross is here",
+      "url": "https://www.coindesk.com/markets/2026/09/08/bitcoin-s-golden-cross-is-here",
+      "publishedAt": "2026-09-08T05:56:23+00:00",
+      "source": "CoinDesk",
+      "kind": "reporting",
+      "symbol": "BTC"
+    },
+    {
+      "headline": "Liquid Network gets back 3,400 bitcoin from whitehat hackers; talks underway for the rest",
+      "url": "https://www.coindesk.com/markets/2026/09/08/white-hat-hackers-return-most-of-usd320m-bitcoin-taken-from-liquid-network",
+      "publishedAt": "2026-09-08T04:41:17+00:00",
+      "source": "CoinDesk",
+      "kind": "reporting",
+      "symbol": "BTC"
+    },
+    {
+      "headline": "Bitcoin slips under $79,000, Zcash leads losses as Fed hike odds hold near 60%",
+      "url": "https://www.coindesk.com/markets/2026/09/08/bitcoin-slips-under-usd79-000-zcash-leads-losses-as-fed-hike-odds-hold-near-60",
+      "publishedAt": "2026-09-08T04:40:57+00:00",
+      "source": "CoinDesk",
+      "kind": "reporting",
+      "symbol": "ZEC"
+    },
+    {
+      "headline": "Bitcoin slips under $79,000, Zcash leads losses as Fed hike odds hold near 60%",
+      "url": "https://www.coindesk.com/markets/2026/09/08/bitcoin-slips-under-usd79-000-zcash-leads-losses-as-fed-hike-odds-hold-near-60",
+      "publishedAt": "2026-09-08T04:40:57+00:00",
+      "source": "CoinDesk",
+      "kind": "reporting",
+      "symbol": "BTC"
+    }
+  ]
+}

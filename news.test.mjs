@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {safeNewsURL,renderNews,newsStatus,loadNews} from './news.mjs';
+test('news links reject spoofed and unsafe hosts',()=>{for(const url of ['https://coindesk.com.evil.test','javascript:alert(1)','https://a:b@coindesk.com','https://reddit.com'])assert.equal(safeNewsURL(url),'');});
+test('news content escapes HTML',()=>{const html=renderNews([{headline:'<img onerror=x>',symbol:'BTC',kind:'reporting',source:'CoinDesk',url:'https://coindesk.com/a',publishedAt:'2026-09-08T00:00:00Z'}]);assert.ok(!html.includes('<img'));assert.ok(html.includes('noopener noreferrer'));});
+test('stale and partial news are explicit',()=>{assert.match(newsStatus({checkedAt:'2020-01-01',sources:[{status:'unavailable'}],coverage:[]}),/Updates delayed.*coverage is partial/);});
+test('news failure leaves public charts usable',async()=>{const status={};await loadNews({querySelector:()=>status},async()=>{throw Error('offline')});assert.match(status.textContent,/charts and Sunday Brief remain open/);});
+test('member links and top arrow use verified destinations',()=>{const html=fs.readFileSync('index.html','utf8');assert.equal((html.match(/href="https:\/\/nasirr.innergintel.org\/innerg-id\/"/g)||[]).length,2);assert.ok(html.includes('aria-label="Scroll to top"'));assert.ok(html.includes('id="top"'));});
+test('news coverage includes every tracked asset',()=>{const data=JSON.parse(fs.readFileSync('data/asset-news.json'));const assets=JSON.parse(fs.readFileSync('data/watchlist.json')).assets;assert.deepEqual(data.coverage.map(a=>a.symbol).sort(),assets.map(a=>a.symbol).sort());});

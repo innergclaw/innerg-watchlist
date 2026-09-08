@@ -13,13 +13,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=leader-1" />
+  <link rel="stylesheet" href="styles.css?v=news-1" />
+  <script type="module" src="news.mjs?v=1"></script>
   <script type="module" src="app.js?v=financial-1"></script>
   <script type="module" src="brief.mjs?v=sunday-1"></script>
 </head>
 <body>
   <a class="skip-link" href="#sectors">Skip to watchlist</a>
-  <header class="site-header"><a href="https://nasirr.innergintel.org/">INNERG INTEL / HOME BASE</a><span class="public-label">Open research</span></header>
+  <header class="site-header" id="top"><a href="https://nasirr.innergintel.org/innerg-id/">INNERG INTEL / MEMBER HUB</a><span class="public-label">Open research</span></header>
   <main>
     <section class="hero" aria-labelledby="page-title">
       <div><p class="eyebrow">INNERG INTEL / Research desk</p><h1 id="page-title">INNERG Market Pulse</h1><p class="hero-copy">What moved. What matters. What I'm watching.</p><p class="intro">Stocks, funds, and crypto, with context you can understand. The full watchlist is open. No account or payment needed.</p></div>
@@ -37,6 +38,15 @@
       <div id="brief-items"></div>
       <noscript><a href="data/sunday-brief.json">Read the latest research data</a></noscript>
     </section>
+    <section class="asset-news" id="asset-news" aria-labelledby="news-title">
+      <div class="section-heading"><div><p class="eyebrow">Asset news</p><h2 id="news-title">Keep up with what changed.</h2></div><a href="#sectors">View charts</a></div>
+      <p class="section-note">Recent headlines from selected financial reporting and company releases. Checked every two hours. This is a filtered feed, not complete market coverage or a buy signal.</p>
+      <p id="news-status" class="section-note" role="status">Checking the latest news snapshot.</p>
+      <label class="news-filter">Choose an asset<select id="news-filter"><option value="all">All tracked assets</option></select></label>
+      <div id="news-items"></div>
+      <details class="news-coverage"><summary>Coverage and sources</summary><p>Each tracked asset is checked against CoinDesk reporting and GlobeNewswire company releases. Releases are company statements, not independent analysis. Headlines link to the publisher. No Reddit. A missing headline does not mean nothing happened.</p><div id="news-coverage"></div></details>
+      <noscript><a href="data/asset-news.json">Read the news snapshot</a></noscript>
+    </section>
     <section class="sectors" id="sectors" aria-labelledby="sectors-title">
       <div class="section-heading"><div><p class="eyebrow" id="asset-count">Full public watchlist</p><h2 id="sectors-title">Find what interests you.</h2></div></div>
       <div class="filters">
@@ -51,6 +61,7 @@
     </section>
     <aside class="referral" aria-labelledby="referral-title"><div><p class="eyebrow">New to investing?</p><h2 id="referral-title">Learn first. Start at your own pace.</h2><p>Explore Robinhood through my referral link. We may both receive a reward. Investing involves risk.</p></div><a href="https://join.robinhood.com/nasirrm" target="_blank" rel="noopener noreferrer sponsored">View my Robinhood invite</a></aside>
   </main>
-  <footer><p>Research and education. Not financial advice.<br />Data: Yahoo Finance and Hyperliquid.</p><a href="https://nasirr.innergintel.org/">Return to Home Base</a></footer>
+  <footer><p>Research and education. Not financial advice.<br />Data: Yahoo Finance and Hyperliquid.</p><a href="https://nasirr.innergintel.org/innerg-id/">Return to member hub</a></footer>
+  <a class="back-to-top" href="#top" aria-label="Scroll to top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 12 6-6 6 6M12 6v13"/></svg></a>
 </body>
 </html>
