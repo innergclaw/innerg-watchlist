@@ -71,7 +71,7 @@ document.querySelector('#research-code-form').onsubmit=async event=>{
     const {error}=await client.auth.verifyOtp({email:pendingEmail,token,type:'email'});if(error)throw error;
   }catch{message.textContent='That code is invalid or expired. Enter the complete code or request another.';}finally{button.disabled=false;}
 };
-signout.onclick=async()=>{++revision;lock();const{error}=await client.auth.signOut({scope:'local'});if(error)message.textContent='Sign-out failed. Please retry.';};
+signout.onclick=async()=>{++revision;lock();message.textContent='Signing out…';signout.disabled=true;try{const{error}=await client.auth.signOut({scope:'local'});if(error)throw error;}catch{message.textContent='Sign-out failed. Please retry.';}finally{signout.disabled=false;}};
 document.querySelector('#research-retry').onclick=async()=>{const{data}=await client.auth.getSession();await check(data.session);};
 async function preference(value){
   const {error}=await client.functions.invoke('member-research',{body:{dailyEmail:value}});
