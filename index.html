@@ -13,20 +13,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=news-1" />
+  <link rel="stylesheet" href="styles.css?v=section-nav-1" />
+  <script type="module" src="section-nav.mjs?v=1"></script>
   <script type="module" src="news.mjs?v=1"></script>
   <script type="module" src="app.js?v=financial-1"></script>
   <script type="module" src="brief.mjs?v=sunday-1"></script>
 </head>
-<body>
+<body id="top">
   <a class="skip-link" href="#sectors">Skip to watchlist</a>
-  <header class="site-header" id="top"><a href="https://nasirr.innergintel.org/innerg-id/">INNERG INTEL / MEMBER HUB</a><span class="public-label">Open research</span></header>
+  <header class="site-header">
+    <a href="https://nasirr.innergintel.org/innerg-id/">INNERG INTEL / MEMBER HUB</a><span class="public-label">Open research</span>
+    <nav class="section-nav" aria-label="Market Pulse sections">
+      <a href="#overview">Overview</a>
+      <a href="#weekly-mover">Weekly mover</a>
+      <a href="#sunday-brief">Sunday Brief</a>
+      <a href="#asset-news">Asset news</a>
+      <a href="#sectors">Watchlist</a>
+      <a href="#referral">Referral</a>
+    </nav>
+  </header>
   <main>
-    <section class="hero" aria-labelledby="page-title">
+    <section class="hero" id="overview" aria-labelledby="page-title">
       <div><p class="eyebrow">INNERG INTEL / Research desk</p><h1 id="page-title">INNERG Market Pulse</h1><p class="hero-copy">What moved. What matters. What I'm watching.</p><p class="intro">Stocks, funds, and crypto, with context you can understand. The full watchlist is open. No account or payment needed.</p></div>
       <div class="snapshot-clock"><span id="market-state">Loading snapshot</span><strong id="snapshot-time">Please wait</strong><small>Scheduled data, not a live trading feed.</small><button id="refresh" type="button">Refresh data</button></div>
     </section>
-    <section class="pulse" aria-labelledby="pulse-title">
+    <section class="pulse" id="weekly-mover" aria-labelledby="pulse-title">
       <div class="section-heading"><div><p class="eyebrow">Weekly movers</p><h2 id="pulse-title">What moved this week.</h2></div><a href="#sectors">Explore all assets</a></div>
       <p class="section-note">The highest weekly percentage change in this watchlist. One asset, its chart, and the context. A move is not a buy signal.</p>
       <div class="leader-grid" id="leader-grid"><p role="status">Loading weekly charts.</p></div>
@@ -59,7 +70,7 @@
       <div id="sector-list"></div>
       <noscript><p>Enable JavaScript to explore charts, or <a href="data/watchlist.json">download the full public data</a>.</p></noscript>
     </section>
-    <aside class="referral" aria-labelledby="referral-title"><div><p class="eyebrow">New to investing?</p><h2 id="referral-title">Learn first. Start at your own pace.</h2><p>Explore Robinhood through my referral link. We may both receive a reward. Investing involves risk.</p></div><a href="https://join.robinhood.com/nasirrm" target="_blank" rel="noopener noreferrer sponsored">View my Robinhood invite</a></aside>
+    <aside class="referral" id="referral" aria-labelledby="referral-title"><div><p class="eyebrow">New to investing?</p><h2 id="referral-title">Learn first. Start at your own pace.</h2><p>Explore Robinhood through my referral link. We may both receive a reward. Investing involves risk.</p></div><a href="https://join.robinhood.com/nasirrm" target="_blank" rel="noopener noreferrer sponsored">View my Robinhood invite</a></aside>
   </main>
   <footer><p>Research and education. Not financial advice.<br />Data: Yahoo Finance and Hyperliquid.</p><a href="https://nasirr.innergintel.org/innerg-id/">Return to member hub</a></footer>
   <a class="back-to-top" href="#top" aria-label="Scroll to top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 12 6-6 6 6M12 6v13"/></svg></a>
