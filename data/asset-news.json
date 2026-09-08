@@ -1,26 +1,26 @@
 {
-  "checkedAt": "2026-09-08T17:46:55.592063+00:00",
-  "lastSuccessfulAt": "2026-09-08T17:46:55.592063+00:00",
+  "checkedAt": "2026-09-08T17:49:48.370889+00:00",
+  "lastSuccessfulAt": "2026-09-08T17:49:48.370889+00:00",
   "sources": [
     {
       "name": "CoinDesk",
       "status": "ok",
-      "checkedAt": "2026-09-08T17:46:55.592063+00:00"
+      "checkedAt": "2026-09-08T17:49:48.370889+00:00"
     },
     {
       "name": "GlobeNewswire public companies",
       "status": "ok",
-      "checkedAt": "2026-09-08T17:46:55.592063+00:00"
+      "checkedAt": "2026-09-08T17:49:48.370889+00:00"
     },
     {
       "name": "GlobeNewswire dividends",
       "status": "ok",
-      "checkedAt": "2026-09-08T17:46:55.592063+00:00"
+      "checkedAt": "2026-09-08T17:49:48.370889+00:00"
     },
     {
       "name": "GlobeNewswire earnings",
       "status": "ok",
-      "checkedAt": "2026-09-08T17:46:55.592063+00:00"
+      "checkedAt": "2026-09-08T17:49:48.370889+00:00"
     }
   ],
   "coverage": [
