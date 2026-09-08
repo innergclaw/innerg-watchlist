@@ -1,6 +1,6 @@
 import { escapeHTML, money, percent, tone, filterAssets, chartPath } from './display.mjs';
 import { chartMarkup, bindCharts } from './interactive-charts.mjs';
-import { topWeeklyMover, moverExplanation } from './weekly-mover.mjs?v=financial-1';
+import { topWeeklyMover, moverExplanation } from './weekly-mover.mjs';
 
 const DATA_URL = 'data/watchlist.json';
 let snapshot = null;
@@ -77,6 +77,6 @@ search.addEventListener('input', renderAssets);
 sectorFilter.addEventListener('change', renderAssets);
 sort.addEventListener('change', renderAssets);
 refresh.addEventListener('click', loadData);
-if(location.hash === '#member-access') location.replace('#sectors');
+document.addEventListener?.('research-change',()=>{if(snapshot){const data=snapshot;snapshot=null;renderSnapshot(data);}});
 loadData();
 setInterval(()=>{if(!document.hidden && !document.activeElement?.closest('.interactive-chart')) loadData();}, 60_000);

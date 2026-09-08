@@ -1,4 +1,5 @@
 import { escapeHTML } from './display.mjs';
+import { safeSource } from './brief.mjs';
 
 export function topWeeklyMover(assets) {
   return assets.filter(a => Number.isFinite(a.returns?.week))
@@ -6,22 +7,16 @@ export function topWeeklyMover(assets) {
 }
 
 // Dated editorial context. Never reuse one asset's story for another leader.
-export const moverContext = {
-  symbol: 'ZEC',
-  reviewedAt: '2026-09-07T20:41:15Z',
-  x: 'Wu Blockchain reported losses on bets that ZEC would fall. Closing those bets can add buying pressure. In simple terms: people bet down, price goes up, some must buy back. That can push a rally further.',
-  caution: 'This helps explain the discussion around the move. It does not prove one cause. A fast rise can reverse quickly.',
-  sources: [
-    { label: 'Wu Blockchain on X · Sep 6', url: 'https://x.com/WuBlockchain/status/2096585867246846265' },
-    { label: 'X post verified in CoinCodex report', url: 'https://coincodex.com/article/91605/zcash-price-surged-past-1200-with-etf-inflows-fueling-zec-short-squeeze/' }
-  ]
-};
+export let moverContext = null;
+export function setMoverContext(value) { moverContext=value; }
 
 export function moverExplanation(symbol, now = Date.now()) {
+  if(!moverContext)return '<div class="mover-context"><h4>What is behind the move?</h4><p>Members can read the news, context, and risks behind the numbers.</p><a href="#member-access">Sign in with INNERG ID</a> · <a href="https://nasirr.innergintel.org/innergid/">Become a member</a></div>';
   const age = now - Date.parse(moverContext.reviewedAt);
-  if (symbol !== moverContext.symbol || age > 7 * 86400000 || age < 0) {
+  if (symbol !== moverContext.symbol || !Number.isFinite(age) || age > 7 * 86400000 || age < 0) {
     return '<div class="mover-context"><h4>What is behind the move?</h4><p>A fresh news review for this weekly leader is not available yet. The chart and ranking use the latest collected price data.</p></div>';
   }
   const esc = escapeHTML;
-  return `<div class="mover-context"><h4>What is behind the move?</h4><p class="mover-reviewed">Financial reporting · Reviewed Sep 7, 2026</p><p><strong>X reporting.</strong> ${esc(moverContext.x)}</p><p class="mover-caution">${esc(moverContext.caution)}</p><nav aria-label="Weekly mover sources">${moverContext.sources.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.label)}</a>`).join('')}</nav></div>`;
+  const reviewed=new Date(moverContext.reviewedAt).toLocaleDateString('en-US',{timeZone:'America/New_York',month:'short',day:'numeric',year:'numeric'});
+  return `<div class="mover-context"><h4>What is behind the move?</h4><p class="mover-reviewed">Financial reporting · Reviewed ${esc(reviewed)}</p><p><strong>X reporting.</strong> ${esc(moverContext.x)}</p><p class="mover-caution">${esc(moverContext.caution)}</p><nav aria-label="Weekly mover sources">${(moverContext.sources||[]).filter(s=>safeSource(s.url)).map(s => `<a href="${esc(safeSource(s.url))}" target="_blank" rel="noopener noreferrer">${esc(s.label)}</a>`).join('')}</nav></div>`;
 }

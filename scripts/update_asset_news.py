@@ -140,7 +140,8 @@ def fetch(feed, now):
 
 def main():
     now = dt.datetime.now(dt.timezone.utc)
-    path = ROOT / 'data/asset-news.json'
+    path = ROOT / '.private-research/asset-news.json'
+    path.parent.mkdir(exist_ok=True)
     old = json.loads(path.read_text()) if path.exists() else {'items': []}
     assets = json.loads((ROOT / 'data/watchlist.json').read_text())['assets']
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
@@ -163,7 +164,7 @@ def main():
     for item in old['items']:
         if item['symbol'] in symbols and safe_url(item['url']) and dt.datetime.fromisoformat(item['publishedAt']) >= now - dt.timedelta(days=7):
             items.setdefault((item['symbol'], item['url']), item)
-    reviewed_path=ROOT/'data/researched-news.json'
+    reviewed_path=ROOT/'.private-research/researched-news.json'
     if reviewed_path.exists():
         for item in json.loads(reviewed_path.read_text())['items']:
             items.setdefault((item['symbol'],item['url']),item)

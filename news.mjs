@@ -47,9 +47,6 @@ export async function loadNews(root = document, fetcher = fetch) {
     filter.onchange = render;
     root.querySelector('#news-coverage').innerHTML = data.coverage.map(a => `<p>${esc(a.symbol)}: ${assetHeadlines(data.items,a.symbol).length} recent reports</p>`).join('') + [...data.sources,...(data.assetChecks || [])].map(s=>`<p>${esc(s.name)}: ${esc(s.status)}</p>`).join('');
     render();
-  } catch { status.textContent = 'News updates are unavailable right now. The charts and Sunday Brief remain open.'; }
+  } catch { status.textContent = 'News updates are unavailable right now. The charts remain open.'; }
 }
-if (typeof document !== 'undefined') {
-  loadNews();
-  setInterval(() => { if (!document.hidden && !document.querySelector('#asset-news').contains(document.activeElement)) loadNews(); }, 5 * 60000);
-}
+// Member research is supplied by the authenticated controller.

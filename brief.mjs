@@ -35,4 +35,4 @@ export async function loadBrief(root = document, fetcher = fetch) {
     items.innerHTML = '';
   }
 }
-if (typeof document !== 'undefined') loadBrief();
+// Member research is supplied by the authenticated controller, never fetched at page load.
