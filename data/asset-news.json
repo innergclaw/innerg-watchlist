@@ -1,103 +1,303 @@
 {
-  "checkedAt": "2026-09-08T17:49:48.370889+00:00",
-  "lastSuccessfulAt": "2026-09-08T17:49:48.370889+00:00",
+  "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+  "lastSuccessfulAt": "2026-09-08T18:15:21.439598+00:00",
   "sources": [
     {
       "name": "CoinDesk",
       "status": "ok",
-      "checkedAt": "2026-09-08T17:49:48.370889+00:00"
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00"
     },
     {
       "name": "GlobeNewswire public companies",
       "status": "ok",
-      "checkedAt": "2026-09-08T17:49:48.370889+00:00"
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00"
     },
     {
       "name": "GlobeNewswire dividends",
       "status": "ok",
-      "checkedAt": "2026-09-08T17:49:48.370889+00:00"
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00"
     },
     {
       "name": "GlobeNewswire earnings",
       "status": "ok",
-      "checkedAt": "2026-09-08T17:49:48.370889+00:00"
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00"
+    }
+  ],
+  "assetChecks": [
+    {
+      "name": "SKHY asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/skhy/"
+    },
+    {
+      "name": "ARM asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/arm/"
+    },
+    {
+      "name": "DRAM asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/etf/dram/"
+    },
+    {
+      "name": "IREN asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/iren/"
+    },
+    {
+      "name": "MRVL asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/mrvl/"
+    },
+    {
+      "name": "CRWV asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/crwv/"
+    },
+    {
+      "name": "WDC asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/wdc/"
+    },
+    {
+      "name": "HOOD asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/hood/"
+    },
+    {
+      "name": "OPEN asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/open/"
+    },
+    {
+      "name": "ASST asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/asst/"
+    },
+    {
+      "name": "ZEC dedicated crypto feed",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://cointelegraph.com/rss/tag/zcash"
+    },
+    {
+      "name": "HYPE filtered crypto news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://cointelegraph.com/rss"
+    },
+    {
+      "name": "BTC dedicated crypto feed",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://cointelegraph.com/rss/tag/bitcoin"
+    },
+    {
+      "name": "SOL dedicated crypto feed",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://cointelegraph.com/rss/tag/solana"
+    },
+    {
+      "name": "USO asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/etf/uso/"
+    },
+    {
+      "name": "GSG asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/etf/gsg/"
+    },
+    {
+      "name": "OXY asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/oxy/"
+    },
+    {
+      "name": "MTDR asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/mtdr/"
+    },
+    {
+      "name": "COP asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/cop/"
+    },
+    {
+      "name": "HAFN asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/hafn/"
+    },
+    {
+      "name": "CORN asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/etf/corn/"
+    },
+    {
+      "name": "CANE asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/etf/cane/"
+    },
+    {
+      "name": "EMN asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/emn/"
+    },
+    {
+      "name": "LYB asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/lyb/"
+    },
+    {
+      "name": "OLN asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/oln/"
+    },
+    {
+      "name": "NTR asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/ntr/"
+    },
+    {
+      "name": "MOS asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/stocks/mos/"
+    },
+    {
+      "name": "SCHD asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/etf/schd/"
+    },
+    {
+      "name": "VOO asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/etf/voo/"
+    },
+    {
+      "name": "QQQ asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/etf/qqq/"
+    },
+    {
+      "name": "VTV asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/etf/vtv/"
+    },
+    {
+      "name": "VTI asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/etf/vti/"
+    },
+    {
+      "name": "FXAIX asset news",
+      "status": "ok",
+      "checkedAt": "2026-09-08T18:15:21.439598+00:00",
+      "url": "https://stockanalysis.com/quote/mutf/FXAIX/"
     }
   ],
   "coverage": [
     {
       "symbol": "SKHY",
       "name": "SK hynix ADR",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "ARM",
       "name": "Arm Holdings",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "DRAM",
       "name": "Themes Generative AI ETF",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "IREN",
       "name": "IREN Limited",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "MRVL",
       "name": "Marvell Technology",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "CRWV",
       "name": "CoreWeave",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "WDC",
       "name": "Western Digital",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "HOOD",
       "name": "Robinhood Markets",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "OPEN",
       "name": "Opendoor Technologies",
-      "count": 0
+      "count": 1
     },
     {
       "symbol": "ASST",
       "name": "Strive",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "ZEC",
       "name": "Zcash",
-      "count": 1
+      "count": 2
     },
     {
       "symbol": "HYPE",
       "name": "Hyperliquid",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "BTC",
       "name": "Bitcoin",
-      "count": 8
+      "count": 2
     },
     {
       "symbol": "SOL",
       "name": "Solana",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "USO",
       "name": "United States Oil Fund",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "GSG",
@@ -107,32 +307,32 @@
     {
       "symbol": "OXY",
       "name": "Occidental Petroleum",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "MTDR",
       "name": "Matador Resources",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "COP",
       "name": "ConocoPhillips",
-      "count": 0
+      "count": 1
     },
     {
       "symbol": "HAFN",
       "name": "Hafnia Limited",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "CORN",
       "name": "Teucrium Corn Fund",
-      "count": 0
+      "count": 1
     },
     {
       "symbol": "CANE",
       "name": "Teucrium Sugar Fund",
-      "count": 0
+      "count": 1
     },
     {
       "symbol": "EMN",
@@ -162,27 +362,27 @@
     {
       "symbol": "SCHD",
       "name": "Schwab U.S. Dividend Equity ETF",
-      "count": 0
+      "count": 1
     },
     {
       "symbol": "VOO",
       "name": "Vanguard S&P 500 ETF",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "QQQ",
       "name": "Invesco QQQ Trust",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "VTV",
       "name": "Vanguard Value ETF",
-      "count": 0
+      "count": 1
     },
     {
       "symbol": "VTI",
       "name": "Vanguard Total Stock Market ETF",
-      "count": 0
+      "count": 2
     },
     {
       "symbol": "FXAIX",
@@ -192,60 +392,156 @@
   ],
   "items": [
     {
-      "headline": "Bitcoin rally has more room as volatility shorts unwind, Two Prime CEO says",
-      "url": "https://www.coindesk.com/markets/2026/09/03/bitcoin-rally-has-more-room-as-volatility-shorts-unwind-two-prime-ceo-says",
-      "publishedAt": "2026-09-08T13:18:21+00:00",
-      "source": "CoinDesk",
-      "kind": "reporting",
-      "symbol": "BTC"
+      "headline": "SK Hynix vs. Micron: One AI Memory Stock Is Cheaper, but Wall Street Prefers the Other",
+      "url": "https://www.tipranks.com/news/sk-hynix-vs-micron-one-memory-stock-is-cheaper-but-wall-street-prefers-the-other",
+      "source": "TipRanks",
+      "publishedAt": "2026-09-08T15:50:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "SKHY"
     },
     {
-      "headline": "Bitcoin\u2019s complexity paradox: How layer-2 scalers became AI's main target",
-      "url": "https://www.coindesk.com/markets/2026/09/08/bitcoin-security-risks-grow-as-ai-uncovers-hidden-vulnerabilities",
-      "publishedAt": "2026-09-08T12:09:26+00:00",
-      "source": "CoinDesk",
-      "kind": "reporting",
-      "symbol": "BTC"
+      "headline": "Why Are SanDisk, Micron, and SK Hynix Stocks Rising in Premarket Today, Sept. 8?",
+      "url": "https://www.tipranks.com/news/why-are-sandisk-micron-and-sk-hynix-stocks-rising-in-premarket-today-sept-8",
+      "source": "TipRanks",
+      "publishedAt": "2026-09-08T11:38:04+00:00",
+      "kind": "report / analysis",
+      "symbol": "SKHY"
     },
     {
-      "headline": "Bitcoin ETFs are still $1 billion shy of breaking even in 2026",
-      "url": "https://www.coindesk.com/daybook-us/2026/09/08/bitcoin-etfs-are-still-usd1-billion-shy-of-breaking-even-in-2026",
-      "publishedAt": "2026-09-08T11:26:27+00:00",
-      "source": "CoinDesk",
-      "kind": "reporting",
-      "symbol": "BTC"
+      "headline": "AI will help find cure for cancer \u2018within our lifetimes', says Arm Holdings chief",
+      "url": "https://www.theguardian.com/business/2026/sep/08/ai-cure-cancer-arm-holdings-rene-haas",
+      "source": "The Guardian",
+      "publishedAt": "2026-09-08T11:49:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "ARM"
     },
     {
-      "headline": "Bitcoin slips to $78,800 as BNB and DeFi tokens buck the selloff",
-      "url": "https://www.coindesk.com/markets/2026/09/08/bitcoin-slips-to-usd78-800-as-bnb-and-defi-tokens-buck-the-selloff",
-      "publishedAt": "2026-09-08T10:33:17+00:00",
-      "source": "CoinDesk",
-      "kind": "reporting",
-      "symbol": "BTC"
+      "headline": "Intel vs. Arm: One AI Stock Will Surge, the Other\u2019s Upside Is Capped, Says Top Mizuho Analyst",
+      "url": "https://www.tipranks.com/news/article/intel-vs-arm-one-ai-stock-will-surge-the-others-upside-is-capped-says-top-mizuho-analyst",
+      "source": "TipRanks",
+      "publishedAt": "2026-09-07T12:18:53+00:00",
+      "kind": "report / analysis",
+      "symbol": "ARM"
     },
     {
-      "headline": "Live updates: Bitcoin climbs from sessions lows as oil prices pull back",
-      "url": "https://www.coindesk.com/tech/2026/09/08/live-updates",
-      "publishedAt": "2026-09-08T08:30:30+00:00",
-      "source": "CoinDesk",
-      "kind": "reporting",
-      "symbol": "BTC"
+      "headline": "Memory, Other AI-Related Stocks Lead the Market's Top Performers Friday",
+      "url": "https://www.investopedia.com/market-update-memory-other-ai-related-stocks-lead-the-markets-top-performers-friday-12108315",
+      "source": "Investopedia",
+      "publishedAt": "2026-09-04T17:31:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "DRAM"
     },
     {
-      "headline": "Bitcoin\u2019s golden cross is here",
-      "url": "https://www.coindesk.com/markets/2026/09/08/bitcoin-s-golden-cross-is-here",
-      "publishedAt": "2026-09-08T05:56:23+00:00",
-      "source": "CoinDesk",
-      "kind": "reporting",
-      "symbol": "BTC"
+      "headline": "ETF Flows Race Toward Record as Investors Deploy Barbell Strategy Against Macro Risks",
+      "url": "https://www.etftrends.com/equity-etf-content-hub/etf-flows-race-toward-record-as-investors-deploy-barbell-strategy-against-macro-risks/",
+      "source": "ETF Trends",
+      "publishedAt": "2026-09-03T11:06:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "DRAM"
     },
     {
-      "headline": "Liquid Network gets back 3,400 bitcoin from whitehat hackers; talks underway for the rest",
-      "url": "https://www.coindesk.com/markets/2026/09/08/white-hat-hackers-return-most-of-usd320m-bitcoin-taken-from-liquid-network",
-      "publishedAt": "2026-09-08T04:41:17+00:00",
-      "source": "CoinDesk",
-      "kind": "reporting",
-      "symbol": "BTC"
+      "headline": "IREN Stock Is Soaring Today, September 8 \u2014 Here\u2019s Why",
+      "url": "https://www.tipranks.com/news/iren-stock-is-soaring-today-september-8-heres-why",
+      "source": "TipRanks",
+      "publishedAt": "2026-09-08T15:39:46+00:00",
+      "kind": "report / analysis",
+      "symbol": "IREN"
+    },
+    {
+      "headline": "Iren Sweetwater Hub included as base load in ERCOT Batch Zero",
+      "url": "https://www.tipranks.com/news/the-fly/iren-sweetwater-hub-included-as-base-load-in-ercot-batch-zero-thefly-news",
+      "source": "TheFly",
+      "publishedAt": "2026-09-08T11:30:08+00:00",
+      "kind": "report / analysis",
+      "symbol": "IREN"
+    },
+    {
+      "headline": "3 Top Semiconductor Stocks to Buy with Over 35% Upside Potential, According to Analysts",
+      "url": "https://www.tipranks.com/news/3-top-semiconductor-stocks-to-buy-with-over-35-upside-potential-according-to-analysts",
+      "source": "TipRanks",
+      "publishedAt": "2026-09-08T13:02:21+00:00",
+      "kind": "report / analysis",
+      "symbol": "MRVL"
+    },
+    {
+      "headline": "Top Wall Street analysts like these 3 stocks for the long haul",
+      "url": "https://www.cnbc.com/2026/09/07/top-wall-street-analysts-like-these-3-stocks-for-the-long-haul.html",
+      "source": "CNBC",
+      "publishedAt": "2026-09-07T10:37:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "MRVL"
+    },
+    {
+      "headline": "CoreWeave rises 15.3%",
+      "url": "https://www.tipranks.com/news/the-fly/coreweave-rises-15-3-thefly-news",
+      "source": "TheFly",
+      "publishedAt": "2026-09-08T16:05:17+00:00",
+      "kind": "report / analysis",
+      "symbol": "CRWV"
+    },
+    {
+      "headline": "Neocloud Stocks CoreWeave, Nebius, and IREN Are Jumping Today, Sept. 4 \u2014 Here\u2019s Why",
+      "url": "https://www.tipranks.com/news/neocloud-stocks-coreweave-nebius-and-iren-are-jumping-today-sept-4-heres-why",
+      "source": "TipRanks",
+      "publishedAt": "2026-09-04T19:56:19+00:00",
+      "kind": "report / analysis",
+      "symbol": "CRWV"
+    },
+    {
+      "headline": "Memory, Other AI-Related Stocks Lead the Market's Top Performers Friday",
+      "url": "https://www.investopedia.com/market-update-memory-other-ai-related-stocks-lead-the-markets-top-performers-friday-12108315",
+      "source": "Investopedia",
+      "publishedAt": "2026-09-04T17:31:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "WDC"
+    },
+    {
+      "headline": "Why SanDisk, Micron, SK Hynix, and Western Digital Stocks Are Falling in Premarket Trading, 9/2/26",
+      "url": "https://www.tipranks.com/news/why-sandisk-micron-sk-hynix-and-western-digital-stocks-are-falling-in-premarket-trading-9-2-26",
+      "source": "TipRanks",
+      "publishedAt": "2026-09-02T10:48:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "WDC"
+    },
+    {
+      "headline": "Robinhood Stock (HOOD) Gets Higher Price Targets from Goldman, Jefferies",
+      "url": "https://www.tipranks.com/news/robinhood-stock-hood-gets-higher-price-targets-from-goldman-jefferies",
+      "source": "TipRanks",
+      "publishedAt": "2026-09-08T16:33:33+00:00",
+      "kind": "report / analysis",
+      "symbol": "HOOD"
+    },
+    {
+      "headline": "Robinhood expands prediction-market push with Crypto.com, OG.com tie-up",
+      "url": "https://www.reuters.com/legal/government/robinhood-expands-prediction-market-push-with-cryptocom-ogcom-tie-up-2026-09-08/",
+      "source": "Reuters",
+      "publishedAt": "2026-09-08T14:32:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "HOOD"
+    },
+    {
+      "headline": "Opendoor Home Loans Exits Beta With Fixed- and Adjustable-Rate Mortgages",
+      "url": "https://www.globenewswire.com/news-release/2026/09/04/3356791/0/en/opendoor-home-loans-exits-beta-with-fixed-and-adjustable-rate-mortgages.html",
+      "source": "GlobeNewsWire",
+      "publishedAt": "2026-09-04T20:05:00+00:00",
+      "kind": "company release",
+      "symbol": "OPEN"
+    },
+    {
+      "headline": "Strive purchases 1,375 bitcoin, reports holdings of 24,531 as of September 4",
+      "url": "https://www.tipranks.com/news/the-fly/strive-purchases-1375-bitcoin-reports-holdings-of-24531-as-of-september-4-thefly-news",
+      "source": "TheFly",
+      "publishedAt": "2026-09-08T12:36:30+00:00",
+      "kind": "report / analysis",
+      "symbol": "ASST"
+    },
+    {
+      "headline": "Strive price target raised to $26 from $16 at B. Riley",
+      "url": "https://www.tipranks.com/news/the-fly/strive-price-target-raised-to-26-from-16-at-b-riley-thefly-news",
+      "source": "TheFly",
+      "publishedAt": "2026-09-03T12:56:30+00:00",
+      "kind": "report / analysis",
+      "symbol": "ASST"
     },
     {
       "headline": "Bitcoin slips under $79,000, Zcash leads losses as Fed hike odds hold near 60%",
@@ -256,12 +552,212 @@
       "symbol": "ZEC"
     },
     {
-      "headline": "Bitcoin slips under $79,000, Zcash leads losses as Fed hike odds hold near 60%",
-      "url": "https://www.coindesk.com/markets/2026/09/08/bitcoin-slips-under-usd79-000-zcash-leads-losses-as-fed-hike-odds-hold-near-60",
-      "publishedAt": "2026-09-08T04:40:57+00:00",
-      "source": "CoinDesk",
+      "headline": "Zcash hits highest price since 2016 as market cap tops $20B",
+      "url": "https://cointelegraph.com/markets/zcash-highest-price-market-cap-20-billion",
+      "publishedAt": "2026-09-07T12:31:23+00:00",
+      "source": "Cointelegraph",
+      "kind": "reporting",
+      "symbol": "ZEC"
+    },
+    {
+      "symbol": "HYPE",
+      "headline": "UBS and Jane Street among firms reporting Hyperliquid ETF holdings",
+      "url": "https://www.theblock.co/news/defi/2026-09-05-ubs-jane-street-among-firms-with-combined-75-million-in-hyperliquid-etf-holdings-bloomberg-413616",
+      "source": "The Block",
+      "publishedAt": "2026-09-05T20:02:00Z",
+      "kind": "reporting"
+    },
+    {
+      "symbol": "HYPE",
+      "headline": "The Block examines the proposed path for Hyperliquid to enter the US",
+      "url": "https://www.theblock.co/news/regulation/2026-09-04-trump-wants-hyperliquid-enter-us-how-it-could-happen-413594",
+      "source": "The Block",
+      "publishedAt": "2026-09-04T18:35:00Z",
+      "kind": "report / analysis"
+    },
+    {
+      "headline": "Bitcoin faces key support test at $78.3K as US crude oil hits three-month high",
+      "url": "https://cointelegraph.com/markets/bitcoin-faces-key-support-test-at-783k-as-us-crude-oil-hits-three-month-high",
+      "publishedAt": "2026-09-08T15:41:11+00:00",
+      "source": "Cointelegraph",
       "kind": "reporting",
       "symbol": "BTC"
+    },
+    {
+      "headline": "Is Bitcoin too volatile to risk your retirement on?",
+      "url": "https://cointelegraph.com/magazine/is-bitcoin-too-volatile-to-risk-your-retirement-on",
+      "publishedAt": "2026-09-08T13:30:00+00:00",
+      "source": "Cointelegraph",
+      "kind": "reporting",
+      "symbol": "BTC"
+    },
+    {
+      "headline": "Fomo overtakes Pump.fun in daily revenue on Solana",
+      "url": "https://cointelegraph.com/news/fomo-pumpfun-revenue-app-solana",
+      "publishedAt": "2026-09-07T07:45:39+00:00",
+      "source": "Cointelegraph",
+      "kind": "reporting",
+      "symbol": "SOL"
+    },
+    {
+      "headline": "Japan\u2019s Remixpoint dumps altcoins, leaves 1,506 BTC as sole crypto bet",
+      "url": "https://cointelegraph.com/news/remixpoint-dumps-altcoins-1506-btc-sole-crypto-bet",
+      "publishedAt": "2026-09-02T12:00:00+00:00",
+      "source": "Cointelegraph",
+      "kind": "reporting",
+      "symbol": "SOL"
+    },
+    {
+      "headline": "Oil stocks in US Strategic Petroleum Reserve fall by 1.2 million barrels to lowest level since 1982",
+      "url": "https://www.reuters.com/business/energy/oil-stocks-us-strategic-petroleum-reserve-fall-by-12-million-barrels-lowest-2026-09-08/",
+      "source": "Reuters",
+      "publishedAt": "2026-09-08T16:16:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "USO"
+    },
+    {
+      "headline": "From Oil Fields to Data Centers. Why This Stock Is Surging 16% Today.",
+      "url": "https://www.barrons.com/articles/solaris-energy-stock-ai-data-centers-5837df3d",
+      "source": "Barrons",
+      "publishedAt": "2026-09-08T15:45:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "USO"
+    },
+    {
+      "headline": "OXY Stock Nears a $10B Debt Milestone That Could Change the Story",
+      "url": "https://www.tipranks.com/news/oxy-stock-nears-a-10b-debt-milestone-that-could-change-the-story",
+      "source": "TipRanks",
+      "publishedAt": "2026-09-03T15:04:07+00:00",
+      "kind": "report / analysis",
+      "symbol": "OXY"
+    },
+    {
+      "headline": "Seaport starts 16 upstream operators with four Buys, two Sells",
+      "url": "https://www.tipranks.com/news/the-fly/seaport-starts-16-upstream-operators-with-four-buys-two-sells-thefly-news",
+      "source": "TheFly",
+      "publishedAt": "2026-09-03T08:50:33+00:00",
+      "kind": "report / analysis",
+      "symbol": "OXY"
+    },
+    {
+      "headline": "Matador initiated with a Neutral at Seaport Research",
+      "url": "https://www.tipranks.com/news/the-fly/matador-initiated-with-a-neutral-at-seaport-research-thefly-news",
+      "source": "TheFly",
+      "publishedAt": "2026-09-03T00:07:03+00:00",
+      "kind": "report / analysis",
+      "symbol": "MTDR"
+    },
+    {
+      "headline": "Matador upgraded to Overweight from Equal Weight at Wells Fargo",
+      "url": "https://www.tipranks.com/news/the-fly/matador-upgraded-to-overweight-from-equal-weight-at-wells-fargo-thefly-news",
+      "source": "TheFly",
+      "publishedAt": "2026-09-02T10:30:16+00:00",
+      "kind": "report / analysis",
+      "symbol": "MTDR"
+    },
+    {
+      "headline": "ConocoPhillips initiated with a Neutral at Seaport Research",
+      "url": "https://www.tipranks.com/news/the-fly/conocophillips-initiated-with-a-neutral-at-seaport-research-thefly-news",
+      "source": "TheFly",
+      "publishedAt": "2026-09-03T00:10:40+00:00",
+      "kind": "report / analysis",
+      "symbol": "COP"
+    },
+    {
+      "headline": "HAFNIA LIMITED: Ex dividend USD 0.5003 on the Oslo Stock Exchange today",
+      "url": "https://www.businesswire.com/news/home/20260906071803/en/HAFNIA-LIMITED-Ex-dividend-USD-0.5003-on-the-Oslo-Stock-Exchange-today/",
+      "source": "Business Wire",
+      "publishedAt": "2026-09-07T05:39:00+00:00",
+      "kind": "company release",
+      "symbol": "HAFN"
+    },
+    {
+      "headline": "Hafnia (HAFN) Q2 2026 Earnings Call Transcript",
+      "url": "https://www.fool.com/earnings/call-transcripts/2026/09/04/hafnia-hafn-q2-2026-earnings-call-transcript/",
+      "source": "The Motley Fool",
+      "publishedAt": "2026-09-04T10:38:06+00:00",
+      "kind": "report / analysis",
+      "symbol": "HAFN"
+    },
+    {
+      "headline": "Corn and Soybean Prices Are Popping. How to Play It.",
+      "url": "https://www.barrons.com/articles/corn-soybean-energy-prices-etfs-90318d8e",
+      "source": "Barrons",
+      "publishedAt": "2026-09-04T16:55:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "CORN"
+    },
+    {
+      "headline": "Sugar is outperforming the stock market this year. Here's what's driving it, and where it can go from here",
+      "url": "https://www.cnbc.com/2026/09/06/sugar-is-outperforming-the-stock-market-this-year-whats-driving-it.html",
+      "source": "CNBC",
+      "publishedAt": "2026-09-06T12:48:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "CANE"
+    },
+    {
+      "headline": "ETF Flows Race Toward Record as Investors Deploy Barbell Strategy Against Macro Risks",
+      "url": "https://www.etftrends.com/equity-etf-content-hub/etf-flows-race-toward-record-as-investors-deploy-barbell-strategy-against-macro-risks/",
+      "source": "ETF Trends",
+      "publishedAt": "2026-09-03T11:06:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "SCHD"
+    },
+    {
+      "headline": "VOO vs. VTI: One Vanguard ETF Has a Clear Edge",
+      "url": "https://www.tipranks.com/news/voo-vs-vti-one-vanguard-etf-has-a-clear-edge",
+      "source": "TipRanks",
+      "publishedAt": "2026-09-07T13:50:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "VOO"
+    },
+    {
+      "headline": "S&P 500 changes are coming soon. These stocks could be named to the index today.",
+      "url": "https://www.marketwatch.com/story/s-p-500-changes-are-coming-soon-these-stocks-could-be-named-to-the-index-today-2d0d7c14",
+      "source": "Market Watch",
+      "publishedAt": "2026-09-04T15:39:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "VOO"
+    },
+    {
+      "headline": "Stock Market Today: SPY, QQQ Mixed as Jobs Report Lifts Rate Hike Odds; Trump Urges Fed to Cut Rates",
+      "url": "https://www.tipranks.com/news/stock-market-today-spy-qqq-mixed-as-jobs-report-lifts-rate-hike-odds-trump-urges-fed-to-cut-rates",
+      "source": "TipRanks",
+      "publishedAt": "2026-09-04T20:22:19+00:00",
+      "kind": "report / analysis",
+      "symbol": "QQQ"
+    },
+    {
+      "headline": "ETF Flows Race Toward Record as Investors Deploy Barbell Strategy Against Macro Risks",
+      "url": "https://www.etftrends.com/equity-etf-content-hub/etf-flows-race-toward-record-as-investors-deploy-barbell-strategy-against-macro-risks/",
+      "source": "ETF Trends",
+      "publishedAt": "2026-09-03T11:06:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "QQQ"
+    },
+    {
+      "headline": "3 ETFs with 10%+ Upside for Exposure to Finance, Health, and Energy, According to AI Analyst",
+      "url": "https://www.tipranks.com/news/3-etfs-with-10-upside-for-exposure-to-finance-health-and-energy-according-to-ai-analyst",
+      "source": "TipRanks",
+      "publishedAt": "2026-09-01T18:28:21+00:00",
+      "kind": "report / analysis",
+      "symbol": "VTV"
+    },
+    {
+      "headline": "VOO vs. VTI: One Vanguard ETF Has a Clear Edge",
+      "url": "https://www.tipranks.com/news/voo-vs-vti-one-vanguard-etf-has-a-clear-edge",
+      "source": "TipRanks",
+      "publishedAt": "2026-09-07T13:50:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "VTI"
+    },
+    {
+      "headline": "ETF Flows Race Toward Record as Investors Deploy Barbell Strategy Against Macro Risks",
+      "url": "https://www.etftrends.com/equity-etf-content-hub/etf-flows-race-toward-record-as-investors-deploy-barbell-strategy-against-macro-risks/",
+      "source": "ETF Trends",
+      "publishedAt": "2026-09-03T11:06:00+00:00",
+      "kind": "report / analysis",
+      "symbol": "VTI"
     }
   ]
 }

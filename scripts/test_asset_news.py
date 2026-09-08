@@ -1,8 +1,26 @@
 import datetime as dt
 import unittest
-from update_asset_news import parse_feed, safe_url, matches
+from update_asset_news import parse_feed, safe_url, matches, parse_date, parse_asset_page, latest_two
 
 class NewsTests(unittest.TestCase):
+    def test_publisher_date_formats(self):
+        self.assertEqual(parse_date('Sep 8, 2026, 7:01 AM EDT').hour,11)
+        self.assertEqual(parse_date('2026-09-08T11:01:00Z'),parse_date('Sep 8, 2026, 7:01 AM EDT'))
+        with self.assertRaises(ValueError): parse_date('2026-09-08')
+
+    def test_per_asset_metadata(self):
+        html='{url:"https://www.tipranks.com/news/a",img:"",title:"Company update",text:"Text",source:"TheFly",type:"Article",tickers:void 0,time:"Sep 8, 2026, 7:01 AM EDT",ago:"1 hour ago"}'
+        now=dt.datetime(2026,9,8,18,tzinfo=dt.timezone.utc)
+        self.assertEqual(len(parse_asset_page(html,now)),1)
+        self.assertEqual(parse_asset_page(html.replace('Sep 8','Aug 8'),now),[])
+
+    def test_two_newest_per_asset(self):
+        now=dt.datetime(2026,9,8,18,tzinfo=dt.timezone.utc)
+        items=[dict(symbol=s,url=f'https://coindesk.com/{s}/{d}',publishedAt=f'2026-09-0{d}T12:00:00Z') for s in ['BTC','ARM'] for d in [1,5,6,7]]
+        selected=latest_two(items+items,[{'symbol':'BTC'},{'symbol':'ARM'}],now)
+        self.assertEqual(len(selected),4)
+        self.assertEqual([i['publishedAt'][8:10] for i in selected],['07','06','07','06'])
+
     def test_safe_sources(self):
         for value in ['javascript:alert(1)', 'https://coindesk.com.evil.test', 'https://user:pass@coindesk.com/a', 'http://coindesk.com/a', 'https://reddit.com/a']:
             self.assertFalse(safe_url(value))

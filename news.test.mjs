@@ -1,7 +1,17 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {safeNewsURL,renderNews,newsStatus,loadNews} from './news.mjs';
+import {safeNewsURL,renderNews,newsStatus,loadNews,assetHeadlines,renderAssetNews} from './news.mjs';
+test('each asset has its own two newest stories, including shared stories',()=>{
+  const now=Date.parse('2026-09-08T18:00:00Z');
+  const items=['ARM','BTC'].flatMap(symbol=>[1,5,6,7,9].map(day=>({symbol,url:`https://coindesk.com/${day}`,headline:'Report',kind:'report',source:'CoinDesk',publishedAt:`2026-09-0${day}T12:00:00Z`})));
+  for(const symbol of ['ARM','BTC']) assert.deepEqual(assetHeadlines([...items,...items],symbol,now).map(i=>i.publishedAt.slice(8,10)),['07','06']);
+  const html=renderAssetNews({coverage:[{symbol:'ARM',name:'Arm'},{symbol:'BTC',name:'Bitcoin'},{symbol:'GSG',name:'Fund'}],items},'all',now);
+  assert.equal((html.match(/class="asset-news-group"/g)||[]).length,3);
+  assert.equal((html.match(/class="news-item"/g)||[]).length,4);
+  assert.match(html,/No recent report found/);
+});
+test('expanded verified publishers work in the browser',()=>{for(const url of ['https://www.tipranks.com/news/a','https://www.theblock.co/news/a','https://cointelegraph.com/news/a','https://www.prnewswire.com/news-releases/a'])assert.equal(safeNewsURL(url),url);});
 test('news links reject spoofed and unsafe hosts',()=>{for(const url of ['https://coindesk.com.evil.test','javascript:alert(1)','https://a:b@coindesk.com','https://reddit.com'])assert.equal(safeNewsURL(url),'');});
 test('news content escapes HTML',()=>{const html=renderNews([{headline:'<img onerror=x>',symbol:'BTC',kind:'reporting',source:'CoinDesk',url:'https://coindesk.com/a',publishedAt:'2026-09-08T00:00:00Z'}]);assert.ok(!html.includes('<img'));assert.ok(html.includes('noopener noreferrer'));});
 test('stale and partial news are explicit',()=>{assert.match(newsStatus({checkedAt:'2020-01-01',sources:[{status:'unavailable'}],coverage:[]}),/Updates delayed.*coverage is partial/);});
