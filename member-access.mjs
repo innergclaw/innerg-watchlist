@@ -1,7 +1,7 @@
 import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4/+esm';
 import {loadBrief} from './brief.mjs';
 import {loadNews} from './news.mjs';
-import {setMoverContext} from './weekly-mover.mjs';
+import {setMoverContext,setWeeklyMoverAccess} from './weekly-mover.mjs?v=weekly-top-three-1';
 const client=createClient('https://zkyhhoxcrjkhywblzehr.supabase.co','sb_publishable_bdi3BexAKWDBaUIh40hJ_A_8CNVdnM_');
 const panel=document.querySelector('#member-access');
 const message=document.querySelector('#member-status');
@@ -15,7 +15,7 @@ function lock(){
   document.querySelectorAll('.research-content').forEach(el=>{el.hidden=true;});
   document.querySelector('#brief-items').innerHTML='';document.querySelector('#news-items').innerHTML='';
   document.querySelector('#news-coverage').innerHTML='';document.querySelector('#news-filter').onchange=null;
-  setMoverContext(null);document.dispatchEvent(new Event('research-change'));
+  setWeeklyMoverAccess(false);setMoverContext(null);document.dispatchEvent(new Event('research-change'));
   prefs.hidden=true;
   document.querySelector('#email-unsubscribe').hidden=true;
   document.querySelector('#research-retry').hidden=true;
@@ -47,7 +47,7 @@ async function check(session){
     const provided=value=>async()=>({ok:true,json:async()=>value});
     await Promise.all([loadBrief(document,provided(data.brief)),loadNews(document,provided(data.news))]);
     if(current!==revision){lock();return;}
-    setMoverContext(data.mover);document.dispatchEvent(new Event('research-change'));
+    setWeeklyMoverAccess(true);setMoverContext(data.mover);document.dispatchEvent(new Event('research-change'));
     message.textContent=`${data.membershipNumber} · Research access active.`;
     document.querySelector('#daily-email').checked=data.dailyEmail===true;prefs.hidden=false;
     document.querySelector('#research-retry').hidden=true;
