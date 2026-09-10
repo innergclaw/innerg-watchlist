@@ -23,7 +23,7 @@ jobs:
           node-version: '22'
       - run: node scripts/build_public_site.mjs
       - name: Verify public charts and member research rules
-        run: node --test verify.mjs news.test.mjs weekly-mover.test.mjs research-access.test.mjs research-email.test.mjs
+        run: node --test verify.mjs news.test.mjs weekly-mover.test.mjs research-access.test.mjs research-email.test.mjs portfolio.test.mjs section-nav.test.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

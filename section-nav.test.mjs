@@ -2,11 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {updateSectionNavigation} from './section-nav.mjs';
-test('all six menu links have unique existing sections',()=>{
+test('all seven menu links have unique existing sections',()=>{
  const html=readFileSync(new URL('./index.html',import.meta.url),'utf8');
  const nav=html.match(/<nav class="section-nav"[\s\S]*?<\/nav>/)[0];
  const ids=[...nav.matchAll(/href="#([^"]+)"/g)].map(m=>m[1]);
- assert.equal(ids.length,6);
+ assert.equal(ids.length,7);
  for(const id of ids) assert.equal(html.split(`id="${id}"`).length-1,1);
  assert.match(html,/<body id="top">/);
 });
