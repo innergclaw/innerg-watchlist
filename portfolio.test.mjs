@@ -3,6 +3,21 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {validatePortfolio,renderPortfolio,renderFounderWatch} from './brief.mjs';
 const sample={updatedAt:'2026-09-10T01:00:00Z',holdings:[{symbol:'TEST'}],planned:[{symbol:'PLAN'}],watch:[{symbol:'DEMO',thesis:'my scenario',watchFor:'hold the level',risk:'could fall'}]};
+test('heatmap shows signed daily changes and distinct missing/flat states',()=>{
+ const html=renderPortfolio({...sample,holdings:[{symbol:'UP',dailyChangePercent:4.5},{symbol:'DOWN',dailyChangePercent:-2.5},{symbol:'FLAT',dailyChangePercent:0},{symbol:'MISSING'}]});
+ assert.match(html,/holding-up holding-strong/);assert.match(html,/\+4\.50%/);
+ assert.match(html,/holding-down holding-medium/);assert.match(html,/-2\.50%/);
+ assert.match(html,/0\.00%/);assert.match(html,/unchanged/);assert.match(html,/no update/);
+ assert.equal((html.match(/class="holding-tile/g)||[]).length,4);
+ for(const value of ['2.5',NaN,Infinity,-101])assert.throws(()=>renderPortfolio({...sample,holdings:[{symbol:'TEST',dailyChangePercent:value}]}));
+});
+test('heatmap ignores sensitive brokerage fields and uses equal tile sizes',()=>{
+ const html=renderPortfolio({...sample,accountNumber:'PRIVATE_ACCOUNT',accountValue:98765.43,holdings:[{symbol:'TEST',dailyChangePercent:1.23,currentValue:98765.43,quantity:9876.54,costBasis:8765.43,accountWeight:76.54,totalGain:7654.32}]});
+ assert.doesNotMatch(html,/PRIVATE_ACCOUNT|98765|9876|8765|76\.54|7654|currentValue|quantity|costBasis|accountWeight|totalGain|\$/);
+ const css=readFileSync('styles.css','utf8');
+ assert.match(css,/\.holdings-heatmap\{[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
+ assert.doesNotMatch(html,/style=/);
+});
 test('member copy has no internal provenance labels and retains risk context',()=>{
  const rendered=renderPortfolio(sample)+renderFounderWatch(sample);
  assert.doesNotMatch(rendered,/user-supplied|self-reported|verified live quote|not confirmed purchases|separate from the sunday news brief/i);

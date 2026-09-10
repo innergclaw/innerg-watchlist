@@ -13,7 +13,7 @@ try {
   await page.route('**/@supabase/supabase-js@2.112.4/+esm',route=>route.fulfill({contentType:'text/javascript',body:`
     let listener,session=null,status=200;
     window.testMemberState=next=>{status=next;session=next===0?null:{user:{id:'test-only'}};listener('SIGNED_IN',session);};
-    export const createClient=()=>({auth:{getSession:async()=>({data:{session}}),onAuthStateChange:fn=>{listener=fn;},signOut:async()=>{session=null;listener('SIGNED_OUT',null);return{};}},functions:{invoke:async()=>status!==200?{error:{context:{status}}}:{data:{membershipNumber:'TEST-ONLY',portfolio:{updatedAt:new Date().toISOString(),holdings:Array.from({length:8},(_,i)=>({symbol:'TEST'+i})),planned:[{symbol:'PLAN1'},{symbol:'PLAN2'}],watch:[{symbol:'DEMO',thesis:'my private scenario',watchFor:'hold the level',risk:'could fall'}]},mover:null,brief:{publishedAt:new Date().toISOString(),priceCapturedAt:new Date().toISOString(),weekOf:'2026-09-07',edition:'Test',items:[]},news:{checkedAt:new Date().toISOString(),coverage:[],items:[],sources:[]}}}}});
+    export const createClient=()=>({auth:{getSession:async()=>({data:{session}}),onAuthStateChange:fn=>{listener=fn;},signOut:async()=>{session=null;listener('SIGNED_OUT',null);return{};}},functions:{invoke:async()=>status!==200?{error:{context:{status}}}:{data:{membershipNumber:'TEST-ONLY',portfolio:{updatedAt:new Date().toISOString(),holdings:Array.from({length:8},(_,i)=>({symbol:'TEST'+i,dailyChangePercent:[-2.5,0.5,-1.5,4.5,0.25,7.5,0,null][i],currentValue:98765.43,quantity:9876.54})),planned:[{symbol:'PLAN1'},{symbol:'PLAN2'}],watch:[{symbol:'DEMO',thesis:'my private scenario',watchFor:'hold the level',risk:'could fall'}]},mover:null,brief:{publishedAt:new Date().toISOString(),priceCapturedAt:new Date().toISOString(),weekOf:'2026-09-07',edition:'Test',items:[]},news:{checkedAt:new Date().toISOString(),coverage:[],items:[],sources:[]}}}}});
   `}));
   await page.goto(base,{waitUntil:'networkidle'});
   await page.locator('#my-holdings .research-gate').waitFor({state:'visible'});
@@ -28,6 +28,16 @@ try {
   await page.evaluate(()=>window.testMemberState(200));
   await page.locator('#portfolio-items li').first().waitFor();
   assert.equal(await page.locator('#portfolio-items li').count(),10);
+  assert.equal(await page.locator('.holding-tile').count(),8);
+  assert.doesNotMatch(await page.locator('#portfolio-items').textContent(),/98765|9876|\$/);
+  const sizes=await page.locator('.holding-tile').evaluateAll(tiles=>tiles.map(tile=>({w:tile.getBoundingClientRect().width,h:tile.getBoundingClientRect().height})));
+  for(const size of sizes){assert.ok(Math.abs(size.w-sizes[0].w)<1);assert.equal(size.h,sizes[0].h);}
+  const contrast=await page.locator('.holding-tile').evaluateAll(tiles=>tiles.map(tile=>{
+    const ctx=document.createElement('canvas').getContext('2d',{willReadFrequently:true});
+    const luminance=color=>{ctx.fillStyle=color;ctx.fillRect(0,0,1,1);const rgb=[...ctx.getImageData(0,0,1,1).data].slice(0,3).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;});return rgb[0]*.2126+rgb[1]*.7152+rgb[2]*.0722;};
+    const css=getComputedStyle(tile),a=luminance(css.color),b=luminance(css.backgroundColor);return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+  }));
+  assert.ok(contrast.every(ratio=>ratio>=4.5),JSON.stringify(contrast));
   assert.match(await page.locator('#founder-watch-points').textContent(),/my private scenario/);
   await page.locator('#my-holdings').scrollIntoViewIfNeeded();
   await page.screenshot({path:'/tmp/innerg-portfolio-qa/member-'+width+'.png'});
