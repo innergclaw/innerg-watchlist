@@ -3,12 +3,19 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {validatePortfolio,renderPortfolio,renderFounderWatch} from './brief.mjs';
 const sample={updatedAt:'2026-09-10T01:00:00Z',holdings:[{symbol:'TEST'}],planned:[{symbol:'PLAN'}],watch:[{symbol:'DEMO',thesis:'my scenario',watchFor:'hold the level',risk:'could fall'}]};
+test('member copy has no internal provenance labels and retains risk context',()=>{
+ const rendered=renderPortfolio(sample)+renderFounderWatch(sample);
+ assert.doesNotMatch(rendered,/user-supplied|self-reported|verified live quote|not confirmed purchases|separate from the sunday news brief/i);
+ assert.match(rendered,/investing involves risk/);
+ assert.match(rendered,/what could weaken the case/);
+ assert.match(rendered,/updated/);
+});
 test('holdings, plans, and personal watch notes remain distinct',()=>{
  const html=renderPortfolio(sample);
  assert.match(html,/what i hold/);assert.match(html,/planned long-term additions/);
- assert.match(html,/not confirmed purchases/);assert.match(html,/self-reported/);
- assert.match(renderFounderWatch(sample),/separate from the sunday news brief/);
- assert.match(renderFounderWatch(sample),/not a verified live quote/);
+ assert.match(html,/i do not hold these yet/);assert.doesNotMatch(html,/self-reported/);
+ assert.match(renderFounderWatch(sample),/my personal watch notes/);
+ assert.doesNotMatch(renderFounderWatch(sample),/user-supplied|verified live quote/);
 });
 test('portfolio data rejects invalid symbols and escapes private text',()=>{
  assert.throws(()=>validatePortfolio({...sample,holdings:[{symbol:'<script>'}]}));
