@@ -10,7 +10,7 @@ export function researchEmail(edition) {
   }
   const stories=edition.news.map(n=>`${n.symbol} · ${n.date}\n${n.summary}\nWhat to watch: ${n.watch}\nRisk: ${n.risk}\nSource: ${n.url}`).join('\n\n');
   return {
-    subject:`INNERG Market Pulse | ${edition.date}`,
-    body:`INNERG INTEL\nYour daily research note · ${edition.date}\n\nNEWS / WHAT TO WATCH\n${stories||'No new report met our source checks today. No forced picks.'}\n\nDAILY BRIEF\n${edition.dailyBrief}\n\nFROM THE BUILDER'S DESK\nLast week\n${edition.lastWeek}\n\nUpcoming week focus\n${edition.nextWeek}\n\nOPEN YOUR RESEARCH DESK\nhttps://innergclaw.github.io/innerg-watchlist/#member-access\n\nResearch and education, not financial advice. Prices can fall. No return is guaranteed.\n\nYou receive this because you enabled daily research emails. To stop, sign in and turn off daily emails here:\nhttps://innergclaw.github.io/innerg-watchlist/#member-access\n\nINNERG INTEL`
+    subject:`innerg market pulse · what to watch for · ${edition.date}`,
+    body:`innerg intel\nyour daily research note · ${edition.date}\n\nnews / what to watch for\n${stories||'no new report met our source checks today. no forced picks.'}\n\ndaily brief\n${edition.dailyBrief}\n\nfrom the builder's desk\nlast week\n${edition.lastWeek}\n\nupcoming week focus\n${edition.nextWeek}\n\nopen your research desk\nhttps://nasirr.innergintel.org/watchlist/#what-to-watch\n\nresearch and education, not financial advice. prices can fall. no return is guaranteed.\n\nyou receive this because you enabled daily research emails. to stop, sign in and turn off daily emails here:\nhttps://nasirr.innergintel.org/watchlist/#member-access\n\ninnerg intel`
   };
 }

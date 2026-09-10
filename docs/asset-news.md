@@ -1,6 +1,6 @@
 # Asset news
 
-The public news section is separate from the Sunday Brief. Every two hours, at minute 23, it checks every symbol in `data/watchlist.json` separately. It keeps up to two newest reports per asset from a rolling seven-day window. Shared stories can appear under each affected asset. GitHub schedules can run late. The browser reloads the snapshot every five minutes while visible, except when a reader is using the news controls.
+The protected asset news section is separate from the daily What to Watch For brief. Every two hours, at minute 23, it checks every symbol in `data/watchlist.json` separately. It keeps up to two newest reports per asset from a rolling seven-day window. Shared stories can appear under each affected asset. GitHub schedules can run late. The browser reloads the snapshot every five minutes while visible, except when a reader is using the news controls.
 
 ## Coverage
 
@@ -24,4 +24,4 @@ Use GitHub Actions **Update asset news → Run workflow** for a manual cloud che
 
 ## Discord summaries
 
-The combined Codex automation checks the last seven days for every asset at 9 AM Eastern. It can update verified supplemental headlines, publish and verify the snapshot, and deliver short Discord-ready explanations for material new stories to Nasirr in the task. It must open articles, preserve dates, identify risks and avoid repeats. Do not treat a headline as a verified explanation or post to Discord automatically. The Sunday Brief remains at 11 AM Eastern on Sunday. Codex research requires the configured task runtime; the two-hour GitHub job is the cloud headline refresh path.
+The combined Codex automation checks the last seven days for every asset at 9 AM Eastern. It can update verified supplemental headlines, publish and verify the protected daily What to Watch For brief, and deliver short Discord-ready explanations for material new stories to Nasirr in the task. It must open articles, preserve dates, identify risks and avoid repeats. Do not treat a headline as a verified explanation or post to Discord automatically. There is no separate Sunday-only brief. Codex research requires the configured task runtime; the two-hour GitHub job is the cloud headline refresh path.

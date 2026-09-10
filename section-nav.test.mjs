@@ -2,6 +2,15 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {updateSectionNavigation} from './section-nav.mjs';
+test('daily research replaces the Sunday menu and keeps old links working',()=>{
+ const html=readFileSync(new URL('./index.html',import.meta.url),'utf8');
+ assert.match(html,/href="#what-to-watch">What to Watch For/);
+ assert.match(html,/id="sunday-brief"/);
+ assert.doesNotMatch(html,/Sunday Brief|The Sunday brief/);
+ const link={getAttribute:()=> '#what-to-watch',setAttribute(key,value){this[key]=value;},removeAttribute(key){delete this[key];}};
+ updateSectionNavigation({querySelectorAll:()=>[link]},'#sunday-brief');
+ assert.equal(link['aria-current'],'location');
+});
 test('all seven menu links have unique existing sections',()=>{
  const html=readFileSync(new URL('./index.html',import.meta.url),'utf8');
  const nav=html.match(/<nav class="section-nav"[\s\S]*?<\/nav>/)[0];

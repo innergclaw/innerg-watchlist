@@ -26,6 +26,8 @@ test('member copy has no internal provenance labels and retains risk context',()
  assert.match(rendered,/updated/);
 });
 test('holdings, plans, and personal watch notes remain distinct',()=>{
+ assert.equal(renderFounderWatch(sample,['DEMO']),'');
+ assert.match(renderFounderWatch(sample,['OTHER']),/my personal watch notes/);
  const html=renderPortfolio(sample);
  assert.match(html,/what i hold/);assert.match(html,/planned long-term additions/);
  assert.match(html,/i do not hold these yet/);assert.doesNotMatch(html,/self-reported/);
@@ -40,7 +42,7 @@ test('portfolio data rejects invalid symbols and escapes private text',()=>{
 });
 test('holdings gate is cleared on lock and uses authenticated research response',()=>{
  const src=readFileSync('member-access.mjs','utf8');
- assert.match(src,/'sunday-brief','asset-news','my-holdings'/);
+ assert.match(src,/'what-to-watch','asset-news','my-holdings'/);
  assert.match(src,/'#portfolio-items'\)\.replaceChildren/);
  assert.match(src,/'#founder-watch-points'\)\.replaceChildren/);
  assert.match(src,/renderPortfolio\(data.portfolio\)/);
