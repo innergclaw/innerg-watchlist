@@ -22,6 +22,7 @@ SECTORS = [
     {"id": "crypto", "name": "Crypto"},
     {"id": "energy", "name": "Energy + Commodities"},
     {"id": "materials", "name": "Agriculture + Materials"},
+    {"id": "industrials", "name": "Industrials + Cyclicals"},
     {"id": "core-funds", "name": "Core Funds"},
 ]
 
@@ -33,6 +34,7 @@ ASSETS = [
     ("MRVL", "Marvell Technology", "ai-compute", "MRVL"),
     ("CRWV", "CoreWeave", "ai-compute", "CRWV"),
     ("WDC", "Western Digital", "ai-compute", "WDC"),
+    ("STM", "STMicroelectronics", "ai-compute", "STM"),
     ("HOOD", "Robinhood Markets", "platforms", "HOOD"),
     ("OPEN", "Opendoor Technologies", "platforms", "OPEN"),
     ("ASST", "Strive", "platforms", "ASST"),
@@ -53,6 +55,9 @@ ASSETS = [
     ("OLN", "Olin Corporation", "materials", "OLN"),
     ("NTR", "Nutrien", "materials", "NTR"),
     ("MOS", "The Mosaic Company", "materials", "MOS"),
+    ("ALGT", "Allegiant Travel", "industrials", "ALGT"),
+    ("BHE", "Benchmark Electronics", "industrials", "BHE"),
+    ("CECO", "CECO Environmental", "industrials", "CECO"),
     ("SCHD", "Schwab U.S. Dividend Equity ETF", "core-funds", "SCHD"),
     ("VOO", "Vanguard S&P 500 ETF", "core-funds", "VOO"),
     ("QQQ", "Invesco QQQ Trust", "core-funds", "QQQ"),

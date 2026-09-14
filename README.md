@@ -1,6 +1,8 @@
 # INNERG Market Pulse
 
-Public research page for the Home Base ecosystem. All 33 assets across six sectors are available without login or payment. The page does not load Supabase Auth or call checkout. Paid INNERG ID membership, private videos, and other ecosystem access are unchanged.
+Public research page for the Home Base ecosystem. All 37 assets across seven sectors are available without login or payment. The page does not load Supabase Auth or call checkout. Paid INNERG ID membership, private videos, and other ecosystem access are unchanged.
+
+The public weekly setup watch highlights STM, ALGT, BHE, and CECO for the week of September 14, 2026. Each setup shows a conditional entry trigger, the next checkpoint, and a support zone. These levels start a review. They do not place a trade or promise a result.
 
 Public name: INNERG Market Pulse. Tagline: What moved. What matters. What I'm watching. The existing `innerg-watchlist` URL stays unchanged. Future live shows or daily editions are not yet advertised as available or scheduled.
 
