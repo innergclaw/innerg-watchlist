@@ -1,90 +1,90 @@
 {
-  "marketDate": "2026-09-16",
-  "generatedAt": "2026-09-17T15:02:59.064228Z",
+  "marketDate": "2026-09-17",
+  "generatedAt": "2026-09-17T20:37:15.736109Z",
   "universe": "Public INNERG watchlist, excluding crypto",
   "method": "Regular-session daily percentage change",
   "gainers": [
     {
-      "symbol": "MRVL",
-      "name": "Marvell Technology",
+      "symbol": "ARM",
+      "name": "Arm Holdings",
       "sector": "ai-compute",
-      "price": 229.71,
+      "price": 264.9,
       "currency": "USD",
-      "changePercent": 3.613
-    },
-    {
-      "symbol": "CRWV",
-      "name": "CoreWeave",
-      "sector": "ai-compute",
-      "price": 83.35,
-      "currency": "USD",
-      "changePercent": 3.003
-    },
-    {
-      "symbol": "CECO",
-      "name": "CECO Environmental",
-      "sector": "industrials",
-      "price": 69.42,
-      "currency": "USD",
-      "changePercent": 2.9054
-    },
-    {
-      "symbol": "IREN",
-      "name": "IREN Limited",
-      "sector": "ai-compute",
-      "price": 42.62,
-      "currency": "USD",
-      "changePercent": 2.5012
-    },
-    {
-      "symbol": "HAFN",
-      "name": "Hafnia Limited",
-      "sector": "energy",
-      "price": 9.71,
-      "currency": "USD",
-      "changePercent": 2.4262
-    }
-  ],
-  "losers": [
-    {
-      "symbol": "MTDR",
-      "name": "Matador Resources",
-      "sector": "energy",
-      "price": 57.73,
-      "currency": "USD",
-      "changePercent": -8.6117
-    },
-    {
-      "symbol": "OXY",
-      "name": "Occidental Petroleum",
-      "sector": "energy",
-      "price": 59.36,
-      "currency": "USD",
-      "changePercent": -6.5491
-    },
-    {
-      "symbol": "COP",
-      "name": "ConocoPhillips",
-      "sector": "energy",
-      "price": 132.54,
-      "currency": "USD",
-      "changePercent": -6.1464
+      "changePercent": 8.5745
     },
     {
       "symbol": "HOOD",
       "name": "Robinhood Markets",
       "sector": "platforms",
-      "price": 104.42,
+      "price": 109.81,
       "currency": "USD",
-      "changePercent": -5.4595
+      "changePercent": 5.1618
     },
     {
-      "symbol": "USO",
-      "name": "United States Oil Fund",
-      "sector": "energy",
-      "price": 156.17,
+      "symbol": "MRVL",
+      "name": "Marvell Technology",
+      "sector": "ai-compute",
+      "price": 240.76,
       "currency": "USD",
-      "changePercent": -3.5154
+      "changePercent": 4.8104
+    },
+    {
+      "symbol": "SKHY",
+      "name": "SK hynix ADR",
+      "sector": "ai-compute",
+      "price": 182.99,
+      "currency": "USD",
+      "changePercent": 4.6435
+    },
+    {
+      "symbol": "DRAM",
+      "name": "Themes Generative AI ETF",
+      "sector": "ai-compute",
+      "price": 57.78,
+      "currency": "USD",
+      "changePercent": 4.428
+    }
+  ],
+  "losers": [
+    {
+      "symbol": "CRWV",
+      "name": "CoreWeave",
+      "sector": "ai-compute",
+      "price": 79.88,
+      "currency": "USD",
+      "changePercent": -4.1632
+    },
+    {
+      "symbol": "CANE",
+      "name": "Teucrium Sugar Fund",
+      "sector": "materials",
+      "price": 11.08,
+      "currency": "USD",
+      "changePercent": -2.7217
+    },
+    {
+      "symbol": "OPEN",
+      "name": "Opendoor Technologies",
+      "sector": "platforms",
+      "price": 2.56,
+      "currency": "USD",
+      "changePercent": -1.1583
+    },
+    {
+      "symbol": "LYB",
+      "name": "LyondellBasell Industries",
+      "sector": "materials",
+      "price": 64.25,
+      "currency": "USD",
+      "changePercent": -1.0015
+    },
+    {
+      "symbol": "CORN",
+      "name": "Teucrium Corn Fund",
+      "sector": "materials",
+      "price": 19.83,
+      "currency": "USD",
+      "changePercent": -0.701
     }
   ],
   "sources": [
