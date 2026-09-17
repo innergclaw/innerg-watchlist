@@ -18,37 +18,58 @@ GRAPHIC = ROOT / "assets" / "innerg-closing-bell.png"
 FONT_DIR = pathlib.Path("/Users/nasirrm/.codex/skills/canvas-design/canvas-fonts")
 
 
-def eligible(asset: dict) -> bool:
-    change = asset.get("returns", {}).get("day")
-    return (
-        asset.get("sector") != "crypto"
-        and asset.get("status") == "ok"
-        and isinstance(asset.get("price"), (int, float))
-        and isinstance(change, (int, float))
-        and math.isfinite(float(asset["price"]))
-        and math.isfinite(float(change))
-    )
+def dated_closes(asset: dict, through: dt.date) -> list[tuple[dt.date, float]]:
+    closes = []
+    for timestamp, value in asset.get("charts", {}).get("month", {}).get("points", []):
+        if not isinstance(value, (int, float)) or not math.isfinite(float(value)):
+            continue
+        date = dt.datetime.fromtimestamp(timestamp, ZoneInfo("America/New_York")).date()
+        if date <= through:
+            closes.append((date, float(value)))
+    return closes
 
 
-def report_item(asset: dict) -> dict:
+def report_item(asset: dict, price: float, change: float) -> dict:
     return {
         "symbol": asset["symbol"],
         "name": asset["name"],
         "sector": asset["sector"],
-        "price": round(float(asset["price"]), 4),
+        "price": round(price, 4),
         "currency": asset.get("currency") or "USD",
-        "changePercent": round(float(asset["returns"]["day"]), 4),
+        "changePercent": round(change, 4),
     }
 
 
-def rank_assets(assets: list[dict]) -> tuple[list[dict], list[dict]]:
-    ranked = sorted((asset for asset in assets if eligible(asset)), key=lambda asset: asset["returns"]["day"], reverse=True)
+def latest_completed_market_date(assets: list[dict], now: dt.datetime) -> dt.date:
+    eastern = now.astimezone(ZoneInfo("America/New_York"))
+    through = eastern.date()
+    if eastern.weekday() < 5 and eastern.time() < dt.time(16, 0):
+        through -= dt.timedelta(days=1)
+    while through.weekday() > 4:
+        through -= dt.timedelta(days=1)
+    dates = [points[-1][0] for asset in assets if asset.get("sector") != "crypto" if (points := dated_closes(asset, through))]
+    if not dates:
+        raise ValueError("No completed market session is available")
+    return max(dates)
+
+
+def rank_assets(assets: list[dict], market_date: dt.date) -> tuple[list[dict], list[dict]]:
+    ranked = []
+    for asset in assets:
+        if asset.get("sector") == "crypto" or asset.get("status") != "ok":
+            continue
+        points = dated_closes(asset, market_date)
+        if len(points) < 2 or points[-1][0] != market_date or points[-2][1] == 0:
+            continue
+        change = (points[-1][1] / points[-2][1] - 1) * 100
+        ranked.append((asset, points[-1][1], change))
+    ranked.sort(key=lambda row: row[2], reverse=True)
     gainers = ranked[:5]
-    gainers_symbols = {asset["symbol"] for asset in gainers}
-    losers = [asset for asset in reversed(ranked) if asset["symbol"] not in gainers_symbols][:5]
+    gainers_symbols = {row[0]["symbol"] for row in gainers}
+    losers = [row for row in reversed(ranked) if row[0]["symbol"] not in gainers_symbols][:5]
     if len(gainers) != 5 or len(losers) != 5:
         raise ValueError("At least ten eligible non-crypto assets are required")
-    return [report_item(asset) for asset in gainers], [report_item(asset) for asset in losers]
+    return [report_item(*row) for row in gainers], [report_item(*row) for row in losers]
 
 
 def fit(draw: ImageDraw.ImageDraw, text: str, font_path: pathlib.Path, size: int, max_width: int) -> ImageFont.FreeTypeFont:
@@ -115,11 +136,11 @@ def render_graphic(report: dict) -> None:
 
 def main() -> None:
     snapshot = json.loads(WATCHLIST.read_text(encoding="utf-8"))
-    gainers, losers = rank_assets(snapshot["assets"])
     generated = dt.datetime.now(dt.timezone.utc)
-    market_date = generated.astimezone(ZoneInfo("America/New_York")).date().isoformat()
+    market_date = latest_completed_market_date(snapshot["assets"], generated)
+    gainers, losers = rank_assets(snapshot["assets"], market_date)
     payload = {
-        "marketDate": market_date,
+        "marketDate": market_date.isoformat(),
         "generatedAt": generated.isoformat().replace("+00:00", "Z"),
         "universe": "Public INNERG watchlist, excluding crypto",
         "method": "Regular-session daily percentage change",

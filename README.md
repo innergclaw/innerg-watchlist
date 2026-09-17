@@ -20,7 +20,7 @@ The Robinhood referral is public and disclosed. This page is research and educat
 
 ## Closing Bell report
 
-The public Closing Bell Snapshot ranks five gainers and five losers from the non-crypto watchlist by regular-session daily percentage change. Crypto is excluded because it trades continuously. `scripts/build_closing_report.py` creates `data/closing-report.json` and the 1600 by 900 email graphic at `assets/innerg-closing-bell.png`.
+The public Closing Bell Snapshot ranks five gainers and five losers from the non-crypto watchlist by regular-session daily percentage change. Crypto is excluded because it trades continuously. Before 4:00 PM Eastern, the report keeps the last completed session instead of labeling intraday prices as closing prices. `scripts/build_closing_report.py` creates `data/closing-report.json` and the 1600 by 900 email graphic at `assets/innerg-closing-bell.png`.
 
 The final weekday market refresh runs at 4:20 PM Eastern. It rebuilds the closing report and graphic, commits changed public files, and deploys the site. The separate Codex closing-report task sends the same ten-name snapshot to the authenticated Gmail account after the public update.
 

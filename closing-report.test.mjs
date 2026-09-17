@@ -18,6 +18,11 @@ test('closing report is ordered and excludes continuous crypto markets',()=>{
   for(const item of [...report.gainers,...report.losers])assert.notEqual(item.sector,'crypto');
 });
 
+test('closing report never labels a future or in-progress session as closed',()=>{
+  const marketDate=new Date(`${report.marketDate}T16:00:00-04:00`);
+  assert.ok(marketDate.getTime()<=Date.now());
+});
+
 test('closing report markup escapes names and links the graphic',()=>{
   const copy=structuredClone(report);copy.gainers[0].name='<script>';
   const html=closingReportMarkup(copy);
