@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { topWeeklyMover, topWeeklyMovers, weeklyMoversMarkup, setWeeklyMoverAccess, moverExplanation, moverContext, setMoverContext } from './weekly-mover.mjs';
-const rows=[{symbol:'AAA',name:'First',returns:{week:30}},{symbol:'BBB',name:'Second',returns:{week:20}},{symbol:'CCC',name:'Third',returns:{week:10}},{symbol:'DDD',name:'Fourth',returns:{week:5}}];
+const rows=[{symbol:'AAA',name:'First',category:'AI + Compute',assetType:'Stock',returns:{week:30}},{symbol:'BBB',name:'Second',category:'Core Funds',assetType:'ETF',returns:{week:20}},{symbol:'CCC',name:'Third',category:'Crypto',assetType:'Crypto',returns:{week:10}},{symbol:'DDD',name:'Fourth',category:'Industrials + Cyclicals',assetType:'Stock',returns:{week:5}}];
 test('top three sort by percentage, exclude invalid returns and duplicates, preserve inputs',()=>{
  const input=[rows[2],{symbol:'BAD',returns:{week:NaN}},rows[0],rows[1],rows[0],rows[3]];
  assert.deepEqual(topWeeklyMovers(input).map(a=>a.symbol),['AAA','BBB','CCC']);
@@ -16,6 +16,7 @@ test('public sees one actual mover plus two anonymous locked cards',()=>{
  assert.equal((html.match(/class="leader-card leader-locked"/g)||[]).length,2);
  assert.match(html,/>AAA</);assert.doesNotMatch(html,/BBB|CCC|Second|Third/);
  assert.match(html,/href="#member-access"/);
+ assert.match(html,/AI \+ Compute/);assert.match(html,/>Stock</);
 });
 test('verified member sees three; sign-out and non-boolean access fail closed',()=>{
  setWeeklyMoverAccess(true);let html=weeklyMoversMarkup(rows);

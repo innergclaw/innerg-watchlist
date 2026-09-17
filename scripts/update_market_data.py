@@ -66,6 +66,24 @@ ASSETS = [
     ("FXAIX", "Fidelity 500 Index Fund", "core-funds", "FXAIX"),
 ]
 
+ETF_SYMBOLS = {"DRAM", "USO", "GSG", "CORN", "CANE", "SCHD", "VOO", "QQQ", "VTV", "VTI"}
+MUTUAL_FUND_SYMBOLS = {"FXAIX"}
+SECTOR_NAMES = {sector["id"]: sector["name"] for sector in SECTORS}
+
+
+def asset_type(symbol: str, sector: str) -> str:
+    if sector == "crypto":
+        return "Crypto"
+    if symbol in MUTUAL_FUND_SYMBOLS:
+        return "Mutual Fund"
+    if symbol in ETF_SYMBOLS:
+        return "ETF"
+    return "Stock"
+
+
+def identity(symbol: str, sector: str) -> dict:
+    return {"assetType": asset_type(symbol, sector), "category": SECTOR_NAMES[sector]}
+
 
 def request_json(url: str, body: dict | None = None) -> dict | list:
     data = json.dumps(body).encode() if body else None
@@ -145,6 +163,7 @@ def yahoo_asset(symbol, name, sector, provider_symbol):
         print(f"{symbol}: intraday unavailable ({type(exc).__name__})")
     return {
         "symbol": symbol, "name": name, "sector": sector, "price": current,
+        **identity(symbol, sector),
         "currency": meta.get("currency") or "USD", "dayHigh": day_high, "dayLow": day_low,
         "yearHigh": clean(meta.get("fiftyTwoWeekHigh")) or max(highs + [current]),
         "yearLow": clean(meta.get("fiftyTwoWeekLow")) or min(lows + [current]),
@@ -177,6 +196,7 @@ def hyperliquid_asset(symbol, name, sector, provider_symbol):
         print(f"{symbol}: intraday unavailable ({type(exc).__name__})")
     return {
         "symbol": symbol, "name": name, "sector": sector, "price": current, "currency": "USD",
+        **identity(symbol, sector),
         "dayHigh": highs[-1], "dayLow": lows[-1], "yearHigh": max(highs), "yearLow": min(lows),
         "weekSeries": [round(point[1], 6) for point in points[-7:]],
         "charts": history_charts(points, intraday, True),
@@ -192,6 +212,7 @@ def hyperliquid_asset(symbol, name, sector, provider_symbol):
 def unavailable(symbol, name, sector, message):
     return {
         "symbol": symbol, "name": name, "sector": sector, "price": None, "currency": "USD",
+        **identity(symbol, sector),
         "dayHigh": None, "dayLow": None, "yearHigh": None, "yearLow": None,
         "weekSeries": [],
         "charts": history_charts([], []),

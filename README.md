@@ -12,6 +12,8 @@ Public name: INNERG Market Pulse. Tagline: What moved. What matters. What I'm wa
 
 Missing data stays unavailable. Snapshots older than 48 hours are labeled. All price points and change windows remain visible through cards, search, sector filters, and sort within each sector. Each chart has an independent scale. Percentage changes exclude dividends. The latest daily point may be incomplete.
 
+Each tracked asset has two public tags. The category tag matches the seven watchlist sectors. The asset-type tag identifies a Stock, ETF, Mutual Fund, or Crypto asset.
+
 Charts support 1D, 1W, and 30D views on both asset cards and weekly movers. 1D uses five-minute samples from the latest regular stock session or the latest 24 hours for crypto. Week and month use dated daily samples over the last 7 or 30 calendar days. Drag the plot or use the native slider; arrow keys move one point and Home/End select endpoints. Readouts show actual recorded samples, never interpolated prices. Intraday times use Eastern time; daily dates use UTC to preserve provider day boundaries. Assets without usable intraday history show an unavailable state. Period and selected timestamp survive filtering and data refresh. Automatic refresh waits while a chart control has focus.
 
 Legacy files in `supabase/` are retained for the existing shared membership infrastructure. They are not deployed or changed by this public-page update. Do not remove shared billing or member security based on the public Watchlist status. `data/watchlist-preview.json` remains for older cached clients; the current page uses the full file.
