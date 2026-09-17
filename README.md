@@ -18,6 +18,12 @@ Legacy files in `supabase/` are retained for the existing shared membership infr
 
 The Robinhood referral is public and disclosed. This page is research and education, not financial advice.
 
+## Closing Bell report
+
+The public Closing Bell Snapshot ranks five gainers and five losers from the non-crypto watchlist by regular-session daily percentage change. Crypto is excluded because it trades continuously. `scripts/build_closing_report.py` creates `data/closing-report.json` and the 1600 by 900 email graphic at `assets/innerg-closing-bell.png`.
+
+The final weekday market refresh runs at 4:20 PM Eastern. It rebuilds the closing report and graphic, commits changed public files, and deploys the site. The separate Codex closing-report task sends the same ten-name snapshot to the authenticated Gmail account after the public update.
+
 ## Sunday brief
 
 `data/sunday-brief.json` supplies the compact public "What to watch for" section. Each item separates dated news, bullish interpretation, a development to watch, and downside risk. Prices are fixed references for that edition, not entry targets. Editions older than eight days are labeled as previous editions. A brief error does not block the watchlist.
@@ -28,10 +34,12 @@ Follow [the Sunday research workflow](docs/sunday-research.md) to add tickers, r
 
 ```sh
 python3 scripts/update_market_data.py
+python3 scripts/build_closing_report.py
 node --check app.js
+node --check closing-report.mjs
 node --check brief.mjs
 node --check interactive-charts.mjs
-node --test verify.mjs
+node --test verify.mjs closing-report.test.mjs
 python3 scripts/test_market_history.py
 python3 -m http.server 4173
 ```

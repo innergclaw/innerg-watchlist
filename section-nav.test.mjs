@@ -11,11 +11,11 @@ test('daily research replaces the Sunday menu and keeps old links working',()=>{
  updateSectionNavigation({querySelectorAll:()=>[link]},'#sunday-brief');
  assert.equal(link['aria-current'],'location');
 });
-test('all eight menu links have unique existing sections',()=>{
+test('all nine menu links have unique existing sections',()=>{
  const html=readFileSync(new URL('./index.html',import.meta.url),'utf8');
  const nav=html.match(/<nav class="section-nav"[\s\S]*?<\/nav>/)[0];
  const ids=[...nav.matchAll(/href="#([^"]+)"/g)].map(m=>m[1]);
- assert.equal(ids.length,8);
+ assert.equal(ids.length,9);
  for(const id of ids) assert.equal(html.split(`id="${id}"`).length-1,1);
  assert.match(html,/<body id="top">/);
 });

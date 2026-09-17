@@ -1,0 +1,95 @@
+{
+  "marketDate": "2026-09-17",
+  "generatedAt": "2026-09-17T14:42:02.976468Z",
+  "universe": "Public INNERG watchlist, excluding crypto",
+  "method": "Regular-session daily percentage change",
+  "gainers": [
+    {
+      "symbol": "ARM",
+      "name": "Arm Holdings",
+      "sector": "ai-compute",
+      "price": 259.625,
+      "currency": "USD",
+      "changePercent": 6.418
+    },
+    {
+      "symbol": "MRVL",
+      "name": "Marvell Technology",
+      "sector": "ai-compute",
+      "price": 242.135,
+      "currency": "USD",
+      "changePercent": 5.409
+    },
+    {
+      "symbol": "SKHY",
+      "name": "SK hynix ADR",
+      "sector": "ai-compute",
+      "price": 182.88,
+      "currency": "USD",
+      "changePercent": 4.581
+    },
+    {
+      "symbol": "DRAM",
+      "name": "Themes Generative AI ETF",
+      "sector": "ai-compute",
+      "price": 57.725,
+      "currency": "USD",
+      "changePercent": 4.329
+    },
+    {
+      "symbol": "ASST",
+      "name": "Strive",
+      "sector": "platforms",
+      "price": 28.51,
+      "currency": "USD",
+      "changePercent": 4.013
+    }
+  ],
+  "losers": [
+    {
+      "symbol": "CRWV",
+      "name": "CoreWeave",
+      "sector": "ai-compute",
+      "price": 79.205,
+      "currency": "USD",
+      "changePercent": -4.973
+    },
+    {
+      "symbol": "CANE",
+      "name": "Teucrium Sugar Fund",
+      "sector": "materials",
+      "price": 11.13,
+      "currency": "USD",
+      "changePercent": -2.283
+    },
+    {
+      "symbol": "LYB",
+      "name": "LyondellBasell Industries",
+      "sector": "materials",
+      "price": 64.03,
+      "currency": "USD",
+      "changePercent": -1.341
+    },
+    {
+      "symbol": "USO",
+      "name": "United States Oil Fund",
+      "sector": "energy",
+      "price": 154.23,
+      "currency": "USD",
+      "changePercent": -1.242
+    },
+    {
+      "symbol": "CORN",
+      "name": "Teucrium Corn Fund",
+      "sector": "materials",
+      "price": 19.755,
+      "currency": "USD",
+      "changePercent": -1.077
+    }
+  ],
+  "sources": [
+    "Yahoo Finance chart data",
+    "Hyperliquid public API"
+  ],
+  "disclaimer": "Research and education only. Prices can be delayed."
+}

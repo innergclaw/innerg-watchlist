@@ -38,6 +38,7 @@ test('public client has no auth or checkout calls',()=>{assert.ok(!/supabase|str
 test('help and referral remain public',()=>{assert.ok(html.includes('How to read the numbers'));assert.ok(html.includes('https://join.robinhood.com/nasirrm'));assert.ok(html.includes('noopener noreferrer sponsored'));assert.ok(html.includes('prices update regularly and may be delayed.'));});
 test('accessible controls and reduced motion remain',()=>{assert.ok(html.includes('type="search"'));assert.ok(html.includes('role="status"'));assert.ok(css.includes(':focus-visible'));assert.ok(css.includes('prefers-reduced-motion:reduce'));assert.ok(css.includes('min-height:44px'));});
 test('workflow refreshes full public snapshot',()=>assert.ok(fs.readFileSync('.github/workflows/update-market-data.yml','utf8').includes('git add data/watchlist.json')));
+test('closing report is public and generated after the market close',()=>{const workflow=fs.readFileSync('.github/workflows/update-market-data.yml','utf8');assert.ok(html.includes('id="closing-bell"'));assert.ok(html.includes('closing-report.mjs'));assert.ok(workflow.includes('20 16 * * 1-5'));assert.ok(workflow.includes('build_closing_report.py'));});
 
 function harness({failure=false,hash=''}={}) {
   const nodes=new Map();
