@@ -1,4 +1,5 @@
 import { escapeHTML } from './display.mjs';
+import { chartMarkup, bindCharts } from './interactive-charts.mjs';
 
 const esc=escapeHTML;
 const safeUrl=value=>{
@@ -15,10 +16,22 @@ export function validateMarketUpdate(update) {
   return update;
 }
 
-export function marketUpdateMarkup(update) {
+export function marketUpdateMarkup(update, asset=null) {
   validateMarketUpdate(update);
   const reviewed=new Date(update.reviewedAt||update.updatedAt).toLocaleString('en-US',{dateStyle:'medium',timeStyle:'short',timeZone:'America/New_York'});
-  return `<article class="market-flash-card"><div class="market-flash-lead"><div><p class="eyebrow">${esc(update.label)}</p><p class="market-flash-time">Reviewed ${esc(reviewed)} ET</p><h2>${esc(update.headline)}</h2><p class="market-flash-summary">${esc(update.summary)}</p></div><strong class="market-flash-symbol">${esc(update.symbol)}</strong></div><dl class="market-flash-metrics">${update.metrics.map(metric=>`<div><dt>${esc(metric.label)}</dt><dd>${esc(metric.value)}</dd></div>`).join('')}</dl><div class="market-flash-body"><section><h3>What moved it</h3>${update.catalysts.map(item=>`<p>${esc(item)}</p>`).join('')}</section><section><h3>Levels in focus</h3><dl class="market-levels">${update.levels.map(level=>`<div><dt>${esc(level.label)}</dt><dd>${esc(level.value)}</dd></div>`).join('')}</dl></section><section class="market-risk"><h3>Risk check</h3><p>${esc(update.risk)}</p></section></div><nav class="market-sources" aria-label="HYPE update sources">${update.sources.map(source=>`<a href="${esc(safeUrl(source.url))}" target="_blank" rel="noopener noreferrer">${esc(source.label)}</a>`).join('')}</nav><p class="market-flash-disclaimer">${esc(update.disclaimer)}</p></article>`;
+  const matchingAsset=asset?.symbol===update.symbol?asset:null;
+  const chart=matchingAsset?chartMarkup(matchingAsset,'market-flash'):'<p class="market-flash-chart-loading" role="status">Loading HYPE price history.</p>';
+  return `<article class="market-flash-card"><div class="market-flash-lead"><div><p class="eyebrow">${esc(update.label)}</p><p class="market-flash-time">Reviewed ${esc(reviewed)} ET</p><h2>${esc(update.headline)}</h2><p class="market-flash-summary">${esc(update.summary)}</p></div><strong class="market-flash-symbol">${esc(update.symbol)}</strong></div><dl class="market-flash-metrics">${update.metrics.map(metric=>`<div><dt>${esc(metric.label)}</dt><dd>${esc(metric.value)}</dd></div>`).join('')}</dl><section class="market-flash-chart" aria-labelledby="hype-chart-title"><div class="market-flash-chart-heading"><div><p class="eyebrow">Interactive price history</p><h3 id="hype-chart-title">HYPE chart</h3></div><p>Choose 1 day, 1 week, or 30 days. Slide across the graph to inspect each recorded price.</p></div>${chart}</section><div class="market-flash-body"><section><h3>What moved it</h3>${update.catalysts.map(item=>`<p>${esc(item)}</p>`).join('')}</section><section><h3>Levels in focus</h3><dl class="market-levels">${update.levels.map(level=>`<div><dt>${esc(level.label)}</dt><dd>${esc(level.value)}</dd></div>`).join('')}</dl></section><section class="market-risk"><h3>Risk check</h3><p>${esc(update.risk)}</p></section></div><nav class="market-sources" aria-label="HYPE update sources">${update.sources.map(source=>`<a href="${esc(safeUrl(source.url))}" target="_blank" rel="noopener noreferrer">${esc(source.label)}</a>`).join('')}</nav><p class="market-flash-disclaimer">${esc(update.disclaimer)}</p></article>`;
+}
+
+let activeUpdate=null;
+let hypeAsset=null;
+
+function renderMarketUpdate(root=document) {
+  const target=root.querySelector('#market-flash-content');
+  if(!target||!activeUpdate)return;
+  target.innerHTML=marketUpdateMarkup(activeUpdate,hypeAsset);
+  if(hypeAsset)bindCharts([hypeAsset],target);
 }
 
 export async function loadMarketUpdate(root=document,fetcher=fetch) {
@@ -30,10 +43,17 @@ export async function loadMarketUpdate(root=document,fetcher=fetch) {
     if(!response.ok)throw Error(`HTTP ${response.status}`);
     const payload=await response.json();
     const update=payload.updates?.find(item=>item.symbol==='HYPE');
-    target.innerHTML=marketUpdateMarkup({...update,updatedAt:payload.updatedAt});
+    activeUpdate={...update,updatedAt:payload.updatedAt};
+    renderMarketUpdate(root);
   } catch {
     target.innerHTML='<p class="section-note">The latest HYPE update is temporarily unavailable. Price charts remain available below.</p>';
   }
 }
 
-if(typeof document!=='undefined')loadMarketUpdate();
+if(typeof document!=='undefined'){
+  document.addEventListener('market-snapshot',event=>{
+    hypeAsset=event.detail?.assets?.find(asset=>asset.symbol==='HYPE')||null;
+    renderMarketUpdate();
+  });
+  loadMarketUpdate();
+}

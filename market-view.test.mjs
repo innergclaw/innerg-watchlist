@@ -33,12 +33,18 @@ test('all three public pages link to each market view and declare their scope',(
 
 test('HYPE update is dated, sourced, risk-aware, and escaped',()=>{
   const update={...updates.updates[0],updatedAt:updates.updatedAt};
+  const hype=data.assets.find(asset=>asset.symbol==='HYPE');
   validateMarketUpdate(update);
-  const markup=marketUpdateMarkup({...update,headline:'<img src=x onerror=alert(1)>'});
+  const markup=marketUpdateMarkup({...update,headline:'<img src=x onerror=alert(1)>'},hype);
   assert.ok(!markup.includes('<img'));
   assert.match(markup,/Research and education only/);
   assert.match(markup,/Risk check/);
   assert.match(markup,/noopener noreferrer/);
+  assert.match(markup,/HYPE chart/);
+  assert.match(markup,/data-period="day"/);
+  assert.match(markup,/data-period="week"/);
+  assert.match(markup,/data-period="month"/);
+  assert.match(markup,/data-chart-key="market-flash-HYPE"/);
   assert.equal(update.symbol,'HYPE');
   assert.equal(update.metrics[0].value,'$91.79');
 });

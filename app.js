@@ -49,6 +49,7 @@ function renderSnapshot(data) {
   document.querySelector('#market-state').textContent = old ? 'prices may be out of date' : 'latest price update';
   document.querySelector('#snapshot-time').textContent = generated.toLocaleString('en-US',{dateStyle:'medium',timeStyle:'short',timeZone:'America/New_York'})+' ET';
   if(!changed) return;
+  document.dispatchEvent(new CustomEvent('market-snapshot',{detail:data}));
   const selected = sectorFilter.value;
   const scopedAssets = assetsForView(data.assets,VIEW);
   const scopedSectors = data.sectors.filter(sector=>scopedAssets.some(asset=>asset.sector===sector.id));
