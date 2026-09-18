@@ -1,0 +1,36 @@
+{
+  "updatedAt": "2026-09-18T09:14:00-04:00",
+  "updates": [
+    {
+      "id": "hype-ath-2026-09-18",
+      "symbol": "HYPE",
+      "assetType": "Crypto",
+      "label": "Crypto market update",
+      "headline": "HYPE reaches a new all-time high near $91.79.",
+      "summary": "HYPE moved into price discovery after clearing its prior record near $89.61. The move followed new borrowing utility on Hyperliquid and Payward's plan to build regulated U.S. perpetual markets through Hyperliquid HIP-3.",
+      "metrics": [
+        {"label": "New all-time high", "value": "$91.79"},
+        {"label": "Price at review", "value": "$90.83"},
+        {"label": "24-hour move", "value": "+12.25%"},
+        {"label": "Market cap", "value": "$20.2B"}
+      ],
+      "catalysts": [
+        "Hyperliquid launched manual borrowing. Users can supply HYPE or BTC as collateral and borrow USDC or USDT.",
+        "Payward, Kraken's parent company, intends to deploy U.S. perpetual futures markets through Hyperliquid HIP-3. The plan remains subject to regulatory approval."
+      ],
+      "levels": [
+        {"label": "Record and resistance", "value": "$91.79"},
+        {"label": "Breakout support", "value": "$89.60 to $90.00"},
+        {"label": "Robinhood midnight reference", "value": "$86.91"}
+      ],
+      "risk": "HYPE is extended and has no established resistance above the new high. At 9:14 AM ET, Robinhood showed a $89.85 bid and $91.61 ask. That wide spread increases execution risk. Borrowing against HYPE can also add liquidation pressure during a sharp decline.",
+      "disclaimer": "Research and education only. This is not a buy or sell recommendation. Crypto trades continuously, and prices can change quickly.",
+      "sources": [
+        {"label": "CoinGecko market data", "url": "https://www.coingecko.com/en/coins/hyperliquid"},
+        {"label": "Hyperliquid portfolio margin documentation", "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/portfolio-margin"},
+        {"label": "Payward HIP-3 announcement", "url": "https://www.payward.com/press-release/payward-hyperliquid-onchain-perpetual-futures"},
+        {"label": "All-time-high report", "url": "https://cointelegraph.com/markets/hype-ath-above-90-hyperliquid-manual-borrowing-lending"}
+      ]
+    }
+  ]
+}
