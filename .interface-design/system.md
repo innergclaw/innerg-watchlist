@@ -18,6 +18,12 @@ The site should feel like a focused research desk. It uses a warm paper canvas, 
 - Use weight, contrast, and spacing before adding more type sizes.
 - Keep the signal-lime color for selected controls, positive price action, and the most important live values.
 
+## Navigation
+
+- Keep the global section menu short and ordered to match the page: Overview, Closing Bell, Setups, Movers, Portfolio, Daily Research, Asset News, and Watchlist.
+- Use plain category labels. Do not place a single ticker or temporary headline in the global menu.
+- Place featured asset reports inside Asset News. Keep their direct chart links inside the feature.
+
 ## Featured asset pattern
 
 Use this sequence for a featured market asset:
