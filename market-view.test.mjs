@@ -47,6 +47,8 @@ test('HYPE update is dated, sourced, risk-aware, and escaped',()=>{
   assert.match(markup,/data-chart-key="market-flash-HYPE"/);
   assert.equal(update.symbol,'HYPE');
   assert.equal(update.metrics[0].value,'$91.79');
+  assert.match(home,/href="#hype-chart-title">Open HYPE chart/);
+  assert.match(crypto,/href="#hype-chart-title">Open HYPE chart/);
 });
 
 test('public build includes both routes and the shared market update',()=>{
