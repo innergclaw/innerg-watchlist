@@ -14,6 +14,15 @@
         {"label": "24-hour move", "value": "+12.25%"},
         {"label": "Market cap", "value": "$20.2B"}
       ],
+      "about": {
+        "summary": "HYPE is the native token of Hyperliquid, a layer-one blockchain built for onchain financial markets. Hyperliquid has two connected parts: HyperCore for spot and perpetual-futures order books, and HyperEVM for smart-contract applications.",
+        "uses": [
+          {"label": "Network security", "value": "HYPE can be delegated to validators through HyperCore's proof-of-stake system."},
+          {"label": "Transaction fees", "value": "HYPE pays gas fees when users and applications make transactions on HyperEVM."},
+          {"label": "Market infrastructure", "value": "Some HyperCore actions, including native-token deployment, require fees paid in HYPE."}
+        ],
+        "note": "HYPE is a volatile crypto asset. It is not a dollar-pegged stablecoin."
+      },
       "catalysts": [
         "Hyperliquid launched manual borrowing. Users can supply HYPE or BTC as collateral and borrow USDC or USDT.",
         "Payward, Kraken's parent company, intends to deploy U.S. perpetual futures markets through Hyperliquid HIP-3. The plan remains subject to regulatory approval."
@@ -27,6 +36,9 @@
       "disclaimer": "Research and education only. This is not a buy or sell recommendation. Crypto trades continuously, and prices can change quickly.",
       "sources": [
         {"label": "CoinGecko market data", "url": "https://www.coingecko.com/en/coins/hyperliquid"},
+        {"label": "About Hyperliquid", "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/about-hyperliquid"},
+        {"label": "HYPE staking documentation", "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/hypercore/staking"},
+        {"label": "HyperEVM documentation", "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/hyperevm"},
         {"label": "Hyperliquid portfolio margin documentation", "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/portfolio-margin"},
         {"label": "Payward HIP-3 announcement", "url": "https://www.payward.com/press-release/payward-hyperliquid-onchain-perpetual-futures"},
         {"label": "All-time-high report", "url": "https://cointelegraph.com/markets/hype-ath-above-90-hyperliquid-manual-borrowing-lending"}

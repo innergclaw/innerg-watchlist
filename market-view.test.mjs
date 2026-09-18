@@ -41,6 +41,10 @@ test('HYPE update is dated, sourced, risk-aware, and escaped',()=>{
   assert.match(markup,/Risk check/);
   assert.match(markup,/noopener noreferrer/);
   assert.match(markup,/HYPE chart/);
+  assert.match(markup,/What is HYPE\?/);
+  assert.match(markup,/Network security/);
+  assert.match(markup,/Transaction fees/);
+  assert.match(markup,/not a dollar-pegged stablecoin/);
   assert.match(markup,/data-period="day"/);
   assert.match(markup,/data-period="week"/);
   assert.match(markup,/data-period="month"/);
