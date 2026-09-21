@@ -1,90 +1,90 @@
 {
-  "marketDate": "2026-09-18",
-  "generatedAt": "2026-09-18T20:35:59.745196Z",
+  "marketDate": "2026-09-21",
+  "generatedAt": "2026-09-21T20:36:59.467250Z",
   "universe": "Public INNERG watchlist, excluding crypto",
   "method": "Regular-session daily percentage change",
   "gainers": [
     {
-      "symbol": "HOOD",
-      "name": "Robinhood Markets",
-      "sector": "platforms",
-      "price": 119.82,
-      "currency": "USD",
-      "changePercent": 9.1157
-    },
-    {
-      "symbol": "IREN",
-      "name": "IREN Limited",
+      "symbol": "ARM",
+      "name": "Arm Holdings",
       "sector": "ai-compute",
-      "price": 46.68,
+      "price": 322.9,
       "currency": "USD",
-      "changePercent": 7.3597
+      "changePercent": 17.1583
     },
     {
-      "symbol": "ASST",
-      "name": "Strive",
-      "sector": "platforms",
-      "price": 30.09,
-      "currency": "USD",
-      "changePercent": 6.4003
-    },
-    {
-      "symbol": "WDC",
-      "name": "Western Digital",
+      "symbol": "MRVL",
+      "name": "Marvell Technology",
       "sector": "ai-compute",
-      "price": 441.36,
+      "price": 257.38,
       "currency": "USD",
-      "changePercent": 4.1263
+      "changePercent": 5.3756
+    },
+    {
+      "symbol": "CRWV",
+      "name": "CoreWeave",
+      "sector": "ai-compute",
+      "price": 85.43,
+      "currency": "USD",
+      "changePercent": 5.0025
+    },
+    {
+      "symbol": "OPEN",
+      "name": "Opendoor Technologies",
+      "sector": "platforms",
+      "price": 2.68,
+      "currency": "USD",
+      "changePercent": 4.6875
+    },
+    {
+      "symbol": "DRAM",
+      "name": "Themes Generative AI ETF",
+      "sector": "ai-compute",
+      "price": 61.58,
+      "currency": "USD",
+      "changePercent": 3.3048
+    }
+  ],
+  "losers": [
+    {
+      "symbol": "MTDR",
+      "name": "Matador Resources",
+      "sector": "energy",
+      "price": 54.09,
+      "currency": "USD",
+      "changePercent": -4.7879
     },
     {
       "symbol": "HAFN",
       "name": "Hafnia Limited",
       "sector": "energy",
-      "price": 10.12,
+      "price": 9.71,
       "currency": "USD",
-      "changePercent": 4.1152
-    }
-  ],
-  "losers": [
-    {
-      "symbol": "LYB",
-      "name": "LyondellBasell Industries",
-      "sector": "materials",
-      "price": 61.93,
-      "currency": "USD",
-      "changePercent": -3.6109
+      "changePercent": -4.0514
     },
     {
-      "symbol": "MOS",
-      "name": "The Mosaic Company",
-      "sector": "materials",
-      "price": 24.48,
+      "symbol": "USO",
+      "name": "United States Oil Fund",
+      "sector": "energy",
+      "price": 148.16,
       "currency": "USD",
-      "changePercent": -3.5841
+      "changePercent": -3.6796
     },
     {
       "symbol": "NTR",
       "name": "Nutrien",
       "sector": "materials",
-      "price": 77.09,
+      "price": 74.54,
       "currency": "USD",
-      "changePercent": -2.3188
+      "changePercent": -3.3078
     },
     {
-      "symbol": "CECO",
-      "name": "CECO Environmental",
-      "sector": "industrials",
-      "price": 69.48,
-      "currency": "USD",
-      "changePercent": -1.906
-    },
-    {
-      "symbol": "MTDR",
-      "name": "Matador Resources",
+      "symbol": "COP",
+      "name": "ConocoPhillips",
       "sector": "energy",
-      "price": 56.81,
+      "price": 127.53,
       "currency": "USD",
-      "changePercent": -1.4912
+      "changePercent": -3.2618
     }
   ],
   "sources": [
