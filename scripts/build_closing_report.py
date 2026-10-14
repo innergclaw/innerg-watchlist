@@ -15,7 +15,22 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 WATCHLIST = ROOT / "data" / "watchlist.json"
 REPORT = ROOT / "data" / "closing-report.json"
 GRAPHIC = ROOT / "assets" / "innerg-closing-bell.png"
-FONT_DIR = pathlib.Path("/Users/nasirrm/.codex/skills/canvas-design/canvas-fonts")
+CANVAS_FONT_DIR = pathlib.Path("/Users/nasirrm/.codex/skills/canvas-design/canvas-fonts")
+DEJAVU_FONT_DIR = pathlib.Path("/usr/share/fonts/truetype/dejavu")
+
+
+def font_paths() -> tuple[pathlib.Path, pathlib.Path, pathlib.Path]:
+    if CANVAS_FONT_DIR.is_dir():
+        return (
+            CANVAS_FONT_DIR / "Outfit-Regular.ttf",
+            CANVAS_FONT_DIR / "Outfit-Bold.ttf",
+            CANVAS_FONT_DIR / "RedHatMono-Bold.ttf",
+        )
+    return (
+        DEJAVU_FONT_DIR / "DejaVuSans.ttf",
+        DEJAVU_FONT_DIR / "DejaVuSans-Bold.ttf",
+        DEJAVU_FONT_DIR / "DejaVuSansMono-Bold.ttf",
+    )
 
 
 def dated_closes(asset: dict, through: dt.date) -> list[tuple[dt.date, float]]:
@@ -94,9 +109,7 @@ def render_graphic(report: dict) -> None:
     width, height = 1600, 900
     image = Image.new("RGB", (width, height), "#151513")
     draw = ImageDraw.Draw(image)
-    regular = FONT_DIR / "Outfit-Regular.ttf"
-    bold = FONT_DIR / "Outfit-Bold.ttf"
-    mono = FONT_DIR / "RedHatMono-Bold.ttf"
+    regular, bold, mono = font_paths()
     title = ImageFont.truetype(str(bold), 66)
     eyebrow = ImageFont.truetype(str(mono), 22)
     section = ImageFont.truetype(str(bold), 30)
