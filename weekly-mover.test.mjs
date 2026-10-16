@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { topWeeklyMover, topWeeklyMovers, weeklyMoversMarkup, setWeeklyMoverAccess, moverExplanation, moverContext, setMoverContext } from './weekly-mover.mjs';
+import { topWeeklyMover, topWeeklyMovers, weeklyMoversMarkup, setWeeklyMoverAccess, setMemberMoverAssets, moverExplanation, moverContext, setMoverContext } from './weekly-mover.mjs';
 const rows=[{symbol:'AAA',name:'First',category:'AI + Compute',assetType:'Stock',returns:{week:30}},{symbol:'BBB',name:'Second',category:'Core Funds',assetType:'ETF',returns:{week:20}},{symbol:'CCC',name:'Third',category:'Crypto',assetType:'Crypto',returns:{week:10}},{symbol:'DDD',name:'Fourth',category:'Industrials + Cyclicals',assetType:'Stock',returns:{week:5}}];
 test('top three sort by percentage, exclude invalid returns and duplicates, preserve inputs',()=>{
  const input=[rows[2],{symbol:'BAD',returns:{week:NaN}},rows[0],rows[1],rows[0],rows[3]];
@@ -51,4 +51,26 @@ test('published mover explanation excludes Reddit material and links',()=>{
   assert.doesNotMatch(JSON.stringify(moverContext),/reddit/i);
   assert.doesNotMatch(moverExplanation('ZEC',Date.parse(moverContext.reviewedAt)),/reddit/i);
   setMoverContext(null);assert.match(moverExplanation('ZEC'),/Sign in with INNERG ID/);
+});
+
+test('public snapshot leadersByView: page uses the published #1 and never ranks 2-3 from public data',()=>{
+ setWeeklyMoverAccess(false);setMemberMoverAssets(null);
+ const html=weeklyMoversMarkup(rows,{view:'all',publicLeaders:[rows[1]]});
+ assert.match(html,/data-weekly-rank="1"[\s\S]*?>BBB</);
+ assert.doesNotMatch(html,/>AAA<|>CCC</);
+ assert.equal((html.match(/class="leader-card leader-locked"/g)||[]).length,2);
+});
+test('members get ranks 2-3 only from member-watchlist assets, scoped by view',()=>{
+ const member=[{symbol:'MMM',name:'M',assetType:'Stock',returns:{week:50}},{symbol:'NNN',name:'N',assetType:'Crypto',returns:{week:40}},{symbol:'OOO',name:'O',assetType:'ETF',returns:{week:30}},{symbol:'PPP',name:'P',assetType:'Stock',returns:{week:20}}];
+ setWeeklyMoverAccess(true);setMemberMoverAssets(member);
+ let html=weeklyMoversMarkup(rows,{view:'all',publicLeaders:[rows[0]]});
+ assert.deepEqual([...html.matchAll(/<h3>([A-Z]+)<\/h3>/g)].map(m=>m[1]),['MMM','NNN','OOO']);
+ html=weeklyMoversMarkup(rows,{view:'stocks'});
+ assert.deepEqual([...html.matchAll(/<h3>([A-Z]+)<\/h3>/g)].map(m=>m[1]),['MMM','OOO','PPP']);
+ setMemberMoverAssets(null);setWeeklyMoverAccess(false);
+});
+test('published snapshot carries at most one leader per view',async()=>{
+ const fs=await import('node:fs');const data=JSON.parse(fs.readFileSync(new URL('./data/watchlist.json',import.meta.url),'utf8'));
+ assert.ok(data.leaders.length<=1);
+ for(const view of ['all','stocks','crypto'])assert.ok(Array.isArray(data.leadersByView?.[view])&&data.leadersByView[view].length<=1,view);
 });
