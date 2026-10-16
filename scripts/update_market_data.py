@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import os
 import math
 import pathlib
 import time
@@ -236,11 +237,34 @@ def main():
         time.sleep(0.08)
 
     now = dt.datetime.now(dt.timezone.utc)
-    leaders = sorted(
-        (item for item in assets if item["returns"]["week"] is not None),
-        key=lambda item: item["returns"]["week"],
-        reverse=True,
-    )[:3]
+    def ranked(items):
+        return sorted(
+            (item for item in items if item["returns"]["week"] is not None),
+            key=lambda item: (-item["returns"]["week"], item["symbol"]),
+        )
+
+    # Public snapshot promises only the #1 weekly mover per view. Movers 2-3 are
+    # served to verified members by the member-watchlist edge function.
+    views = {
+        "all": assets,
+        "stocks": [a for a in assets if a.get("assetType") != "Crypto"],
+        "crypto": [a for a in assets if a.get("assetType") == "Crypto"],
+    }
+    leaders_by_view = {view: ranked(items)[:1] for view, items in views.items()}
+    leaders = leaders_by_view["all"]
+
+    # Optional stricter mode (product decision): hide weekly detail for every
+    # asset except the public #1 movers, so ranks 2-3 cannot be derived from the
+    # free table. Default keeps today's free weekly charts/returns.
+    if os.environ.get("PUBLIC_WEEKLY_DETAIL", "1") == "0":
+        public_ids = {item["symbol"] for items in leaders_by_view.values() for item in items}
+        for item in assets:
+            if item["symbol"] in public_ids:
+                continue
+            item["returns"]["week"] = None
+            item["weekSeries"] = []
+            if isinstance(item.get("charts"), dict):
+                item["charts"].pop("week", None)
 
     payload = {
         "generatedAt": now.isoformat().replace("+00:00", "Z"),
@@ -249,6 +273,7 @@ def main():
         "sectors": SECTORS,
         "assets": assets,
         "leaders": leaders,
+        "leadersByView": leaders_by_view,
     }
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
