@@ -17,16 +17,37 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - run: node scripts/build_public_site.mjs
       - name: Verify public charts and member research rules
         run: node --test verify.mjs news.test.mjs weekly-mover.test.mjs research-access.test.mjs research-email.test.mjs portfolio.test.mjs section-nav.test.mjs closing-report.test.mjs market-view.test.mjs
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@v6
+      # Unique artifact name per attempt so "Re-run jobs" does not fail with
+      # "Multiple artifacts named github-pages".
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: .public-site
-      - uses: actions/deploy-pages@v4
+          name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+      - uses: actions/deploy-pages@v5
         id: deployment
+        with:
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+      # Tell nasirr-mayo-brand the public data is live so Market Pulse syncs now.
+      # Requires secret MARKET_PULSE_DISPATCH_TOKEN (fine-grained PAT on
+      # innergclaw/nasirr-mayo-brand with Contents: read and write).
+      - name: Notify Market Pulse sync
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.MARKET_PULSE_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::warning::MARKET_PULSE_DISPATCH_TOKEN not set; nasirr-mayo-brand will rely on its fallback cron."
+            exit 0
+          fi
+          gh api --method POST repos/innergclaw/nasirr-mayo-brand/dispatches \
+            -f event_type=market-pulse-updated \
+            -f "client_payload[sha]=${{ github.sha }}" \
+            -f "client_payload[run_id]=${{ github.run_id }}"
