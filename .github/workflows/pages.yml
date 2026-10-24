@@ -23,7 +23,7 @@ jobs:
           node-version: '22'
       - run: node scripts/build_public_site.mjs
       - name: Verify public charts and member research rules
-        run: node --test verify.mjs news.test.mjs weekly-mover.test.mjs research-access.test.mjs research-email.test.mjs portfolio.test.mjs section-nav.test.mjs closing-report.test.mjs market-view.test.mjs
+        run: node --test verify.mjs news.test.mjs weekly-mover.test.mjs research-access.test.mjs research-email.test.mjs portfolio.test.mjs section-nav.test.mjs closing-report.test.mjs market-view.test.mjs watchlist-chart.test.mjs
       - uses: actions/configure-pages@v6
       # Unique artifact name per attempt so "Re-run jobs" does not fail with
       # "Multiple artifacts named github-pages".

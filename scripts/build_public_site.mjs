@@ -4,7 +4,7 @@ await mkdir('.public-site/data',{recursive:true});
 await mkdir('.public-site/assets',{recursive:true});
 await mkdir('.public-site/stocks',{recursive:true});
 await mkdir('.public-site/crypto',{recursive:true});
-for(const file of ['index.html','styles.css','app.js','display.mjs','interactive-charts.mjs','weekly-mover.mjs','member-access.mjs','brief.mjs','news.mjs','section-nav.mjs','closing-report.mjs','market-update.mjs','.nojekyll'])await copyFile(file,`.public-site/${file}`);
+for(const file of ['index.html','styles.css','app.js','display.mjs','interactive-charts.mjs','weekly-mover.mjs','member-access.mjs','brief.mjs','news.mjs','section-nav.mjs','closing-report.mjs','market-update.mjs','watchlist-chart.mjs','.nojekyll'])await copyFile(file,`.public-site/${file}`);
 await copyFile('stocks/index.html','.public-site/stocks/index.html');
 await copyFile('crypto/index.html','.public-site/crypto/index.html');
 await copyFile('data/watchlist.json','.public-site/data/watchlist.json');

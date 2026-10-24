@@ -20,7 +20,7 @@ test('all menu links have unique existing sections',()=>{
  assert.doesNotMatch(nav,/HYPE ATH|market-flash|Referral/);
  assert.match(html,/<body id="top"[^>]*>/);
 });
-test('HYPE feature sits inside Asset News instead of the global menu',()=>{
+test('market commentary sits inside Asset News instead of the global menu',()=>{
  const html=readFileSync(new URL('./index.html',import.meta.url),'utf8');
  const assetNewsStart=html.indexOf('<section class="asset-news" id="asset-news"');
  const assetNewsEnd=html.indexOf('</section>',html.indexOf('</section>',assetNewsStart)+10);
@@ -29,7 +29,7 @@ test('HYPE feature sits inside Asset News instead of the global menu',()=>{
  assert.ok(hypeStart>assetNewsStart);
  assert.ok(hypeStart<assetNewsEnd);
  assert.match(html.slice(assetNewsStart,hypeStart),/Keep up with what changed/);
- assert.match(html.slice(hypeStart),/Featured asset update/);
+ assert.match(html.slice(hypeStart),/Featured asset updates/);
  assert.ok(hypeStart<html.indexOf('Your assets, one at a time.',assetNewsStart));
 });
 test('selected section is identified without changing page content',()=>{
@@ -40,6 +40,6 @@ test('selected section is identified without changing page content',()=>{
  assert.equal(links[0]['aria-current'],undefined);
  updateSectionNavigation(root,'#overview');
  assert.equal(links[1]['aria-current'],undefined);
- updateSectionNavigation(root,'#hype-chart-title');
+ updateSectionNavigation(root,'#market-flash');
  assert.equal(links[1]['aria-current'],'location');
 });

@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { assetsForView } from './display.mjs';
-import { validateMarketUpdate, marketUpdateMarkup } from './market-update.mjs';
+import { validateMarketUpdate, marketUpdateMarkup, marketUpdatesMarkup, loadMarketUpdate, EMPTY_UPDATES } from './market-update.mjs';
 
 const data=JSON.parse(fs.readFileSync('data/watchlist.json','utf8'));
 const updates=JSON.parse(fs.readFileSync('data/market-updates.json','utf8'));
@@ -31,32 +31,43 @@ test('all three public pages link to each market view and declare their scope',(
   assert.match(crypto,/data-market-view="crypto"/);
 });
 
-test('HYPE update is dated, sourced, risk-aware, and escaped',()=>{
-  const entry=updates.updates.find(item=>item.symbol==='HYPE');
-  const update={...entry,updatedAt:entry.updatedAt||updates.updatedAt};
-  const hype=data.assets.find(asset=>asset.symbol==='HYPE');
-  validateMarketUpdate(update);
-  const markup=marketUpdateMarkup({...update,headline:'<img src=x onerror=alert(1)>'},hype);
+test('HYPE market update card and its chart links are gone',()=>{
+  assert.ok(!updates.updates.some(item=>item.symbol==='HYPE'));
+  for(const html of [home,stocks,crypto]){
+    assert.doesNotMatch(html,/Open HYPE chart|hype-chart-title|HYPE enters price discovery|Loading the latest HYPE/);
+  }
+  assert.ok(data.assets.some(asset=>asset.symbol==='HYPE'),'HYPE stays on the watchlist itself');
+});
+
+test('every remaining market update validates, escapes, and links to the shared chart',()=>{
+  assert.ok(updates.updates.length>=1);
+  for(const entry of updates.updates)validateMarketUpdate({...entry,updatedAt:entry.updatedAt||updates.updatedAt});
+  const entry={...updates.updates[0],updatedAt:updates.updates[0].updatedAt||updates.updatedAt};
+  const asset={symbol:entry.symbol,name:entry.symbol};
+  const markup=marketUpdateMarkup({...entry,headline:'<img src=x onerror=alert(1)>'},asset);
   assert.ok(!markup.includes('<img'));
-  assert.match(markup,/Research and education only/);
-  assert.match(markup,/Risk check/);
-  assert.match(markup,/noopener noreferrer/);
-  assert.match(markup,/HYPE chart/);
-  assert.match(markup,/What is HYPE\?/);
-  assert.match(markup,/Network security/);
-  assert.match(markup,/Transaction fees/);
-  assert.match(markup,/not a dollar-pegged stablecoin/);
-  assert.match(markup,/data-period="day"/);
-  assert.match(markup,/data-period="week"/);
-  assert.match(markup,/data-period="month"/);
-  assert.match(markup,/data-chart-key="market-flash-HYPE"/);
-  assert.equal(update.symbol,'HYPE');
-  assert.equal(update.metrics[0].value,'$91.79');
-  assert.match(home,/href="#hype-chart-title">Open HYPE chart/);
-  assert.match(crypto,/href="#hype-chart-title">Open HYPE chart/);
+  assert.doesNotMatch(markup,/interactive-chart|data-chart-key/);
+  assert.match(markup,new RegExp(`href="#asset-${entry.symbol}"`));
+  assert.doesNotMatch(marketUpdateMarkup(entry,null),/href="#asset-/);
+});
+
+test('empty or near-empty update lists render cleanly',()=>{
+  assert.equal(marketUpdatesMarkup([]),EMPTY_UPDATES);
+  assert.equal(marketUpdatesMarkup(undefined),EMPTY_UPDATES);
+  assert.equal(marketUpdatesMarkup([{symbol:'bad'}]),EMPTY_UPDATES);
+  const one=marketUpdatesMarkup([{...updates.updates[0],updatedAt:updates.updatedAt},{symbol:'bad'}]);
+  assert.equal((one.match(/class="market-flash-card"/g)||[]).length,1);
+  assert.doesNotMatch(EMPTY_UPDATES,/HYPE|\u2014/);
+});
+
+test('loader shows the empty note for an empty payload',async()=>{
+  const target={innerHTML:''};
+  const root={querySelector:()=>target,body:{dataset:{updateUrl:'x.json'}}};
+  await loadMarketUpdate(root,async()=>({ok:true,json:async()=>({updatedAt:'2026-10-24T08:45:00-04:00',updates:[]})}));
+  assert.equal(target.innerHTML,EMPTY_UPDATES);
 });
 
 test('public build includes both routes and the shared market update',()=>{
   const build=fs.readFileSync('scripts/build_public_site.mjs','utf8');
-  for(const path of ['stocks/index.html','crypto/index.html','data/market-updates.json','market-update.mjs'])assert.ok(build.includes(path));
+  for(const path of ['stocks/index.html','crypto/index.html','data/market-updates.json','market-update.mjs','watchlist-chart.mjs'])assert.ok(build.includes(path));
 });
