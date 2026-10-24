@@ -1,6 +1,118 @@
 {
-  "updatedAt": "2026-09-18T09:14:00-04:00",
+  "updatedAt": "2026-10-24T08:45:00-04:00",
   "updates": [
+    {
+      "id": "xle-oil-2026-10-23",
+      "updatedAt": "2026-10-24T08:45:00-04:00",
+      "symbol": "XLE",
+      "assetType": "stock",
+      "label": "Energy market update",
+      "headline": "XLE climbs 2.6% as Brent settles near $116.72.",
+      "summary": "Energy led Friday's session. Brent crude futures settled at $116.72, up about 3.1% on the day, and the Energy Select Sector SPDR Fund (XLE) closed at $69.33. Watchlist energy names followed, with Matador Resources up about 5.6%, the United States Oil Fund up about 4.3%, and ConocoPhillips up about 3.6%.",
+      "metrics": [
+        {
+          "label": "XLE close",
+          "value": "$69.33"
+        },
+        {
+          "label": "XLE daily move",
+          "value": "+2.60%"
+        },
+        {
+          "label": "Brent settle",
+          "value": "$116.72"
+        },
+        {
+          "label": "Brent daily move",
+          "value": "+3.14%"
+        }
+      ],
+      "about": {
+        "summary": "XLE is an exchange-traded fund that tracks the energy companies in the S&P 500, mainly oil and gas producers, refiners, and equipment and services firms.",
+        "uses": [
+          "Tracks the large-cap US energy sector in one fund",
+          "Often moves with crude oil and natural gas prices",
+          "Used as a reference point for energy sector sentiment"
+        ],
+        "note": "This is news, not financial advice."
+      }
+    },
+    {
+      "id": "qqq-xlk-steady-2026-10-23",
+      "updatedAt": "2026-10-24T08:45:00-04:00",
+      "symbol": "QQQ",
+      "assetType": "stock",
+      "label": "Tech market update",
+      "headline": "QQQ and XLK steady after Thursday's tech drop.",
+      "summary": "Large-cap tech held its ground Friday after a sharp Thursday decline. QQQ closed at $704.40, nearly flat, after falling about 2.9% on Thursday. The Technology Select Sector SPDR Fund (XLK) added about 0.5% to $183.23. Meta Platforms extended its slide, closing at $642.62 after a roughly 7% drop on Thursday.",
+      "metrics": [
+        {
+          "label": "QQQ close",
+          "value": "$704.40"
+        },
+        {
+          "label": "QQQ daily move",
+          "value": "-0.01%"
+        },
+        {
+          "label": "XLK close",
+          "value": "$183.23"
+        },
+        {
+          "label": "XLK daily move",
+          "value": "+0.49%"
+        },
+        {
+          "label": "META close",
+          "value": "$642.62 (-0.96%)"
+        }
+      ],
+      "about": {
+        "summary": "QQQ tracks the Nasdaq-100, the 100 largest non-financial companies listed on the Nasdaq. XLK tracks the technology companies in the S&P 500.",
+        "uses": [
+          "QQQ is a common gauge of large-cap growth and tech stocks",
+          "XLK offers focused exposure to the S&P 500 tech sector",
+          "Both are used to follow software, semiconductor, and SI-related names"
+        ],
+        "note": "This is news, not financial advice."
+      }
+    },
+    {
+      "id": "spy-dow-2026-10-23",
+      "updatedAt": "2026-10-24T08:45:00-04:00",
+      "symbol": "SPY",
+      "assetType": "stock",
+      "label": "Broad market update",
+      "headline": "SPY slips 0.5% as the Dow ETF falls about 1.2%.",
+      "summary": "Broad US stocks ended the week lower. SPY closed at $759.97, down about 0.5%, its second straight decline. The SPDR Dow Jones Industrial Average ETF (DIA) fell about 1.2% to $521.37, while higher oil prices lifted energy shares.",
+      "metrics": [
+        {
+          "label": "SPY close",
+          "value": "$759.97"
+        },
+        {
+          "label": "SPY daily move",
+          "value": "-0.52%"
+        },
+        {
+          "label": "DIA close",
+          "value": "$521.37"
+        },
+        {
+          "label": "DIA daily move",
+          "value": "-1.24%"
+        }
+      ],
+      "about": {
+        "summary": "SPY is an exchange-traded fund that tracks the S&P 500, a benchmark of 500 large US companies across all sectors.",
+        "uses": [
+          "Widely used as a gauge of the overall US stock market",
+          "Serves as a benchmark for sector and single-stock performance",
+          "Holds every S&P 500 sector, including tech and energy"
+        ],
+        "note": "This is news, not financial advice."
+      }
+    },
     {
       "id": "hype-ath-2026-09-18",
       "updatedAt": "2026-09-18T09:14:00-04:00",
@@ -10,17 +122,38 @@
       "headline": "HYPE reaches a new all-time high near $91.79.",
       "summary": "HYPE moved into price discovery after clearing its prior record near $89.61. The move followed new borrowing utility on Hyperliquid and Payward's plan to build regulated U.S. perpetual markets through Hyperliquid HIP-3.",
       "metrics": [
-        {"label": "New all-time high", "value": "$91.79"},
-        {"label": "Price at review", "value": "$90.83"},
-        {"label": "24-hour move", "value": "+12.25%"},
-        {"label": "Market cap", "value": "$20.2B"}
+        {
+          "label": "New all-time high",
+          "value": "$91.79"
+        },
+        {
+          "label": "Price at review",
+          "value": "$90.83"
+        },
+        {
+          "label": "24-hour move",
+          "value": "+12.25%"
+        },
+        {
+          "label": "Market cap",
+          "value": "$20.2B"
+        }
       ],
       "about": {
         "summary": "HYPE is the native token of Hyperliquid, a layer-one blockchain built for onchain financial markets. Hyperliquid has two connected parts: HyperCore for spot and perpetual-futures order books, and HyperEVM for smart-contract applications.",
         "uses": [
-          {"label": "Network security", "value": "HYPE can be delegated to validators through HyperCore's proof-of-stake system."},
-          {"label": "Transaction fees", "value": "HYPE pays gas fees when users and applications make transactions on HyperEVM."},
-          {"label": "Market infrastructure", "value": "Some HyperCore actions, including native-token deployment, require fees paid in HYPE."}
+          {
+            "label": "Network security",
+            "value": "HYPE can be delegated to validators through HyperCore's proof-of-stake system."
+          },
+          {
+            "label": "Transaction fees",
+            "value": "HYPE pays gas fees when users and applications make transactions on HyperEVM."
+          },
+          {
+            "label": "Market infrastructure",
+            "value": "Some HyperCore actions, including native-token deployment, require fees paid in HYPE."
+          }
         ],
         "note": "HYPE is a volatile crypto asset. It is not a dollar-pegged stablecoin."
       },
@@ -29,20 +162,50 @@
         "Payward, Kraken's parent company, intends to deploy U.S. perpetual futures markets through Hyperliquid HIP-3. The plan remains subject to regulatory approval."
       ],
       "levels": [
-        {"label": "Record and resistance", "value": "$91.79"},
-        {"label": "Breakout support", "value": "$89.60 to $90.00"},
-        {"label": "Robinhood midnight reference", "value": "$86.91"}
+        {
+          "label": "Record and resistance",
+          "value": "$91.79"
+        },
+        {
+          "label": "Breakout support",
+          "value": "$89.60 to $90.00"
+        },
+        {
+          "label": "Robinhood midnight reference",
+          "value": "$86.91"
+        }
       ],
       "risk": "HYPE is extended and has no established resistance above the new high. At 9:14 AM ET, Robinhood showed a $89.85 bid and $91.61 ask. That wide spread increases execution risk. Borrowing against HYPE can also add liquidation pressure during a sharp decline.",
       "disclaimer": "Research and education only. This is not a buy or sell recommendation. Crypto trades continuously, and prices can change quickly.",
       "sources": [
-        {"label": "CoinGecko market data", "url": "https://www.coingecko.com/en/coins/hyperliquid"},
-        {"label": "About Hyperliquid", "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/about-hyperliquid"},
-        {"label": "HYPE staking documentation", "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/hypercore/staking"},
-        {"label": "HyperEVM documentation", "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/hyperevm"},
-        {"label": "Hyperliquid portfolio margin documentation", "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/portfolio-margin"},
-        {"label": "Payward HIP-3 announcement", "url": "https://www.payward.com/press-release/payward-hyperliquid-onchain-perpetual-futures"},
-        {"label": "All-time-high report", "url": "https://cointelegraph.com/markets/hype-ath-above-90-hyperliquid-manual-borrowing-lending"}
+        {
+          "label": "CoinGecko market data",
+          "url": "https://www.coingecko.com/en/coins/hyperliquid"
+        },
+        {
+          "label": "About Hyperliquid",
+          "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/about-hyperliquid"
+        },
+        {
+          "label": "HYPE staking documentation",
+          "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/hypercore/staking"
+        },
+        {
+          "label": "HyperEVM documentation",
+          "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/hyperevm"
+        },
+        {
+          "label": "Hyperliquid portfolio margin documentation",
+          "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/portfolio-margin"
+        },
+        {
+          "label": "Payward HIP-3 announcement",
+          "url": "https://www.payward.com/press-release/payward-hyperliquid-onchain-perpetual-futures"
+        },
+        {
+          "label": "All-time-high report",
+          "url": "https://cointelegraph.com/markets/hype-ath-above-90-hyperliquid-manual-borrowing-lending"
+        }
       ]
     }
   ]

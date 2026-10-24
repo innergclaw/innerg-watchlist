@@ -32,7 +32,8 @@ test('all three public pages link to each market view and declare their scope',(
 });
 
 test('HYPE update is dated, sourced, risk-aware, and escaped',()=>{
-  const update={...updates.updates[0],updatedAt:updates.updatedAt};
+  const entry=updates.updates.find(item=>item.symbol==='HYPE');
+  const update={...entry,updatedAt:entry.updatedAt||updates.updatedAt};
   const hype=data.assets.find(asset=>asset.symbol==='HYPE');
   validateMarketUpdate(update);
   const markup=marketUpdateMarkup({...update,headline:'<img src=x onerror=alert(1)>'},hype);
