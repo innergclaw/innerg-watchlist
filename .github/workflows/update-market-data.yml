@@ -3,12 +3,11 @@ name: Update market snapshot
 on:
   workflow_dispatch:
   schedule:
-    - cron: "37 9 * * 1-5"
-      timezone: "America/New_York"
-    - cron: "7,37 10-15 * * 1-5"
-      timezone: "America/New_York"
-    - cron: "20 16 * * 1-5"
-      timezone: "America/New_York"
+    # UTC crons (timezone key removed, unverified support). Covers EDT (UTC-4) and EST (UTC-5).
+    - cron: "37 13,14 * * 1-5"
+    - cron: "7,37 14-20 * * 1-5"
+    - cron: "20 20,21 * * 1-5"
+
 
 permissions:
   contents: write
@@ -29,13 +28,13 @@ jobs:
       - name: Build market snapshot
         run: python scripts/update_market_data.py
       - name: Install closing graphic dependencies
-        if: github.event.schedule == '20 16 * * 1-5' || github.event_name == 'workflow_dispatch'
+        if: github.event.schedule == '20 20,21 * * 1-5' || github.event_name == 'workflow_dispatch'
         run: |
           sudo apt-get update
           sudo apt-get install -y fonts-dejavu-core
           python -m pip install pillow
       - name: Build closing report and graphic
-        if: github.event.schedule == '20 16 * * 1-5' || github.event_name == 'workflow_dispatch'
+        if: github.event.schedule == '20 20,21 * * 1-5' || github.event_name == 'workflow_dispatch'
         run: python scripts/build_closing_report.py
       - name: Check history windows
         run: python scripts/test_market_history.py
