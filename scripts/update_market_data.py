@@ -139,6 +139,20 @@ def history_charts(points, intraday, crypto=False, timezone="America/New_York", 
     }
 
 
+def fill_closed_session(timestamps, closes, price, timezone="America/New_York", now=None):
+    """After the 4 PM close, fill a null close on today's daily bar with the latest price."""
+    closes = list(closes)
+    if not timestamps or price is None or closes[len(timestamps) - 1:len(timestamps)] != [None]:
+        return closes
+    zone = ZoneInfo(timezone)
+    current = dt.datetime.fromtimestamp(time.time() if now is None else now, zone)
+    if current.weekday() > 4 or current.time() < dt.time(16, 0):
+        return closes
+    if dt.datetime.fromtimestamp(timestamps[-1], zone).date() == current.date():
+        closes[len(timestamps) - 1] = price
+    return closes
+
+
 def yahoo_asset(symbol, name, sector, provider_symbol):
     encoded = urllib.parse.quote(provider_symbol, safe="")
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{encoded}?range=1y&interval=1d&includePrePost=true&events=div%2Csplits"
@@ -146,7 +160,11 @@ def yahoo_asset(symbol, name, sector, provider_symbol):
     result = payload["chart"]["result"][0]
     meta = result["meta"]
     quote = result["indicators"]["quote"][0]
-    points = [(ts, clean(close)) for ts, close in zip(result.get("timestamp", []), quote.get("close", [])) if close is not None]
+    timestamps = result.get("timestamp", [])
+    closes = quote.get("close", [])
+    if sector != "crypto":
+        closes = fill_closed_session(timestamps, closes, clean(meta.get("regularMarketPrice")), meta.get("exchangeTimezoneName") or "America/New_York")
+    points = [(ts, clean(close)) for ts, close in zip(timestamps, closes) if close is not None]
     if not points:
         raise ValueError("No historical prices returned")
 

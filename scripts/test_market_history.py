@@ -1,5 +1,5 @@
 import unittest
-from update_market_data import history_charts, chart_points
+from update_market_data import history_charts, chart_points, fill_closed_session
 import datetime as dt
 
 
@@ -8,6 +8,15 @@ def ts(value):
 
 
 class HistoryTests(unittest.TestCase):
+    def test_fill_null_close_after_market_close(self):
+        bars = [ts('2026-10-27T13:30:00+00:00'), ts('2026-10-28T13:30:00+00:00')]
+        after = ts('2026-10-28T20:30:00+00:00')
+        before = ts('2026-10-28T19:00:00+00:00')
+        self.assertEqual(fill_closed_session(bars, [9, None], 10.5, now=after), [9, 10.5])
+        self.assertEqual(fill_closed_session(bars, [9, None], 10.5, now=before), [9, None])
+        self.assertEqual(fill_closed_session(bars, [9, 10], 10.5, now=after), [9, 10])
+        self.assertEqual(fill_closed_session(bars[:1], [9, None][:1], 10.5, now=after), [9])
+
     def test_clean_sort_deduplicate(self):
         self.assertEqual(chart_points([(2, 4), (1, None), (2, 5), (3, float('nan'))]), [[2, 5]])
 
