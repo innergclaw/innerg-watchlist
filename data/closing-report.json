@@ -1,90 +1,90 @@
 {
-  "marketDate": "2026-10-29",
-  "generatedAt": "2026-10-30T00:00:03.760463Z",
+  "marketDate": "2026-10-30",
+  "generatedAt": "2026-10-30T23:54:04.740418Z",
   "universe": "Public INNERG watchlist, excluding crypto",
   "method": "Regular-session daily percentage change",
   "gainers": [
     {
-      "symbol": "STM",
-      "name": "STMicroelectronics",
-      "sector": "ai-compute",
-      "price": 49.99,
-      "currency": "USD",
-      "changePercent": 3.0297
-    },
-    {
-      "symbol": "HAFN",
-      "name": "Hafnia Limited",
-      "sector": "energy",
-      "price": 11.06,
-      "currency": "USD",
-      "changePercent": 2.0295
-    },
-    {
-      "symbol": "EMN",
-      "name": "Eastman Chemical",
+      "symbol": "OLN",
+      "name": "Olin Corporation",
       "sector": "materials",
-      "price": 67.93,
+      "price": 17.6,
       "currency": "USD",
-      "changePercent": 1.8899
+      "changePercent": 9.6573
     },
     {
-      "symbol": "SCHD",
-      "name": "Schwab U.S. Dividend Equity ETF",
-      "sector": "core-funds",
-      "price": 35.61,
+      "symbol": "LYB",
+      "name": "LyondellBasell Industries",
+      "sector": "materials",
+      "price": 68.64,
       "currency": "USD",
-      "changePercent": 1.4819
+      "changePercent": 5.0023
     },
     {
-      "symbol": "USO",
-      "name": "United States Oil Fund",
+      "symbol": "COP",
+      "name": "ConocoPhillips",
       "sector": "energy",
-      "price": 168.19,
+      "price": 154.03,
       "currency": "USD",
-      "changePercent": 0.9726
+      "changePercent": 2.6661
+    },
+    {
+      "symbol": "MTDR",
+      "name": "Matador Resources",
+      "sector": "energy",
+      "price": 60.88,
+      "currency": "USD",
+      "changePercent": 1.755
+    },
+    {
+      "symbol": "OXY",
+      "name": "Occidental Petroleum",
+      "sector": "energy",
+      "price": 64.0,
+      "currency": "USD",
+      "changePercent": 1.5712
     }
   ],
   "losers": [
     {
-      "symbol": "MRVL",
-      "name": "Marvell Technology",
-      "sector": "ai-compute",
-      "price": 218.34,
-      "currency": "USD",
-      "changePercent": -13.2366
-    },
-    {
       "symbol": "ASST",
       "name": "Strive",
       "sector": "platforms",
-      "price": 24.91,
+      "price": 22.195,
       "currency": "USD",
-      "changePercent": -9.5169
+      "changePercent": -10.8992
     },
     {
-      "symbol": "IREN",
-      "name": "IREN Limited",
+      "symbol": "MRVL",
+      "name": "Marvell Technology",
       "sector": "ai-compute",
-      "price": 26.25,
+      "price": 196.4,
       "currency": "USD",
-      "changePercent": -8.9806
+      "changePercent": -10.0485
+    },
+    {
+      "symbol": "ARM",
+      "name": "Arm Holdings",
+      "sector": "ai-compute",
+      "price": 205.97,
+      "currency": "USD",
+      "changePercent": -9.9663
     },
     {
       "symbol": "CRWV",
       "name": "CoreWeave",
       "sector": "ai-compute",
-      "price": 60.74,
+      "price": 54.87,
       "currency": "USD",
-      "changePercent": -4.9898
+      "changePercent": -9.6641
     },
     {
-      "symbol": "DRAM",
-      "name": "Themes Generative AI ETF",
+      "symbol": "IREN",
+      "name": "IREN Limited",
       "sector": "ai-compute",
-      "price": 51.75,
+      "price": 23.95,
       "currency": "USD",
-      "changePercent": -4.3792
+      "changePercent": -8.7619
     }
   ],
   "sources": [
