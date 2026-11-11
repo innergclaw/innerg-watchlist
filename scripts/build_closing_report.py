@@ -123,7 +123,7 @@ def render_graphic(report: dict) -> None:
     market_date = dt.date.fromisoformat(report["marketDate"]).strftime("%B %d, %Y").replace(" 0", " ")
     draw.text((78, 184), f"U.S. MARKET CLOSE  /  {market_date.upper()}", font=eyebrow, fill="#a8a89f")
 
-    columns = [(76, "TOP 5 GAINERS", report["gainers"], "#caff37"), (824, "TOP 5 LOSERS", report["losers"], "#ff8d82")]
+    columns = [(76, "TOP 5 GAINERS", report["gainers"], "#caff37"), (824, "BOTTOM 5 PERFORMERS", report["losers"], "#ff8d82")]
     for x, heading, items, accent in columns:
         draw.rounded_rectangle((x, 255, x + 700, 760), radius=22, fill="#20201d", outline="#3c3c36", width=2)
         draw.text((x + 34, 286), heading, font=section, fill=accent)
@@ -141,7 +141,8 @@ def render_graphic(report: dict) -> None:
             change = f"{item['changePercent']:+.2f}%"
             draw.text((x + 650, y), change, font=value, fill=accent, anchor="ra")
 
-    draw.text((76, 818), "RANKED BY REGULAR-SESSION DAILY % CHANGE  •  CRYPTO EXCLUDED", font=small, fill="#aaa9a1")
+    draw.text((76, 804), "BOTTOM GROUP CAN INCLUDE GAINERS WHEN FEWER THAN FIVE ASSETS DECLINE", font=small, fill="#aaa9a1")
+    draw.text((76, 840), "RANKED BY REGULAR-SESSION DAILY % CHANGE  •  CRYPTO EXCLUDED", font=small, fill="#aaa9a1")
     draw.text((1524, 818), "RESEARCH ONLY", font=eyebrow, fill="#caff37", anchor="ra")
     GRAPHIC.parent.mkdir(parents=True, exist_ok=True)
     image.save(GRAPHIC, optimize=True)
