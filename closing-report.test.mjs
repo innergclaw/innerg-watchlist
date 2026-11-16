@@ -28,6 +28,7 @@ test('closing report markup escapes names and links the graphic',()=>{
   const html=closingReportMarkup(copy);
   assert.ok(!html.includes('<script>'));
   assert.ok(html.includes('assets/innerg-closing-bell.png'));
+  assert.ok(html.includes('Top 5 performers'));
   assert.ok(html.includes('Bottom 5 performers'));
-  assert.ok(html.includes('can include assets that rose'));
+  assert.ok(html.includes('can include both gains and losses'));
 });
