@@ -3,10 +3,12 @@ name: Update market snapshot
 on:
   workflow_dispatch:
   schedule:
-    # UTC crons (timezone key removed, unverified support). Covers EDT (UTC-4) and EST (UTC-5).
+    # UTC crons. Covers EDT (UTC-4) and EST (UTC-5).
     - cron: "37 13,14 * * 1-5"
     - cron: "7,37 14-20 * * 1-5"
     - cron: "20 20,21 * * 1-5"
+    # Fallback if GitHub drops the 4:20 PM ET close cron (often delayed or skipped).
+    - cron: "30 22 * * 1-5"
 
 
 permissions:
@@ -27,14 +29,27 @@ jobs:
           python-version: "3.12"
       - name: Build market snapshot
         run: python scripts/update_market_data.py
+      - name: Decide whether to build closing report
+        id: close_report
+        run: |
+          now_et="$(TZ=America/New_York date '+%Y-%m-%d %H:%M %Z')"
+          dow="$(TZ=America/New_York date +%u)"
+          hm="$(TZ=America/New_York date +%H%M)"
+          hm=$((10#$hm))
+          echo "ET time: $now_et (dow=$dow hm=$hm)"
+          if [ "$dow" -le 5 ] && [ "$hm" -ge 1615 ]; then
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Install closing graphic dependencies
-        if: github.event.schedule == '20 20,21 * * 1-5' || github.event_name == 'workflow_dispatch'
+        if: steps.close_report.outputs.build == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           sudo apt-get update
           sudo apt-get install -y fonts-dejavu-core
           python -m pip install pillow
       - name: Build closing report and graphic
-        if: github.event.schedule == '20 20,21 * * 1-5' || github.event_name == 'workflow_dispatch'
+        if: steps.close_report.outputs.build == 'true' || github.event_name == 'workflow_dispatch'
         run: python scripts/build_closing_report.py
       - name: Check history windows
         run: python scripts/test_market_history.py
